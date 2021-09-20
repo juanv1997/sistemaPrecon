@@ -1,11 +1,11 @@
 <div>
+    
     <x-no-target-loading>
         <x-slot name="message">
             Cargando...
         </x-slot>
     </x-no-target-loading>
 
-    
     <!--Editar-->
 
     <x-modal>
@@ -84,7 +84,9 @@
 
              <div class="md:w-1/2 px-3">
                  <x-jet-label value="Precio"/>@if ($material)<x-jet-label value="[{{$material->material_precio}}]"/>  @endif
-                     <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
+                     <input @if ($infoMaterialToShow)
+                                value="{{$infoMaterialToShow->material_precio}}"
+                             @endif  class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
                  <x-jet-input-error for="material.material_precio"/>
              </div>
              <div class="md:w-1/2 px-3">
@@ -224,7 +226,7 @@
             <dt class="text-sm font-medium text-gray-500">
               Importe
             </dt>
-            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <dd  class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                @if ($material)
 
                 {{$material->material_importe}}

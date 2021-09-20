@@ -1,6 +1,9 @@
 <div>
-   
-        
+    
+    {{-- <div wire:offline>
+        You are now offline.
+    </div> --}}
+    
                 <div class='py-4'>
                     <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500">
                     

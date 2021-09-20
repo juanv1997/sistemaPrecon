@@ -43,3 +43,13 @@ Route::get('filter',function(){
 Route::get('test', function () {
     return view('kardex.entrada.entrada-view');
 });
+
+Route::get('/domain', function () {
+     $var = [
+
+        "34"=>2
+
+    ];
+
+    return $var;
+})->domain('blog.'.env('APP_URL'));

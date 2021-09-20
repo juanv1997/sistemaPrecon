@@ -9,6 +9,10 @@ use Livewire\Component;
 
 class TransactionFilter extends Component
 {       
+    protected $listeners = ['productChanged'=>'removeDefaultItem'];
+    public $defaultPre = true;
+    public $defaultMaterial = true;
+    //public $test = "es un test";
     public $search;
     public $tipoProducto="Prefabricado";
     public $tipoTransaccion = "Entradas";
@@ -49,6 +53,23 @@ class TransactionFilter extends Component
         }
 
         return $productItems;
+    }
+
+    public function removeDefaultItem($product){
+
+
+        $this->test = $product;
+
+        switch ($product) {
+            case 'Prefabricado':
+                $this->defaultPre = false;
+                break;
+            
+            case 'Material':
+                $this->defaultMaterial = false; 
+                break;
+        }
+
     }
 
     public function render()

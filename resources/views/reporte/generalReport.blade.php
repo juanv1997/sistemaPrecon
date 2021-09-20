@@ -37,12 +37,36 @@
 @stop
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+
+    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         
-        date
+        const productChanged = ()=>{
+
+            try {
+
+                
+                 let cbProduct = document.getElementById('cbProduct')
+                 let product = cbProduct.dataset.product
+            
+                // cbProduct.remove(0)}
+
+                alert(product)
+
+
+                Livewire.emit('productChanged',product)
+                
+                
+            } catch (e) {
+                
+
+                console.log(e)
+            }
+            
+        }
 
     </script>
 @stop

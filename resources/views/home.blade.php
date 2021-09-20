@@ -6,6 +6,8 @@
 
     <x-app-layout>
       
+        
+
         @php
             $countMaterial= 0;
             $countPre = 0;

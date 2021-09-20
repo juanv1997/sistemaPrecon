@@ -17,7 +17,7 @@ class ShowMaterial extends Component
     public $openModal = false;
     protected $listeners = ['materialAdded'=>'render','findMaterial'];
     public $val=5;
-    public Material $material,$materialEdit;
+    public Material $material , $materialEdit, $infoMaterialToShow; 
     public $image;
 
     public function findMaterial($idMaterial,$eventName){
@@ -26,6 +26,7 @@ class ShowMaterial extends Component
                         ->join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
                         ->join('tbl_tipo','tbl_material.tipo_id','=','tbl_tipo.tipo_id')
                         ->first();
+        $this->infoMaterialToShow = $this->material;
                         
         switch ($eventName) {
             case 'edit':
@@ -52,6 +53,16 @@ class ShowMaterial extends Component
     $this->emit('materialDestroyed');
     $this->emit('itemDestroyed');
 }
+
+    public function editMaterial(){
+
+        $materialToEdit = Material::find($this->material->material_id);
+        $material = new Material();
+        $this->material = $material;
+        $this->emit('materialEdited');
+        $this->emit('itemEdited');
+            
+    }
 
     public function render()
     {

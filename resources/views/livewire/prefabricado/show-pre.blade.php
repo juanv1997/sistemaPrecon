@@ -339,8 +339,23 @@
                 </dd>
              </div>
 
+           
 
-          <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+             <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">
+                Descripcion
+              </dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                @if ($prefa)
+  
+                  {{$prefa->pre_descripcion}}
+  
+                @endif
+              </dd>
+           </div>
+  
+
+          <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               Stock
             </dt>
@@ -353,7 +368,7 @@
             </dd>
           </div>
 
-          <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               Importe
             </dt>
@@ -368,7 +383,7 @@
 
 
 
-          <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               Observaciones
             </dt>
@@ -381,7 +396,7 @@
             </dd>
           </div>
 
-          <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div class="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">
               Imagen
             </dt>
@@ -570,7 +585,7 @@
                         <th class='py-3 px-6'>Unidad</th>
                         <th class='py-3 px-6'>Precio</th>
                         <th class='py-3 px-6'>Dimensión</th>
-                        <th class='py-3 px-6'>Descripción</th>
+                        {{-- <th class='py-3 px-6'>Descripción</th> --}}
                         <th class='py-3 px-6'>Stock</th>
                         <th class='py-3 px-6'>Acciones</th>
                     </tr>
@@ -622,9 +637,9 @@
                                 <td class="py-3 px-6  w-0">
                                     {{ $prefabricado->dimension_medida }}
                                 </td>
-                                <td class="py-3 px-6 w-4">
+                                {{-- <td class="py-3 px-6 w-4">
                                     {{ $prefabricado->pre_descripcion}}
-                                </td>
+                                </td> --}}
                                 <td class="py-3 px-6 w-4">
                                   {{ $prefabricado->pre_stock}}
                               </td>

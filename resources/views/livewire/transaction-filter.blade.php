@@ -4,7 +4,7 @@
                     
     <div class="p-2">
 
-
+        {{-- {{$test}} --}}
         <div class="flex space-x-3 p-3 justify-center font-semibold">
 
             <span>Filtros:</span>
@@ -56,12 +56,25 @@
             
             @empty(!$productoToggle) 
                 <div class=" px-2 py-1 text-sm rounded ">
-                    <select wire:model="producto" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
+                    <select  wire:model="producto" data-product="{{$tipoProducto}}" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  
+                            @if ($defaultPre || $defaultMaterial)
+                                onchange="productChanged()" 
+                            @endif 
+                            id="cbProduct"> 
                         
+                        
+                        
+
                         @if ($tipoProducto=="Prefabricado")
 
+                        {{-- @if ($defaultPre)
+                        
+                            <option selected>Seleccione una opcion</option>
+
+                        @endif  --}}
+                        
                         @foreach ($productos as $producto)
-                           
+                        
                             <option value="{{$producto->pre_id}}">{{$producto->pre_descripcion}}</option>
                                     
                         @endforeach
@@ -69,10 +82,17 @@
                     @endif
     
                     @if ($tipoProducto=="Material")
-    
+
+                        {{-- @if ($defaultMaterial)
+                        
+                        <option selected>Seleccione una opcion</option>
+
+                        @endif  --}}
+                        
+                       
                         @foreach ($productos as $producto)
                             
-                            <option value="{{$producto->material_id}}">{{$producto->material_descrip}}</option>
+                            <option value="{{$producto->material_id}}" selected>{{$producto->material_descrip}}</option>
                                   
                         @endforeach
     
