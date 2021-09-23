@@ -1,9 +1,9 @@
 <div>
     
+    {{-- Loader for all the process in the view(Spinner) --}}
+
     <x-no-target-loading>
-        <x-slot name="message">
-            Cargando...
-        </x-slot>
+        
     </x-no-target-loading>
 
     <!--Editar-->
@@ -31,19 +31,26 @@
 
         <x-slot name="eventClick">editMaterial</x-slot>
 
-        <x-slot name="buttonText">Actualizar</x-slot>
+        <x-slot name="buttonText">Actualizar </x-slot>
 
-        <x-slot name="title">Actualizar material</x-slot>       
+        <x-slot name="title">Actualizar material 
+            <br> 
+            @if ($material)
+
+            {{$material->material_descrip}}
+
+            @endif
+
+        </x-slot>       
 
         <div class="-mx-2 md:flex mb-3">
 
             <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <x-jet-label value="Tipo"/> @if ($material)<x-jet-label value="[{{$material->tipo_nombre}}]"/>  @endif
+                <x-jet-label value="Tipo"/> 
 
                 <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="material.tipo_id">
 
-                    <option >Seleccione una opción</option>
-
+                
                     @foreach ($tipos as $tipo)
 
                         <option value="{{ $tipo->tipo_id}}">{{ $tipo->tipo_nombre }}</option>
@@ -55,25 +62,36 @@
                 <x-jet-input-error for="material.tipo_id"/>
 
 
-
             </div>
 
             <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-             <x-jet-label value="Unidad"/>@if ($material)<x-jet-label value="[{{$material->unidad_nombre}}]"/>  @endif
-             <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" id="grid-state" wire:model.defer="material.unidad_id">
 
-                 <option >Seleccione una opción</option>
+                <x-jet-label value="Unidad"/>
 
+                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" id="grid-state" wire:model.defer="material.unidad_id">
+                
                  @foreach ($unidades as $unidad)
 
-                     <option value="{{ $unidad->unidad_id }}">{{ $unidad->unidad_nombre }}</option>
+                    @if ($material)
+
+                           <option value="{{ $unidad->unidad_id }}" 
+                            
+                            @if ($material->unidad_nombre==$unidad->unidad_nombre)
+                                    selected
+                                @endif
+                                >
+
+                                {{ $unidad->unidad_nombre }}
+
+                            </option>
+                    @endif
 
                  @endforeach
+            
 
-                
+                </select>
 
-             </select>
-                 <x-jet-input-error for="material.unidad_id"/>
+                <x-jet-input-error for="material.unidad_id"/>
 
              </div>
 
@@ -83,19 +101,17 @@
         <div class="-mx-2 md:flex mb-3">
 
              <div class="md:w-1/2 px-3">
-                 <x-jet-label value="Precio"/>@if ($material)<x-jet-label value="[{{$material->material_precio}}]"/>  @endif
-                     <input @if ($infoMaterialToShow)
-                                value="{{$infoMaterialToShow->material_precio}}"
-                             @endif  class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
+                 <x-jet-label value="Precio"/>
+                   
+                    <input  class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
                  <x-jet-input-error for="material.material_precio"/>
              </div>
+
              <div class="md:w-1/2 px-3">
                  <x-jet-label value="Descripción"/>
                      <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_descrip'/>
                  <x-jet-input-error for="material.material_descrip"/>
              </div>
-
-
 
          </div>
 
@@ -119,16 +135,10 @@
                     </center>
                 </div>
                 <div class="w-full">
-                    @if ($material)
+                    @if ($material && !$image)
                       <div class="w-full md:w-full mb-4 px-2">
-                        <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
-
-                                
-
-                                <img clas="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$material->material_image_path}}"/>
-
-                                
-
+                        <div class="flex flex-col sm:flex-row md:flex-col -mx-2">                                
+                                <img class="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$material->material_image_path}}"/>
                         </div>
                       </div>
                     @endif
@@ -148,7 +158,7 @@
         <x-jet-input-error for="image"/>
 
         <x-slot name="eventClick">
-            addMaterial
+            editMaterial
         </x-slot>
 
     </x-modal>
@@ -189,7 +199,7 @@
 
 
 
-    <div class="px-2 py-2 sm:px-2">
+     <div class="px-2 py-2 sm:px-2">
 
       </div>
       <div class="border-t border-gray-200">
@@ -309,7 +319,10 @@
 
     </x-modal-small>
 
+    {{-- Tabla de materiales --}}
 
+    @if ($materialCount)
+    
       <div class='bg-white shadow-md rounded my-2'>
             <table class='min-w-max w-full table-auto'>
                 <thead class="text-center">
@@ -400,7 +413,31 @@
                 </tbody>
             </table>
             
-    </div>
+      </div>
+        
+    @else
+
+    <center>
+
+        <div class="mb-8 py-16">
+
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class=" w-1/4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+
+            <span class="text-lg">
+                No se encontro ningun material para mostrar
+            </span>
+
+        </div>
+
+    </center>
+
+
+   
+        
+    @endif
 
 
     {{$materiales->links()}}

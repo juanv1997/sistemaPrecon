@@ -27,7 +27,10 @@
 
         <div class='flex items-center justify-center md:gap-2 p-4'>
 
+
+
             <div x-data="{ openAction: {{$action}} }">
+
 
                     <x-jet-button wire:click='{{$eventClick}}' x-show="openAction">
 

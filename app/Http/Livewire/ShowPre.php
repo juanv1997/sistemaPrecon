@@ -13,6 +13,7 @@ use App\Models\Unidad;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 
 class ShowPre extends Component
 {
@@ -27,6 +28,7 @@ class ShowPre extends Component
     public $image;
     public $destroyBanner = false;
     public $editBanner = false;
+    public $preCount = 0;
 
 
     protected $rules = [
@@ -98,8 +100,8 @@ class ShowPre extends Component
             'resistencias' => Resistencia::all(),
             'dimensiones' => Dimension::all(),
             'capas' => Capa::all(),
-            'unidades' => Unidad::all()->where('tipo_pro_id','1')
-
+            'unidades' => Unidad::all()->where('tipo_pro_id','1'),
+            'preCount'=> $this->preCount = DB::table('tbl_prefabricado')->count()
         ]);
     }
 }

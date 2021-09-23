@@ -104,6 +104,13 @@
         }
     )
 
+    Livewire.on('materialEdited', function() {
+
+document.getElementById('editMaterialModal').close();
+
+}
+)
+
 
     Livewire.on('materialFindedToDestroy', function() {
 

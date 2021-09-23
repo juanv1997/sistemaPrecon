@@ -8,17 +8,35 @@ use App\Models\Unidad;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class ShowMaterial extends Component
 {
     use WithPagination;
     use WithFileUploads;
 
+    //public $test="perro";
     public $openModal = false;
     protected $listeners = ['materialAdded'=>'render','findMaterial'];
     public $val=5;
     public Material $material , $materialEdit, $infoMaterialToShow; 
     public $image;
+    public $materialCount = 0;
+
+    // public function test(){
+
+    //     $this->reset('test');
+    // }
+    
+    protected $rules = [
+   
+        'material.tipo_id'=>'required',
+        'material.unidad_id'=>'required',
+        'material.material_precio'=>'required',
+        'material.material_descrip'=>'required',
+        'material.material_observacion'=>'required',
+        
+      ];
 
     public function findMaterial($idMaterial,$eventName){
 
@@ -44,6 +62,8 @@ class ShowMaterial extends Component
         }
    }
 
+   
+
    public function destroyMaterial(){
 
     $materialToDestroy = Material::find($this->material->material_id);
@@ -56,9 +76,16 @@ class ShowMaterial extends Component
 
     public function editMaterial(){
 
-        $materialToEdit = Material::find($this->material->material_id);
-        $material = new Material();
-        $this->material = $material;
+        $this->validate();
+
+        $imageName = $this->material->material_descrip."_".date('d-m-Y').".png";
+
+        if($this->image){
+
+            $this->material->material_image_path = $this->image->storeAs('img/materiales',$imageName); 
+        }
+        
+        $this->material->save();
         $this->emit('materialEdited');
         $this->emit('itemEdited');
             
@@ -72,7 +99,8 @@ class ShowMaterial extends Component
                         ->join('tbl_tipo','tbl_material.tipo_id','=','tbl_tipo.tipo_id')
                         ->paginate(7),
             'tipos'=>Tipo::all()->where('tipo_pro_id','3'),
-            'unidades' => Unidad::all()->where('tipo_pro_id','3')            
+            'unidades' => Unidad::all()->where('tipo_pro_id','3'),
+            'materialCount' => $this->materialCount = DB::table('tbl_material')->count()          
 
 
         ]);

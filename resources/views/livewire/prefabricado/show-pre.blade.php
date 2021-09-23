@@ -1,9 +1,7 @@
 <div>
     <!--Loading para cualquier proceso-->
     <x-no-target-loading>
-        <x-slot name="message">
-            Cargando...
-        </x-slot>
+        
     </x-no-target-loading>
 
     <!--Editar-->
@@ -286,7 +284,6 @@
 
         <x-slot name="cancel">false</x-slot>
 
-
         <x-slot name="targetMethodLoading">viewPrefabriado</x-slot>
 
        <x-slot name="loadingMessage">Procesando solicitud...</x-slot>
@@ -304,21 +301,6 @@
 
             @endif
         </x-slot>
-
-
-    {{-- @if ($prefa)
-        <div class="mt-8 md:mt-0 md:w-96">
-            <div class="flex items-center justify-center">
-                <div class="max-w-md">
-                    @php
-                    $path = "storage/".$prefa->pre_image_path;
-                    @endphp
-
-                    <img  src="{{ asset($path) }}"/>
-                </div>
-            </div>
-        </div>
-    @endif --}}
 
     <div class="px-2 py-2 sm:px-2">
 
@@ -571,122 +553,125 @@
     </div> --}}
 
 
+      @if ($preCount)
+          
+        <div class='bg-white shadow-md rounded my-2'>
+              <table class='min-w-max w-full table-auto'>
+                  <thead class="text-center">
+                      <tr class='bg-gray-200 text-gray-600  text-sm leading-normal'>
 
-      <div class='bg-white shadow-md rounded my-2'>
-            <table class='min-w-max w-full table-auto'>
-                <thead class="text-center">
-                    <tr class='bg-gray-200 text-gray-600  text-sm leading-normal'>
+                          <th class='py-3 px-6'>Código</th>
+                          <th class='py-3 px-6'>Tipo</th>
+                          <th class='py-3 px-6'>Espesor</th>
+                          <th class='py-3 px-6'>Resistencia</th>
+                          <th class='py-3 px-6'>Color</th>
+                          <th class='py-3 px-6'>Unidad</th>
+                          <th class='py-3 px-6'>Precio</th>
+                          <th class='py-3 px-6'>Dimensión</th>
+                          {{-- <th class='py-3 px-6'>Descripción</th> --}}
+                          <th class='py-3 px-6'>Stock</th>
+                          <th class='py-3 px-6'>Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody class='text-gray-600 text-sm font-light text-center'>
+                      <tr class='border-b border-gray-200 hover:bg-gray-100'>
 
-                        <th class='py-3 px-6'>Código</th>
-                        <th class='py-3 px-6'>Tipo</th>
-                        <th class='py-3 px-6'>Espesor</th>
-                        <th class='py-3 px-6'>Resistencia</th>
-                        <th class='py-3 px-6'>Color</th>
-                        <th class='py-3 px-6'>Unidad</th>
-                        <th class='py-3 px-6'>Precio</th>
-                        <th class='py-3 px-6'>Dimensión</th>
-                        {{-- <th class='py-3 px-6'>Descripción</th> --}}
-                        <th class='py-3 px-6'>Stock</th>
-                        <th class='py-3 px-6'>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class='text-gray-600 text-sm font-light text-center'>
-                    <tr class='border-b border-gray-200 hover:bg-gray-100'>
+                          @php
+                              $i=1;
+                          @endphp
 
-                        @php
-                            $i=1;
-                        @endphp
-
-                        @foreach ($prefabricados as $prefabricado)
-                            <tr class="transition-all hover:bg-gray-100 hover:shadow-lg border-b">
+                          @foreach ($prefabricados as $prefabricado)
+                              <tr class="transition-all hover:bg-gray-100 hover:shadow-lg border-b">
 
 
-                                <td class="py-3 px-6  whitespace-nowrap" >
-                                    {{ $prefabricado->pre_codigo }}
+                                  <td class="py-3 px-6  whitespace-nowrap" >
+                                      {{ $prefabricado->pre_codigo }}
+                                  </td>
+                                  <td class="py-3 px-6 w-0">
+                                      {{ $prefabricado->tipo_nombre }}
+                                  </td>
+                                  <td  class="py-3 px-6  w-0">
+                                    @if ($prefabricado->espesor_cantidad==0)
+                                        N/A
+                                    @else
+                                    {{ $prefabricado->espesor_cantidad }}
+                                    @endif  
+                                    
+                                  </td >
+                                  <td class="py-3 px-6  w-0">
+                                    @if ($prefabricado->resistencia_cantidad==0)
+                                        N/A
+                                    @else
+                                    {{ $prefabricado->resistencia_cantidad }}
+                                    @endif  
+                                    
+                                  </td>
+                                  <td class="py-3 px-6  w-0" >
+                                      {{ $prefabricado->color_nombre }}
+                                  </td>
+                                  <td  class="py-3 px-6  w-0">
+                                      {{ $prefabricado->unidad_termino }}
+                                  </td>
+
+                                  <td  class="py-3 px-6  w-0">
+                                      {{ $prefabricado->pre_precio }}
+                                  </td>
+
+                                  <td class="py-3 px-6  w-0">
+                                      {{ $prefabricado->dimension_medida }}
+                                  </td>
+                                  {{-- <td class="py-3 px-6 w-4">
+                                      {{ $prefabricado->pre_descripcion}}
+                                  </td> --}}
+                                  <td class="py-3 px-6 w-4">
+                                    {{ $prefabricado->pre_stock}}
                                 </td>
-                                <td class="py-3 px-6 w-0">
-                                    {{ $prefabricado->tipo_nombre }}
-                                </td>
-                                <td  class="py-3 px-6  w-0">
-                                  @if ($prefabricado->espesor_cantidad==0)
-                                      N/A
-                                  @else
-                                  {{ $prefabricado->espesor_cantidad }}
-                                  @endif  
-                                  
-                                </td >
-                                <td class="py-3 px-6  w-0">
-                                  @if ($prefabricado->resistencia_cantidad==0)
-                                      N/A
-                                  @else
-                                  {{ $prefabricado->resistencia_cantidad }}
-                                  @endif  
-                                  
-                                </td>
-                                <td class="py-3 px-6  w-0" >
-                                    {{ $prefabricado->color_nombre }}
-                                </td>
-                                <td  class="py-3 px-6  w-0">
-                                    {{ $prefabricado->unidad_termino }}
-                                </td>
 
-                                <td  class="py-3 px-6  w-0">
-                                    {{ $prefabricado->pre_precio }}
-                                </td>
+                                <td class="py-3 px-6 whitespace-nowrap">
 
-                                <td class="py-3 px-6  w-0">
-                                    {{ $prefabricado->dimension_medida }}
-                                </td>
-                                {{-- <td class="py-3 px-6 w-4">
-                                    {{ $prefabricado->pre_descripcion}}
-                                </td> --}}
-                                <td class="py-3 px-6 w-4">
-                                  {{ $prefabricado->pre_stock}}
-                              </td>
+                                          <input type="hidden" >
 
-                               <td class="py-3 px-6 whitespace-nowrap">
+                                          <button  id="view_{{$prefabricado->pre_id}}" onclick="viewPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" >
 
-                                        <input type="hidden" >
+                                              {{-- <div wire:loading class="w-5 h-5 items-center border-4 border-blue-500 rounded-full loader"></div> --}}
 
-                                        <button  id="view_{{$prefabricado->pre_id}}" onclick="viewPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" >
+                                              {{-- <div  wire:loading class="w-5 h-5">Cargando</div> --}}
 
-                                            {{-- <div wire:loading class="w-5 h-5 items-center border-4 border-blue-500 rounded-full loader"></div> --}}
-
-                                            {{-- <div  wire:loading class="w-5 h-5">Cargando</div> --}}
-
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                                            </svg>
-                                        </button>
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                                              </svg>
+                                          </button>
 
 
-                                        <button  id="edit_{{$prefabricado->pre_id}}"  onclick="editPre(this)"  class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </button>
+                                          <button  id="edit_{{$prefabricado->pre_id}}"  onclick="editPre(this)"  class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                              </svg>
+                                          </button>
 
-                                        <button  id="destroy_{{$prefabricado->pre_id}}"  onclick="destroyPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm racking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
+                                          <button  id="destroy_{{$prefabricado->pre_id}}"  onclick="destroyPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm racking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                              </svg>
+                                          </button>
 
 
-                                    </td>
+                                      </td>
 
 
 
 
 
-                            </tr>
+                              </tr>
 
 
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
-    </div>
+                          @endforeach
+                      </tr>
+                  </tbody>
+              </table>
+        </div>
+
+      @endif
 
     {{$prefabricados->links()}}
 
