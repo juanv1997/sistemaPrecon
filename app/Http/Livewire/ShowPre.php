@@ -33,8 +33,8 @@ class ShowPre extends Component
 
     protected $rules = [
 
-        'pre.pre_precio'=>'required'
-
+        'prefa.pre_observacion'=>'required',
+        'prefa.pre_precio'=>'required',
     ];
 
     public function findPrefabricado($idPre,$eventName){
@@ -77,8 +77,20 @@ class ShowPre extends Component
 
     public function editPrefabricado(){
 
-        $this->emit('itemEdited');
+        $this->validate();
 
+        $imageName = $this->prefa->pre_image_path;
+
+         if($this->image){
+
+            $this->prefa->pre_image_path = $this->image->storeAs('img/materiales',$imageName); 
+         }
+        
+        $this->prefa->save();
+        $this->reset('image');
+        $this->emit('preEdited');
+        $this->emit('itemEdited');
+            
     }
 
     public function render()

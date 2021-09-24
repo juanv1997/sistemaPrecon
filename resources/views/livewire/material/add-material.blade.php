@@ -117,7 +117,11 @@
                                 <x-slot name="targetMethod">
                                     image
                                 </x-slot>
-                               
+                                
+                                <x-slot name="message">
+                                    Cargando imagen
+                                </x-slot>
+
                             </x-loading-medium>
                             <label wire:loading.remove wire:target='image' class="w-64 flex flex-col items-center  px-4 py-6 hover:bg-gray-200 rounded-lg border-2 border-gray-600 ">
                                 <svg class="mx-auto h-12 w-12 text-gray-600" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
@@ -128,7 +132,7 @@
                             </label>
                         </center>
                     </div>
-                    <div class="w-full">
+                    <div class="w-full" wire:loading.remove wire:target="image">
                         @if (!$image)
                           <ul wire:loading.remove wire:target='image' id="gallery" class="flex flex-1 flex-wrap -m-1">
                             <li id="empty" class="h-full w-full text-center flex flex-col  justify-center items-center">

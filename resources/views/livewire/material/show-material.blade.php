@@ -45,113 +45,87 @@
 
         <div class="-mx-2 md:flex mb-3">
 
-            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-                <x-jet-label value="Tipo"/> 
-
-                <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="material.tipo_id">
-
-                
-                    @foreach ($tipos as $tipo)
-
-                        <option value="{{ $tipo->tipo_id}}">{{ $tipo->tipo_nombre }}</option>
-
-                    @endforeach
-
-                </select>
-
-                <x-jet-input-error for="material.tipo_id"/>
-
-
-            </div>
-
-            <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-
-                <x-jet-label value="Unidad"/>
-
-                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" id="grid-state" wire:model.defer="material.unidad_id">
-                
-                 @foreach ($unidades as $unidad)
-
-                    @if ($material)
-
-                           <option value="{{ $unidad->unidad_id }}" 
-                            
-                            @if ($material->unidad_nombre==$unidad->unidad_nombre)
-                                    selected
-                                @endif
-                                >
-
-                                {{ $unidad->unidad_nombre }}
-
-                            </option>
-                    @endif
-
-                 @endforeach
-            
-
-                </select>
-
-                <x-jet-input-error for="material.unidad_id"/>
-
-             </div>
-
-
-        </div>
-
-        <div class="-mx-2 md:flex mb-3">
-
              <div class="md:w-1/2 px-3">
-                 <x-jet-label value="Precio"/>
+                <x-jet-label value="Precio"/>
                    
-                    <input  class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
-                 <x-jet-input-error for="material.material_precio"/>
-             </div>
-
-             <div class="md:w-1/2 px-3">
-                 <x-jet-label value="Descripción"/>
-                     <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_descrip'/>
-                 <x-jet-input-error for="material.material_descrip"/>
+                <input  class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
+                 
              </div>
 
          </div>
 
         <x-jet-label value="Observaciones"/>
+
         <textarea class="py-2 px-3 mb-3 rounded-lg border-2 border-gray-600 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" type="text" placeholder="Breve descripción de la categoría" rows="4" wire:model.defer='material.material_observacion'></textarea>
-        <x-jet-input-error for="material.material_observacion"/>
-      
+        
 
         <x-jet-label value="Imagen"/>
+
         <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 rounded-md">
+
             <div class="flex w-full">
+
                 <div class="w-full">
+
+                    <x-loading-medium>
+                        <x-slot name="targetMethod">
+                            image
+                        </x-slot>
+
+                        <x-slot name="message">
+                          Cargando nueva imagen
+                      </x-slot>
+                      
+                    </x-loading-medium>
+
                     <center>
-                        <label class="w-64 flex flex-col items-center  px-4 py-6 hover:bg-gray-200 rounded-lg border-2 border-gray-600 ">
+                        <label wire:loading.remove wire:target='image' class="w-64 flex flex-col items-center  px-4 py-6 hover:bg-gray-200 rounded-lg border-2 border-gray-600 ">
+                            
                             <svg class="mx-auto h-12 w-12 text-gray-600" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                               </svg>
+                            
                             <span class="mt-2 text-base leading-normal text-gray-600">Presione para selecionar una nueva imagen</span>
+                            
                             <input type='file' class="hidden" accept="image/*" wire:model='image' />
+
                         </label>
                     </center>
+
                 </div>
-                <div class="w-full">
-                    @if ($material && !$image)
-                      <div class="w-full md:w-full mb-4 px-2">
-                        <div class="flex flex-col sm:flex-row md:flex-col -mx-2">                                
+
+                <div class="w-full" wire:loading.remove wire:target="image">
+
+                    @if ($material)
+
+                        <div class="w-full md:w-full mb-4 px-2">
+                            <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
+                                   
+                                <span class="text-center">Imagen actual</span>
+
                                 <img class="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$material->material_image_path}}"/>
-                        </div>
+                            
+                            </div>
                       </div>
+
                     @endif
+
                     <center>
                         @if ($image)
                         <div class="w-full md:w-full mb-4 px-2">
-                         <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
 
-                                 <img clas="object-fill " src="{{$image->temporaryUrl()}}"/>
-                         </div>
+                            <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
+
+                                <span class="text-center">Imagen seleccionada</span>  
+                                 
+                                <img clas="object-fill " src="{{$image->temporaryUrl()}}"/>
+
+                            </div>
+
                        </div>
                        @endif
                      </center>
+
                 </div>
             </div>
         </div>

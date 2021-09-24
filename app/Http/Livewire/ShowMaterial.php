@@ -29,13 +29,10 @@ class ShowMaterial extends Component
     // }
     
     protected $rules = [
-   
-        'material.tipo_id'=>'required',
-        'material.unidad_id'=>'required',
+
         'material.material_precio'=>'required',
-        'material.material_descrip'=>'required',
-        'material.material_observacion'=>'required',
-        
+        'material.material_observacion'=>'required', 
+
       ];
 
     public function findMaterial($idMaterial,$eventName){
@@ -44,7 +41,7 @@ class ShowMaterial extends Component
                         ->join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
                         ->join('tbl_tipo','tbl_material.tipo_id','=','tbl_tipo.tipo_id')
                         ->first();
-        $this->infoMaterialToShow = $this->material;
+        
                         
         switch ($eventName) {
             case 'edit':
@@ -78,7 +75,7 @@ class ShowMaterial extends Component
 
         $this->validate();
 
-        $imageName = $this->material->material_descrip."_".date('d-m-Y').".png";
+        $imageName = $this->material->material_image_path;
 
         if($this->image){
 
@@ -86,6 +83,7 @@ class ShowMaterial extends Component
         }
         
         $this->material->save();
+        $this->reset('image');
         $this->emit('materialEdited');
         $this->emit('itemEdited');
             

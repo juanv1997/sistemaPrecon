@@ -165,6 +165,13 @@
              }
          )
 
+          Livewire.on('preEdited', function() {
+
+            document.getElementById('editPreModal').close();
+
+
+     })
+
         Livewire.on('preFindedToEdit', function() {
 
             document.getElementById('editPreModal').showModal();
