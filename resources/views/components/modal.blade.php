@@ -63,15 +63,6 @@
 
     </dialog>
 
-    <script>
-
-        const closeModal = ()=>{
-
-            alert('entro al metodo')
-            document.getElementById('{{$modalId}}').close()
-
-        }
-
-    </script>
+    
 
 </div>

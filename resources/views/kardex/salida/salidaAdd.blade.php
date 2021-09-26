@@ -15,6 +15,8 @@
     <x-app-layout>
 
 
+       
+
         {{-- Card superior --}}
 
         @livewire('add-salida')
@@ -90,10 +92,14 @@
 
 <script>
 
-   const itemChanged = (data)=>{
+   const itemChanged = ()=>{
 
-    idItem = data.id;
-    Livewire.emit('itemChanged',idItem);
+    let cbPro = document.getElementById('cbPro') , cbTipo  = document.getElementById('cbTipo') ;
+    
+    let descripPro = cbPro.value, tipoPro = cbTipo.value;
+
+
+    Livewire.emit('itemChanged',descripPro,tipoPro);
 
    }
 

@@ -138,6 +138,8 @@ document.getElementById('editMaterialModal').close();
     )
   
   </script>
+
+  
 @stop
 
 

@@ -16,8 +16,8 @@ class AddSalida extends Component
     public $addMethod = "addItemByPro";
     public $byProduct = true;
     public $byCode = false;
-    public $stockProducto = 0;
-    protected $listeners = ["itemChanged"];
+    //public $stockProducto = 0;
+    //protected $listeners = ["sendInfo"=>"infoToSend"];
 
     public function addItemByCode(){
 
@@ -112,25 +112,6 @@ class AddSalida extends Component
 
     }
 
-    public function itemChanged(){
-
-        $item = null;
-
-        if ($this->tipoProducto=="Prefabricado") {
-            
-            $item = Prefabricado::where('pre_descripcion',$this->producto)->first(); 
-            $this->stockProducto = $item->pre_stock;
-            
-        } 
-        else {
-            
-            $item = Material::where('material_descrip',$this->producto)->first();
-            $this->stockProducto = $item->material_stock;
-        }
-        
-       
-
-    }
 
     public function changeSelect($inputType){
 
@@ -153,9 +134,6 @@ class AddSalida extends Component
 
     public function render()
     {   
-        
-        
-
         $prefabricados = Prefabricado::all();
         $materiales = Material::all();
         return view('livewire.salida.add-salida',compact('prefabricados','materiales'));

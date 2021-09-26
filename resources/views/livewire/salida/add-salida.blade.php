@@ -1,7 +1,5 @@
 <div>
 
-   
-
     <div class='py-4'>
         <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500">
             
@@ -31,7 +29,7 @@
                         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
 
 
-                            <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbProducto"  wire:model="tipoProducto"  >
+                            <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbTipo"  wire:model="tipoProducto"  >
 
                                 <option value="Prefabricado">Prefabricado</option>
                                 <option value="Material">Material</option>
@@ -45,35 +43,25 @@
                         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
 
 
-                            <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  id="cbItem" wire:model.defer="producto" onchange="itemChanged(this)">
-
-                                @php
-                                $i = 0;
-                                @endphp
+                            <select  id="cbPro" class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  wire:model.defer="producto" onchange="itemChanged()">
 
                                 @if ($tipoProducto == "Prefabricado")
                                     @foreach ($prefabricados as $prefabricado)
 
-                                        <option selected >{{$prefabricado->pre_descripcion}}</option>
-                                        @if ($i==0)
-                                        {{$producto = $prefabricado->pre_descripcion}}
-                                        @endif
-
-                                        @php
-                                            $i++;
-                                        @endphp
+                                        <option value="{{$prefabricado->pre_descripcion}}">{{$prefabricado->pre_descripcion}}</option>
+                                       
 
                                     @endforeach
                                 @endif
 
 
-                            @if ($tipoProducto == "Material")
-                                @foreach ($materiales as $material)
+                                @if ($tipoProducto == "Material")
+                                    @foreach ($materiales as $material)
 
-                                    <option  selected>{{$material->material_descrip}}</option>
+                                        <option value="{{$material->material_descrip}}" >{{$material->material_descrip}}</option>
 
-                                @endforeach
-                            @endif
+                                    @endforeach
+                                @endif
 
 
 
@@ -81,7 +69,9 @@
 
 
                         </div>
-                        @if ($stockProducto!=0)
+
+                         @livewire('inventario-count')  
+                        {{-- @if ($stockProducto!=0)
                             
                             <div class="flex space-x-7 justify-end ">
 
@@ -95,7 +85,7 @@
                                 </div>
                             </div>
 
-                        @endif
+                        @endif --}}
 
                         <div  class="md:w-1/2 px-3 mb-6 md:mb-0">
 
@@ -142,6 +132,8 @@
                             
                         </x-slot>
                     </x-button-loading>
+
+                   
 
                     <x-jet-button wire:loading.remove id="btnAddPro"  wire:click="{{$addMethod}}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

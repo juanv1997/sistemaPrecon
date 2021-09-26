@@ -52,22 +52,13 @@
         
                                 <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  id="cbItem" wire:model.defer="producto">
         
-                                    @php
-                                    $i = 0;
-                                    @endphp
+                                   
         
                                     @if ($tipoProducto == "Prefabricado")
                                         @foreach ($prefabricados as $prefabricado)
         
                                             <option selected >{{$prefabricado->pre_descripcion}}</option>
-                                            @if ($i==0)
-                                            {{$producto = $prefabricado->pre_descripcion}}
-                                            @endif
-        
-                                            @php
-                                                $i++;
-                                            @endphp
-        
+                                        
                                         @endforeach
                                     @endif
         
@@ -75,7 +66,7 @@
                                 @if ($tipoProducto == "Material")
                                     @foreach ($materiales as $material)
         
-                                        <option  selected>{{$material->material_descrip}}</option>
+                                    <option  selected>{{$material->material_descrip}}</option>
         
                                     @endforeach
                                 @endif
