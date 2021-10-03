@@ -14,9 +14,6 @@
 
     <x-app-layout>
 
-
-       
-
         {{-- Card superior --}}
 
         @livewire('add-salida')
@@ -92,14 +89,53 @@
 
 <script>
 
-   const itemChanged = ()=>{
+    
+   const getStockPro = ()=>{
 
     let cbPro = document.getElementById('cbPro') , cbTipo  = document.getElementById('cbTipo') ;
     
     let descripPro = cbPro.value, tipoPro = cbTipo.value;
 
+    removeDefaultItem()
 
-    Livewire.emit('itemChanged',descripPro,tipoPro);
+    Livewire.emit('getStockPro',descripPro,tipoPro);
+    
+   }
+
+   const removeDefaultItem = () => {
+
+        let cbPro = document.getElementById('cbPro')
+
+        let firstOption = cbPro.options[0].value;
+
+        if(firstOption == "default"){
+
+            cbPro.remove(0);
+            Livewire.emit('defaultItemRemoved');
+
+        }
+   }
+
+//    const removeSelectedItem = () => {
+
+//         let cbPro = document.getElementById('cbPro')    
+//         let prodcuto = cbPro.selectedIndex
+
+        
+//         cbPro.remove(prodcuto)
+
+//         alert("se dio click al boto de agrgar")
+//         alert(prodcuto)
+
+//    }
+
+   const getStockCod = ()=>{
+    
+    let btn_stock = document.getElementById('btn_stock') ;
+    
+    let codPro = btn_stock.value;
+
+    Livewire.emit('getStockCod',codPro);
 
    }
 

@@ -54,7 +54,7 @@ class AddMaterial extends Component
     public function addMaterial(){
     
         $this->validate();
-       
+        date_default_timezone_set("America/Lima");
         $this->material->material_importe = $this->material->material_stock*$this->material->material_precio;
         $imageName = $this->material->material_descrip."_".date('d-m-Y').".png";
         $imagePath = $this->image->storeAs('img/materiales',$imageName);

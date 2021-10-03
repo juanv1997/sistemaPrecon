@@ -9,12 +9,15 @@ use Livewire\Component;
 class InventarioCount extends Component
 {   
 
-    protected $listeners = ["itemChanged"];
+    protected $listeners = ["getStockPro","getStockCod","stockChecked"];
 
     public $stockProducto = 0;
 
+    // public $stockCheck = true;
 
-    public function itemChanged($descripPro,$tipoPro){
+     
+
+    public function getStockPro($descripPro,$tipoPro){
 
          $item = null;
 
@@ -30,8 +33,36 @@ class InventarioCount extends Component
              $this->stockProducto = $item->material_stock;
          }
         
-
     }
+
+    public function getStockCod($codPro){
+
+        $item = null;
+        $cod = trim($codPro);
+
+        $item = Prefabricado::where('pre_codigo',$cod)->first(); 
+        
+        if ($item!=null) {
+
+            $this->stockProducto = $item->pre_stock;
+
+        }
+        if ($item == null) {
+                
+            $item = Material::where('material_cod',$cod)->first();
+            $this->stockProducto = $item->material_stock;
+            
+        }
+           
+        // $this->emit('stockChecked');
+        
+    }
+
+    // public function stockChecked(){
+
+    //     $this->stockCheck = true;
+
+    // }
 
     public function render()
     {

@@ -52,6 +52,7 @@ class AddPre extends Component
     public function addPrefabricado(){
 
         $this->validate();
+        date_default_timezone_set("America/Lima");
 
         $tipo = Tipo::find($this->pre->tipo_id);
         $espesor = Espesor::find($this->pre->espesor_id);

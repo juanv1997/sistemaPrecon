@@ -1,5 +1,10 @@
 <div>
 
+    stock{{$stockProducto}}
+    codido{{$byCode}}
+    producto{{$byProduct}}
+    test {{$showDefaultOption}}
+
     <div class='py-4'>
         <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500">
             
@@ -43,7 +48,13 @@
                         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
 
 
-                            <select  id="cbPro" class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  wire:model.defer="producto" onchange="itemChanged()">
+                            <select  id="cbPro" class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  wire:model.defer="producto" onchange="getStockPro()">
+
+                                @if($showDefaultOption)
+
+                                    <option value="default">Seleccione una opcion</option>
+
+                                @endif
 
                                 @if ($tipoProducto == "Prefabricado")
                                     @foreach ($prefabricados as $prefabricado)
@@ -66,7 +77,7 @@
 
 
                             </select>
-
+                            <x-jet-input-error for="producto"/>
 
                         </div>
 
@@ -92,6 +103,8 @@
                             <input  type="number" min="1"  step="1" placeholder="Número de items" id="txtNumberPro"
                             class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" wire:model.defer="cantidadPro">
 
+                            <x-jet-input-error for="cantidadPro"/>
+
                         </div>
 
                     </div>
@@ -105,17 +118,38 @@
                 
                     <div x-show="!byProduct" class="mx-8 md:flex mb-3 justify-center">
 
+                        <x-jet-button onclick="getStockCod()" >
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            <span>Verificar stock</span>
+
+                        </x-jet-button>
+                        
                         <div  class="md:w-1/3 px-3 ">
 
-                        <input type="text" placeholder="Ingrese el código del producto" id="txtNumberPro"
-                                wire:model.defer="codigo"
-                                class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent">
+                            <input type="text" placeholder="Ingrese el código del producto" id="btn_stock"
+                                    wire:model.defer="codigo"
+                                    class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent">
+                            <x-jet-input-error for="codigo"/>
+
                         </div>
-                                <div  class="md:w-1/3 px-3" >
-                        <input  type="number" min="1"  step="1" placeholder="Número de items" id="txtNumberCod"
-                                wire:model.defer="cantidadCod"
-                                class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent">
-                            </div>
+
+
+                            @livewire('inventario-count')  
+
+                       
+
+                        <div  class="md:w-1/3 px-3" >
+
+                            <input  type="number" min="1" step="1" placeholder="Número de items" id="txtNumberCod"
+                                    wire:model.defer="cantidadCod"
+                                    class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent">
+                            <x-jet-input-error for="cantidadCod"/>
+
+                        </div>
+
                     </div>
 
                 @endif
@@ -135,7 +169,7 @@
 
                    
 
-                    <x-jet-button wire:loading.remove id="btnAddPro"  wire:click="{{$addMethod}}">
+                    <x-jet-button wire:loading.remove id="btnAddPro"  wire:click="{{$addMethod}}" >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>

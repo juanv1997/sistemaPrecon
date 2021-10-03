@@ -14,6 +14,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ShowPre extends Component
 {
@@ -66,6 +67,7 @@ class ShowPre extends Component
     public function destroyPrefabricado(){
 
         $preToDestroy = Prefabricado::find($this->prefa->pre_id);
+        Storage::delete($preToDestroy->pre_image_path);
         $preToDestroy->delete();
         $prefabricado = new Prefabricado();
         $this->prefa = $prefabricado;
@@ -79,11 +81,11 @@ class ShowPre extends Component
 
         $this->validate();
 
-        $imageName = $this->prefa->pre_image_path;
+        $imageName =  $this->prefa->pre_descripcion."_".substr($this->prefa->pre_image_path,-14);
 
          if($this->image){
 
-            $this->prefa->pre_image_path = $this->image->storeAs('img/materiales',$imageName); 
+            $this->prefa->pre_image_path = $this->image->storeAs('img/prefabricados',$imageName); 
          }
         
         $this->prefa->save();

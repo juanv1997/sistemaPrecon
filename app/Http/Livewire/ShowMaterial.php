@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ShowMaterial extends Component
 {
@@ -63,19 +64,21 @@ class ShowMaterial extends Component
 
    public function destroyMaterial(){
 
-    $materialToDestroy = Material::find($this->material->material_id);
-    $materialToDestroy->delete();
-    $material = new Material();
-    $this->material = $material;
-    $this->emit('materialDestroyed');
-    $this->emit('itemDestroyed');
-}
+        $materialToDestroy = Material::find($this->material->material_id);
+        Storage::delete($materialToDestroy->material_image_path);
+        $materialToDestroy->delete();
+        $material = new Material();
+        $this->material = $material;
+        $this->emit('materialDestroyed');
+        $this->emit('itemDestroyed');
+
+    }
 
     public function editMaterial(){
 
         $this->validate();
 
-        $imageName = $this->material->material_image_path;
+        $imageName =  $this->material->material_descrip."_".substr($this->material->material_image_path,-14);
 
         if($this->image){
 
