@@ -5,11 +5,12 @@ namespace App\Http\Livewire;
 use App\Models\Material;
 use App\Models\Prefabricado;
 use Livewire\Component;
+use Livewire\Livewire;
 
 class AddSalida extends Component
 {
     public $tipoProducto = "Prefabricado";
-    public $producto;
+    public $producto ;
     public $cantidadPro;
     public $codigo;
     public $cantidadCod;
@@ -17,8 +18,10 @@ class AddSalida extends Component
     public $byProduct = true;
     public $byCode = false;
     public $stockProducto = 0;
+    public $buttonActivated = true;
     public $showDefaultOption = true;
-    protected $listeners  = ['defaultItemRemoved'];
+    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption'];
+   
     
     protected $messages = [
 
@@ -28,7 +31,7 @@ class AddSalida extends Component
         "producto.required"=>"Debe escoger un producto de la lista"
 
     ];
-
+    
     protected function rules(){
 
         if ($this->byProduct) {
@@ -52,9 +55,28 @@ class AddSalida extends Component
 
     }
 
+    public function resetSelect(){
+
+         $this->reset('producto');
+    }
+
+    public function activateButton(){
+
+        $this->buttonActivated = false;
+
+    }
+    
+    public function resetProductOption(){
+
+        $this->buttonActivated = true;
+        $this->reset('producto');
+
+    }
+
     public function defaultItemRemoved(){
 
         $this->showDefaultOption = false;
+
     }
 
     public function addItemByCode(){
@@ -228,8 +250,12 @@ class AddSalida extends Component
 
     }
 
+   
+    
     public function render()
     {   
+       
+       
         $prefabricados = Prefabricado::all();
         $materiales = Material::all();
         return view('livewire.salida.add-salida',compact('prefabricados','materiales'));

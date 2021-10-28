@@ -53,3 +53,5 @@ Route::get('/domain', function () {
 
     return $var;
 })->domain('blog.'.env('APP_URL'));
+
+Route::view('lista', 'policy');

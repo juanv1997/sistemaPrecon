@@ -2,8 +2,10 @@
 
     stock{{$stockProducto}}
     codido{{$byCode}}
-    producto{{$byProduct}}
-    test {{$showDefaultOption}}
+    Byproducto{{$byProduct}}
+    El producto {{$producto}}
+    {{-- test {{$showDefaultOption}} --}}
+    
 
     <div class='py-4'>
         <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500">
@@ -16,11 +18,11 @@
 
                     <span> Código</span>
 
-                    <input wire:click="changeSelect('byCode')"   name="rbSearch" type="radio" class="form-radio h-5 w-5 text-gray-600" value="code">
+                    <input wire:click="changeSelect('byCode')"   name="rbSearch" type="radio" class="form-radio h-5 w-5 text-gray-600" value="code" >
 
                     <span>Producto</span>
 
-                    <input wire:click="changeSelect('byProduct')"   name="rbSearch" type="radio" class="form-radio h-5 w-5 text-gray-600" value="product" checked    >
+                    <input wire:click="changeSelect('byProduct')"   name="rbSearch" type="radio" class="form-radio h-5 w-5 text-gray-600" value="product" checked >
 
 
                 </div>
@@ -34,7 +36,7 @@
                         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
 
 
-                            <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbTipo"  wire:model="tipoProducto"  >
+                            <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbTipo"  wire:model="tipoProducto"  onchange="resetProductOption()" >
 
                                 <option value="Prefabricado">Prefabricado</option>
                                 <option value="Material">Material</option>
@@ -45,23 +47,24 @@
 
                         </div>
 
-                        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
 
 
-                            <select  id="cbPro" class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  wire:model.defer="producto" onchange="getStockPro()">
+                            <select  id="cbPro" class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  wire:model.defer="producto"  onchange="getStockPro()">
 
-                                @if($showDefaultOption)
-
+                                
                                     <option value="default">Seleccione una opcion</option>
-
-                                @endif
-
+                                
+                                
                                 @if ($tipoProducto == "Prefabricado")
+                                    
+                                
                                     @foreach ($prefabricados as $prefabricado)
 
-                                        <option value="{{$prefabricado->pre_descripcion}}">{{$prefabricado->pre_descripcion}}</option>
+ 
+                                        <option value="{{$prefabricado->pre_descripcion}}">{{$prefabricado->pre_descripcion}}-{{ $prefabricado->pre_stock  }} </option> 
                                        
-
+                                
                                     @endforeach
                                 @endif
 
@@ -79,7 +82,7 @@
                             </select>
                             <x-jet-input-error for="producto"/>
 
-                        </div>
+                        </div> 
 
                          @livewire('inventario-count')  
                         {{-- @if ($stockProducto!=0)
@@ -98,6 +101,8 @@
 
                         @endif --}}
 
+                         
+
                         <div  class="md:w-1/2 px-3 mb-6 md:mb-0">
 
                             <input  type="number" min="1"  step="1" placeholder="Número de items" id="txtNumberPro"
@@ -108,6 +113,8 @@
                         </div>
 
                     </div>
+
+                    {{-- @livewire('product-options') --}}
 
                 @endif
 
@@ -167,14 +174,30 @@
                         </x-slot>
                     </x-button-loading>
 
-                   
-
-                    <x-jet-button wire:loading.remove id="btnAddPro"  wire:click="{{$addMethod}}" >
+                   <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-medium text-sm text-white  tracking-widest transform hover:scale-105 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"  
+                            id="btnAddPro"
+                            wire:loading.remove 
+                            wire:click="{{$addMethod}}" 
+                            @if($buttonActivated)
+                                disabled
+                            @endif
+                    >
+                
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         Agregar
-                    </x-jet-button>
+
+                   </button>
+
+                    {{-- <x-jet-button wire:loading.remove id="btnAddPro" wire:click="{{$addMethod}}" >
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Agregar
+
+                    </x-jet-button> --}}
                 </div>
 
 

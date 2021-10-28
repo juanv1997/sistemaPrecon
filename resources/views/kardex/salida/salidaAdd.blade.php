@@ -45,17 +45,24 @@
 
         });
 
-        Livewire.on('itemRemoved',()=>{
+    Livewire.on('itemRemoved',()=>{
 
         document.getElementById('removeItem').close();
 
-        });
+});
 
-        function addSalida() {
+Livewire.on('event',() => {
+
+alert('hola');
+
+
+});
+
+    function addSalida() {
 
         document.getElementById('addSalida').showModal();
 
-        }
+    }
 
 
 </script>
@@ -88,6 +95,16 @@
 </script>
 
 <script>
+    
+    // let cbPro = document.getElementById('cbPro')
+
+    // let defaultOption = document.createElement('option')
+
+    // defaultOption.text = "Seleccione una opcion"
+
+    // defaultOption.value = "default"
+
+    // cbPro.add(defaultOption,cbPro[0])
 
     
    const getStockPro = ()=>{
@@ -96,10 +113,18 @@
     
     let descripPro = cbPro.value, tipoPro = cbTipo.value;
 
-    removeDefaultItem()
+    activateAddButton()
 
-    Livewire.emit('getStockPro',descripPro,tipoPro);
-    
+    if (descripPro != "default") {
+
+        Livewire.emit('getStockPro',descripPro,tipoPro); 
+
+    }else{
+
+        disabledButton(); 
+
+    }
+        
    }
 
    const removeDefaultItem = () => {
@@ -108,26 +133,25 @@
 
         let firstOption = cbPro.options[0].value;
 
+        //alert(firstOption)
+
         if(firstOption == "default"){
 
-            cbPro.remove(0);
+            //alert("entro a if")
+            //cbPro.remove(0);
             Livewire.emit('defaultItemRemoved');
 
         }
    }
 
-//    const removeSelectedItem = () => {
 
-//         let cbPro = document.getElementById('cbPro')    
-//         let prodcuto = cbPro.selectedIndex
+    const disabledButton = () => {
 
-        
-//         cbPro.remove(prodcuto)
+        let btnAdd = document.getElementById('btnAddPro');
 
-//         alert("se dio click al boto de agrgar")
-//         alert(prodcuto)
+        btnAdd.disabled = true;
 
-//    }
+    }
 
    const getStockCod = ()=>{
     
@@ -138,6 +162,34 @@
     Livewire.emit('getStockCod',codPro);
 
    }
+
+   const activateAddButton = ()=>{
+
+        let btnAdd = document.getElementById('btnAddPro')
+        
+        //alert(btnAdd.disabled)
+
+        if (btnAdd.disabled) {
+            Livewire.emit('activateButton')
+        }
+       
+
+   }
+
+   const resetProductOption = ()=>{
+
+        //alert("entro")
+        Livewire.emit('resetProductOption')
+        
+
+   }
+
+//    const test = ()=>{
+
+//     alert("hola")
+//    }
+
+
 
 </script>
 

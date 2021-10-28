@@ -13,9 +13,11 @@
 
     <x-app-layout>
 
+       {{-- @livewire('list-products') --}}
+
         {{-- Card superior --}}
 
-        @livewire('add-entrada')
+         @livewire('add-entrada') 
 
 
         {{-- Card inferior --}}
