@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-
 @section('title', 'Dashboard')
 
 @section('content_header')
@@ -23,8 +22,6 @@
 
         @livewire('show-salida')
 
-
-
     </x-app-layout>
 
 @stop
@@ -33,7 +30,8 @@
 @section('js')
 
 <script>
-     function removeItem(data) {
+
+    function removeItem(data) {
 
         idItem = data.id;
         Livewire.emit('itemFinded',idItem);
@@ -49,14 +47,27 @@
 
         document.getElementById('removeItem').close();
 
-});
+    });
 
-Livewire.on('event',() => {
+    Livewire.on('event',() => {
 
-alert('hola');
+        alert('hola');
 
+    });
 
-});
+    Livewire.on('itemExists',() => {
+            
+        
+        document.getElementById('productExists').showModal();
+
+    }); 
+
+    Livewire.on('stockError',() => {
+            
+        
+            document.getElementById('stockError' ).showModal();
+    
+        }); 
 
     function addSalida() {
 
@@ -73,7 +84,7 @@ alert('hola');
 
         const Toast = Swal.mixin({
              toast: true,
-             position: 'top-end',
+             position: 'top-end', 
              showConfirmButton: false,
              timer: 3000,
              timerProgressBar: false,
@@ -127,22 +138,36 @@ alert('hola');
         
    }
 
-   const removeDefaultItem = () => {
+    const resetToDefault = () => {
 
         let cbPro = document.getElementById('cbPro')
 
-        let firstOption = cbPro.options[0].value;
+        //cbPro.value = "default";
 
-        //alert(firstOption)
+        //cbPro.selectedIndex = 0;
 
-        if(firstOption == "default"){
+        Livewire.emit('reset');
 
-            //alert("entro a if")
-            //cbPro.remove(0);
-            Livewire.emit('defaultItemRemoved');
+        //disabledButton();
 
-        }
-   }
+    }
+
+//    const removeDefaultItem = () => {
+
+//         let cbPro = document.getElementById('cbPro')
+
+//         let firstOption = cbPro.options[0].value;
+
+//         //alert(firstOption)
+
+//         if(firstOption == "default"){
+
+//             //alert("entro a if")
+//             //cbPro.remove(0);
+//             Livewire.emit('defaultItemRemoved');
+
+//         }
+//    }
 
 
     const disabledButton = () => {
@@ -155,11 +180,11 @@ alert('hola');
 
    const getStockCod = ()=>{
     
-    let btn_stock = document.getElementById('btn_stock') ;
-    
-    let codPro = btn_stock.value;
+        let btn_stock = document.getElementById('btn_stock') ;
+        
+        let codPro = btn_stock.value;
 
-    Livewire.emit('getStockCod',codPro);
+        Livewire.emit('getStockCod',codPro);
 
    }
 
@@ -176,24 +201,50 @@ alert('hola');
 
    }
 
-   const resetProductOption = ()=>{
-
-        //alert("entro")
-        Livewire.emit('resetProductOption')
-        
-
-   }
-
-//    const test = ()=>{
-
-//     alert("hola")
-//    }
-
-
-
 </script>
 
 
+<script>
+
+    let tabsContainer = document.querySelector("#tabs");
+
+    let tabTogglers = tabsContainer.querySelectorAll("a");
+
+    console.log(tabTogglers);
+
+    tabTogglers.forEach(function(toggler) {
+
+        toggler.addEventListener("click", function(e) {
+
+            e.preventDefault();
+
+            let tabName = this.getAttribute("href");
+
+            let tabContents = document.querySelector("#tab-contents");
+
+            for (let i = 0; i < tabContents.children.length; i++) {
+
+                tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");  tabContents.children[i].classList.remove("hidden");
+                
+                if ("#" + tabContents.children[i].id === tabName) {
+                
+                    continue;
+
+                }
+
+                tabContents.children[i].classList.add("hidden");
+
+            }
+
+            e.target.parentElement.classList.add("border-gray-800", "border-b-4", "-mb-px", "opacity-100");
+        
+        });
+    
+    });
+
+    document.getElementById("default-tab").click();
+
+</script>   
 
 @stop
 

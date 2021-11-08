@@ -21,7 +21,7 @@ class AddSalida extends Component
     public $buttonActivated = true;
     public $showDefaultOption = true;
     protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption'];
-   
+    public $test = "hola";
     
     protected $messages = [
 
@@ -56,9 +56,11 @@ class AddSalida extends Component
     }
 
     public function resetSelect(){
-
+        
          $this->reset('producto');
+         $this->buttonActivated = true;
     }
+    
 
     public function activateButton(){
 
@@ -66,19 +68,6 @@ class AddSalida extends Component
 
     }
     
-    public function resetProductOption(){
-
-        $this->buttonActivated = true;
-        $this->reset('producto');
-
-    }
-
-    public function defaultItemRemoved(){
-
-        $this->showDefaultOption = false;
-
-    }
-
     public function addItemByCode(){
 
             $this->validate();
@@ -141,13 +130,15 @@ class AddSalida extends Component
 
     public function addItemByPro(){
 
+        $pro = array();
+
         $this->validate();
 
         $this->getStock();
 
         if ($this->cantidadPro <= $this->stockProducto  ) {
             
-            $pro = array();
+            
             $item = null;
             $item = Prefabricado::where('pre_descripcion',$this->producto)->first();
     
@@ -184,11 +175,47 @@ class AddSalida extends Component
     
             }
 
-            $this->emit('');
+            //$this->emit('');
 
         } else {
             
-
+            $item = null;
+            $item = Prefabricado::where('pre_descripcion',$this->producto)->first();
+    
+            if($item != null){
+    
+                $pro = array(  
+                                'tipo'=>'pre',
+                                'codigo'=>$item->pre_codigo,
+                                'descrip'=>$item->pre_descripcion,
+                                'precio'=>$item->pre_precio,
+                                'cantidad'=>$this->cantidadPro,
+                                'total'=>$item->pre_precio*$this->cantidadPro
+                            );
+    
+                
+            }
+            else{
+    
+                $item = Material::where('material_descrip',$this->producto)->first();
+    
+                if($item != null){
+    
+                    $pro = array(   
+                                    'tipo'=>'material',
+                                    'codigo'=>$item->material_cod,
+                                    'descrip'=>$item->material_descrip,
+                                    'precio'=>$item->material_precio,
+                                    'cantidad'=>$this->cantidadPro,
+                                    'total'=>$item->material_precio*$this->cantidadPro
+                    );
+                    
+    
+                }
+    
+            }
+            
+            $this->emit('stockFail',$pro);
 
         }
         
@@ -250,12 +277,8 @@ class AddSalida extends Component
 
     }
 
-   
-    
     public function render()
     {   
-       
-       
         $prefabricados = Prefabricado::all();
         $materiales = Material::all();
         return view('livewire.salida.add-salida',compact('prefabricados','materiales'));

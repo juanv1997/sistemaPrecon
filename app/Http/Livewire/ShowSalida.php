@@ -9,16 +9,35 @@ use Livewire\Component;
 
 class ShowSalida extends Component
 {
-    protected $listeners = ['add','itemDestroyed'=>'destroyItem','itemFinded','addSalida'];
+    protected $listeners = ['add','itemDestroyed'=>'destroyItem','itemFinded','addSalida','stockFail'=>'stockCheck'];
     public $productos = array();
     public $delete = 0;
     public $itemDescrip = "";
     public $itemId = 0;
+    public $pro;
 
     public function add($pro){
 
-        array_push($this->productos,$pro);
+        $productExists = false;
 
+        if (empty($pro)) {
+            
+            array_push($this->productos,$pro);
+
+        }else{
+
+            foreach ($this->productos as $item){
+                if($item['codigo'] == $pro['codigo']){
+                    $productExists = true;
+                    $this->emit('itemExists');
+                    break;
+                }
+            }
+    
+            if (!$productExists) {
+                array_push($this->productos,$pro);
+            }
+        }
     }
 
     public function itemFinded($itemId){
@@ -28,6 +47,32 @@ class ShowSalida extends Component
         $this->itemDescrip = $item['descrip'];
         $this->emit('itemToRemove');
     }
+
+    public function stockCheck($pro){
+
+        $this->pro = $pro;
+
+        $productExists = false;
+
+        foreach ($this->productos as $item){
+
+            if($item['codigo'] == $pro['codigo']){
+
+                $productExists = true;
+                $this->emit('itemExists');
+                break;
+                
+            }
+        }
+    
+        if (!$productExists) {
+
+            $this->emit('stockError');
+        }
+        
+        
+
+    }  
 
     public function removeItem(){
 
