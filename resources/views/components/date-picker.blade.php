@@ -12,8 +12,10 @@
     </div>
        --}}
     <input type="date" value="2021-09-12" id="{{$id}}" wire:model="{{$prop}}" class="rounded-full border bg-white border-gray-800 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-900" >
-  
-  {{-- </div>   --}}
+    
+    <div class="flex">
+      {{$message}}
+    </div>  {{-- </div>   --}}
 
     {{-- <script>
         $( function() {

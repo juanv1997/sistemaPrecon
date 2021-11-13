@@ -9,9 +9,11 @@ use Livewire\Component;
 class InventarioCount extends Component
 {   
 
-    protected $listeners = ["getStockPro","getStockCod","stockChecked"];
+    protected $listeners = ["getStockPro","getStockCod","stockChecked",'resetCount'];
 
     public $stockProducto = 0;
+
+    public $stockCod = 0;
 
     // public $stockCheck = true;
 
@@ -56,6 +58,12 @@ class InventarioCount extends Component
            
         // $this->emit('stockChecked');
         
+    }
+
+    public function resetCount(){
+
+        $this->stockProducto = 0;
+
     }
 
     // public function stockChecked(){

@@ -4,6 +4,7 @@ use App\Exports\FilterReportExport;
 use App\Exports\MaterialExport;
 use App\Exports\PreExport;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -55,3 +56,6 @@ Route::get('/domain', function () {
 })->domain('blog.'.env('APP_URL'));
 
 Route::view('lista', 'policy');
+
+Route::get('sendMail', [MailController::class, 'sendMail']);
+    

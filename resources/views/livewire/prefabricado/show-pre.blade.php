@@ -138,7 +138,7 @@
             @endif
         </x-slot>
 
-    <div class="px-2 py-2 sm:px-2">
+     <div class="px-2 py-2 sm:px-2">
 
       </div>
       <div class="border-t border-gray-200">
@@ -414,10 +414,18 @@
 
                           @php
                               $i=1;
+                              $hover = "gray-100";
                           @endphp
 
                           @foreach ($prefabricados as $prefabricado)
-                              <tr class="transition-all hover:bg-gray-100 hover:shadow-lg border-b">
+                            
+                          
+                            <tr class="
+                                      transition-all hover:bg-{{$hover}} hover:shadow-lg border-b
+                                      @if ($prefabricado->pre_stock == 0)
+                                        bg-red-100
+                                      @endif "
+                            >
 
 
                                   <td class="py-3 px-6  whitespace-nowrap" >

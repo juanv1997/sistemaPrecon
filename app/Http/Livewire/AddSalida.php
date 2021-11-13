@@ -15,13 +15,14 @@ class AddSalida extends Component
     public $codigo;
     public $cantidadCod;
     public $addMethod = "addItemByPro";
-    public $byProduct = true;
-    public $byCode = false;
+    //public $byProduct = true;
+    //public $byCode = false;
     public $stockProducto = 0;
     public $buttonActivated = true;
     public $showDefaultOption = true;
-    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption'];
+    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput'];
     public $test = "hola";
+    public $inputType = "product";
     
     protected $messages = [
 
@@ -34,7 +35,9 @@ class AddSalida extends Component
     
     protected function rules(){
 
-        if ($this->byProduct) {
+        
+        
+        if ($this->inputType == "product") {
             
             return[
 
@@ -60,8 +63,7 @@ class AddSalida extends Component
          $this->reset('producto');
          $this->buttonActivated = true;
     }
-    
-
+ 
     public function activateButton(){
 
         $this->buttonActivated = false;
@@ -70,15 +72,18 @@ class AddSalida extends Component
     
     public function addItemByCode(){
 
+        
             $this->validate();
             
             $this->getStock();
 
+            $pro = array();
+            $item = null;
+            $cod = trim($this->codigo);
+
             if ($this->cantidadCod <= $this->stockProducto) {
 
-                $pro = array();
-                $item = null;
-                $cod = trim($this->codigo);
+               
                 $item = Prefabricado::where( 'pre_codigo', $cod )->first();
     
                 if($item != null){
@@ -112,16 +117,50 @@ class AddSalida extends Component
     
                     }else{
     
-    
-    
-    
+                        $this->emit('productNotExist');    
                     }
     
                 }
             }else {
-
-
+            
+                $item = null;
+                $item = Prefabricado::where('pre_codigo',$cod)->first();
+        
+                if($item != null){
+        
+                    $pro = array(  
+                                    'tipo'=>'pre',
+                                    'codigo'=>$item->pre_codigo,
+                                    'descrip'=>$item->pre_descripcion,
+                                    'precio'=>$item->pre_precio,
+                                    'cantidad'=>$this->cantidadPro,
+                                    'total'=>$item->pre_precio*$this->cantidadPro
+                                );
+        
+                    
+                }
+                else{
+        
+                    $item = Material::where('material_cod',$cod)->first();
+        
+                    if($item != null){
+        
+                        $pro = array(   
+                                        'tipo'=>'material',
+                                        'codigo'=>$item->material_cod,
+                                        'descrip'=>$item->material_descrip,
+                                        'precio'=>$item->material_precio,
+                                        'cantidad'=>$this->cantidadPro,
+                                        'total'=>$item->material_precio*$this->cantidadPro
+                        );
+                        
+        
+                    }
+        
+                }
                 
+                $this->emit('stockFail',$pro);
+    
             }
             
             
@@ -225,7 +264,7 @@ class AddSalida extends Component
 
         $item = null;
 
-        if ($this->byProduct) {
+        if ($this->inputType == "product") {
             
             if ($this->tipoProducto=="Prefabricado") {
            
@@ -239,7 +278,7 @@ class AddSalida extends Component
                 $this->stockProducto = $item->material_stock;
             }
 
-        } elseif($this->byCode) {
+        } elseif($this->inputType == "code") {
             
               $cod = trim($this->codigo);
                

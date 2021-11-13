@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class TransactionFilter extends Component
 {       
-    protected $listeners = ['productChanged'=>'removeDefaultItem'];
+    protected $listeners = ['productChanged'=>'removeDefaultItem','reset'=>'resetSelect','activateButton','resetDate'];
     public $defaultPre = true;
     public $defaultMaterial = true;
     //public $test = "es un test";
@@ -24,9 +24,22 @@ class TransactionFilter extends Component
     public $listItems;
     public $listProductos;
     public $dateDefault = '2017-06-01';
+    public $buttonActivated = false;
+    
+    protected $rules = [
 
+        'dateBegin'=>'required',
+        'dateEnd'=>'required'
+        
+    ];
+
+    protected $messages = [
+        'dateBegin.required'=>'La fecha de inicio es requerida',
+        'dateEnd.required'=>'La fecha de fin es requerida'
+    ];
     public function filter(){
 
+        $this->validate();
         $parameters = ["tipo"=>$this->tipoProducto,"transaccion"=>$this->tipoTransaccion,
                       "producto"=>$this->producto,"dateBegin"=>$this->dateBegin,
                       "dateEnd"=>$this->dateEnd,"dateToggle"=>$this->dateIntervalToggle,
@@ -55,6 +68,18 @@ class TransactionFilter extends Component
         return $productItems;
     }
 
+    public function resetSelect(){
+        
+        $this->reset('producto');
+        $this->buttonActivated = true;
+    }
+    
+    public function activateButton(){
+
+        $this->buttonActivated = false;
+
+    }
+
     public function removeDefaultItem($product){
 
 
@@ -72,6 +97,11 @@ class TransactionFilter extends Component
 
     }
 
+    public function resetDate(){
+
+        $this->reset('dateBegin');
+        $this->reset('dateEnd');  
+    }
     public function render()
     {   
         $tipo_productos = TipoProducto::all();

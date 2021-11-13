@@ -68,5 +68,77 @@
             
         }
 
+        
+        const changeProduct = () => {
+
+            
+            let cbPro = document.getElementById('cbProduct');
+    
+            let descripPro = cbPro.value;
+
+            if (descripPro == "default") {
+                
+                disabledButton(); 
+
+            }else{
+
+                enabledButton();
+
+            }
+        }
+
+        let productoToggle = document.getElementById('productoToggle');
+
+        productoToggle.addEventListener("change", checkIsEnable, false);
+
+        function checkIsEnable()
+        {
+
+             if (productoToggle.checked) {
+
+                Livewire.emit('reset');
+
+             }else{
+
+                Livewire.emit('activateButton');
+
+             }
+             
+
+        }
+        
+        let dateToggle = document.getElementById('dateToggle');
+
+        dateToggle.addEventListener("change", check, false);
+
+        function check()
+        {
+
+             if (dateToggle.checked) {
+
+                Livewire.emit('resetDate');
+
+             }
+             
+        }
+
+        const disabledButton = () => {
+
+            let btnSearch = document.getElementById('btnSearch');
+
+            btnSearch.disabled = true;
+
+        }
+
+        const enabledButton = () => {
+
+            let btnSearch = document.getElementById('btnSearch');
+
+            btnSearch.disabled = false;
+
+        }
+
+        
+
     </script>
 @stop

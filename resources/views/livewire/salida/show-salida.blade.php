@@ -24,7 +24,7 @@
 
         <x-slot name="buttonText"></x-slot>
 
-        <x-slot name="title">Mensaje</x-slot>
+        <x-slot name="title">Stock insuficiente</x-slot>
 
         El stock del producto es insuficiente para agregarlo a la lista.
 
@@ -55,7 +55,7 @@
 
         <x-slot name="buttonText"></x-slot>
 
-        <x-slot name="title">Mensaje</x-slot>
+        <x-slot name="title">Producto ya seleccionado</x-slot>
 
         El producto seleccionado ya esta en lista a egresar.
 

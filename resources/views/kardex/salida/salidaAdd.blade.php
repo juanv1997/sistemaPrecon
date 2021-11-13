@@ -118,6 +118,7 @@
     // cbPro.add(defaultOption,cbPro[0])
 
     
+    
    const getStockPro = ()=>{
 
     let cbPro = document.getElementById('cbPro') , cbTipo  = document.getElementById('cbTipo') ;
@@ -132,7 +133,8 @@
 
     }else{
 
-        disabledButton(); 
+        disabledButton();
+        resetCount(); 
 
     }
         
@@ -142,33 +144,17 @@
 
         let cbPro = document.getElementById('cbPro')
 
-        //cbPro.value = "default";
-
-        //cbPro.selectedIndex = 0;
-
         Livewire.emit('reset');
 
-        //disabledButton();
+        resetCount();
 
     }
 
-//    const removeDefaultItem = () => {
+    const resetCount = ()=>{
 
-//         let cbPro = document.getElementById('cbPro')
+        Livewire.emit('resetCount');
 
-//         let firstOption = cbPro.options[0].value;
-
-//         //alert(firstOption)
-
-//         if(firstOption == "default"){
-
-//             //alert("entro a if")
-//             //cbPro.remove(0);
-//             Livewire.emit('defaultItemRemoved');
-
-//         }
-//    }
-
+    }
 
     const disabledButton = () => {
 
@@ -201,10 +187,52 @@
 
    }
 
+    
+    const changeOption = () =>{
+
+        let inputType = ""
+
+        productView = document.getElementById('product')
+        codView = document.getElementById('code')
+        cbOption = document.getElementById('cbOption')
+
+        inputType = cbOption.value
+
+        if (inputType == "product") {
+            
+            productView.classList.remove('hidden')
+            code.classList.add('hidden')
+
+        } else {
+            
+            productView.classList.add('hidden')
+            code.classList.remove('hidden')
+
+        }
+
+
+    }
+
+    function copyToClipBoard() {
+
+        var content = document.getElementById();
+
+        content.select();
+        document.execCommand('copy');
+
+        alert("Copied!");
+   }
+
+
+
 </script>
 
 
-<script>
+
+
+{{-- <script>
+
+
 
     let tabsContainer = document.querySelector("#tabs");
 
@@ -244,7 +272,9 @@
 
     document.getElementById("default-tab").click();
 
-</script>   
+</script>    --}}
+
+    
 
 @stop
 
