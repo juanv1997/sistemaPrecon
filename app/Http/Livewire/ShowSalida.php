@@ -168,7 +168,6 @@ class ShowSalida extends Component
 
     public function render()
     {
-
         return view('livewire.salida.show-salida');
     }
 }

@@ -74,6 +74,11 @@
         document.getElementById('addSalida').showModal();
 
     }
+    Livewire.on('productNotExist',() => {
+
+        document.getElementById('productNoExist').showModal();
+
+    });
 
 
 </script>
@@ -117,6 +122,24 @@
 
     // cbPro.add(defaultOption,cbPro[0])
 
+    Livewire.on('render',()=>{
+
+        let cbPro = document.getElementById('cbPro')
+    
+        let descripPro = cbPro.value    
+
+        if (descripPro != "default") {
+
+            activateAddButton()
+
+        }else{
+
+            disabledButton();
+            resetCount(); 
+
+        }
+
+    })
     
     
    const getStockPro = ()=>{
@@ -125,11 +148,10 @@
     
     let descripPro = cbPro.value, tipoPro = cbTipo.value;
 
-    activateAddButton()
-
     if (descripPro != "default") {
 
         Livewire.emit('getStockPro',descripPro,tipoPro); 
+        activateAddButton()
 
     }else{
 
@@ -158,9 +180,9 @@
 
     const disabledButton = () => {
 
-        let btnAdd = document.getElementById('btnAddPro');
+         let btnAdd = document.getElementById('btnAddPro');
 
-        btnAdd.disabled = true;
+         btnAdd.disabled = true;
 
     }
 
@@ -178,13 +200,11 @@
 
         let btnAdd = document.getElementById('btnAddPro')
         
-        //alert(btnAdd.disabled)
+        btnAdd.disabled = false
 
-        if (btnAdd.disabled) {
-            Livewire.emit('activateButton')
-        }
-       
-
+        // if (btnAdd.disabled) {
+        //     Livewire.emit('activateButton')
+        // }
    }
 
     
@@ -207,6 +227,33 @@
             
             productView.classList.add('hidden')
             code.classList.remove('hidden')
+
+        }
+        
+        if (inputType == "code") {
+            
+            Livewire.emit('resetCount');
+             
+        }else{
+
+            
+            let cbPro = document.getElementById('cbPro') , cbTipo  = document.getElementById('cbTipo') ;
+            
+            let descripPro = cbPro.value, tipoPro = cbTipo.value;
+
+            //activateAddButton()
+
+            if (descripPro != "default") {
+
+                Livewire.emit('getStockPro',descripPro,tipoPro); 
+
+            }else{
+
+                //Livewire.emit('desactivateButton');
+                Livewire.emit('resetCount');
+            }
+
+           
 
         }
 

@@ -90,7 +90,8 @@
 
                                 </div> 
 
-                                @livewire('inventario-count')  
+                                
+                                @livewire('inventario-count')   
                                  
 
                                 <div  class="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -119,9 +120,10 @@
                                     id="btnAddPro"
                                     wire:loading.remove 
                                     wire:click="addItemByPro" 
-                                    @if($buttonActivated)
+                                    disabled
+                                    {{-- @if($buttonActivated)
                                         disabled
-                                    @endif
+                                    @endif --}}
                         >
                         
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -181,15 +183,13 @@
                                     <x-slot name="targetMethod">
                                         addItemByCode
                                     </x-slot>
-                                    <x-slot name="message">  
-                                        
-                                    </x-slot>
                                 </x-button-loading>
                 
                                 <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-medium text-sm text-white  tracking-widest transform hover:scale-105 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"  
                                             id="btnAddCod"
                                             wire:loading.remove 
                                             wire:click="addItemByCode" 
+                                             
                                             {{-- @if($buttonActivated)
                                                 disabled
                                             @endif --}}
