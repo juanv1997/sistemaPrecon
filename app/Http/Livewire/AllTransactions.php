@@ -21,10 +21,10 @@ class AllTransactions extends Component
     public $producto = null;
     public $dateBegin;
     public $dateEnd;
-    public $listItems;
+    public $listItems = 0;
     public $dateIntervalToggle = 0;
     public $productoToggle = 0;
-    public $stringResult;
+    public $stringResult = "hola";
     
 
     public function setParameters($parameters){
@@ -179,6 +179,8 @@ class AllTransactions extends Component
         }
         elseif ($this->dateIntervalToggle==1) {
 
+            $this->emit('fecha');
+
             switch ($this->tipoTransaccion) {
                 case "Entradas":
 
@@ -303,9 +305,6 @@ class AllTransactions extends Component
             }
 
         }
-
-        
-
     }
 
     public function createReport(){

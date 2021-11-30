@@ -2,20 +2,18 @@
 
 @section('title', 'Transacciones')
 
-
-
 @section('content_header')
  
    <div class="flex justify-center">
     
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+        </svg>
 
-    <h1>Transacciones</h1>
+        <h1>Transacciones</h1>
 
     </div>
 
@@ -26,7 +24,7 @@
     <x-app-layout>
 
         @livewire('transaction-filter')
-        @livewire('all-transactions')
+        @livewire('all-transactions') 
        
     </x-app-layout>    
 
@@ -38,107 +36,101 @@
 
 @section('js')
 
-    {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         
-        const productChanged = ()=>{
+        let productoToggle = document.getElementById('productoToggle');
 
-            try {
+        let dateToggle = document.getElementById('dateToggle');
 
+        productoToggle.addEventListener("change", filterChanged, false);
+
+        dateToggle.addEventListener("change", filterChanged, false);
+
+
+        function filterChanged(){
+
+            dateView = document.getElementById('date')
+            productView = document.getElementById('product')
+            productFilter = document.getElementById('productoToggle')
+            dateFilter = document.getElementById('dateToggle')
+
+            if (productFilter.checked && !dateFilter.checked) {
                 
-                 let cbProduct = document.getElementById('cbProduct')
-                 let product = cbProduct.dataset.product
-            
-                // cbProduct.remove(0)}
-
-                alert(product)
-
-
-                Livewire.emit('productChanged',product)
+                productView.classList.remove('hidden')
+                dateView.classList.add('hidden')
+                checkSelect()
+ 
+            }else if (!productFilter.checked && dateFilter.checked) {
                 
-                
-            } catch (e) {
-                
-
-                console.log(e)
+                dateView.classList.remove('hidden')
+                product.classList.add('hidden')
+                enabledButton()
             }
+            else if (productFilter.checked && dateFilter.checked) {
+                
+                productView.classList.remove('hidden')
+                dateView.classList.remove('hidden')
+                checkSelect()
+            }
+            else {
+
+                 productView.classList.add('hidden')
+                 dateView.classList.add('hidden')
+                 enabledButton()
+            }
+           
             
         }
 
+        const validateSelect = ()=>{
+
+            let productToggle = document.getElementById('productoToggle')
+            let cbProduct = document.getElementById('cbProduct')
+
+            if(productToggle.checked){
+
+                Livewire.emit('reset');
+                cbProduct.selectedIndex = 0
+                disabledButton()
+            }
+
+        }
         
-        const changeProduct = () => {
+        const checkSelect = ()=>{
 
-            
-            let cbPro = document.getElementById('cbProduct');
+            let cbPro = document.getElementById('cbProduct')
     
-            let descripPro = cbPro.value;
+            let descripPro = cbPro.value   
+            
 
-            if (descripPro == "default") {
-                
-                disabledButton(); 
+            if (descripPro != "default") {
+
+                enabledButton()
 
             }else{
 
-                enabledButton();
+                disabledButton();
 
             }
         }
 
-        let productoToggle = document.getElementById('productoToggle');
-
-        productoToggle.addEventListener("change", checkIsEnable, false);
-
-        function checkIsEnable()
-        {
-
-             if (productoToggle.checked) {
-
-                Livewire.emit('reset');
-
-             }else{
-
-                Livewire.emit('activateButton');
-
-             }
-             
-
-        }
-        
-        let dateToggle = document.getElementById('dateToggle');
-
-        dateToggle.addEventListener("change", check, false);
-
-        function check()
-        {
-
-             if (dateToggle.checked) {
-
-                Livewire.emit('resetDate');
-
-             }
-             
-        }
-
-        const disabledButton = () => {
+         const disabledButton = () => {
 
             let btnSearch = document.getElementById('btnSearch');
-
+            
             btnSearch.disabled = true;
 
-        }
+         }
 
-        const enabledButton = () => {
+         const enabledButton = () => {
 
             let btnSearch = document.getElementById('btnSearch');
 
-            btnSearch.disabled = false;
+             btnSearch.disabled = false;
 
-        }
-
-        
+         }    
 
     </script>
 @stop

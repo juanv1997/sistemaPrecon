@@ -1,7 +1,10 @@
 <div >
     
         <div  class="relative w-12 transition duration-200 origin-center">
-            <input type="checkbox" name="{{$id}}" id="{{$id}}" wire:ignore.self wire:model="{{$prop}}" class="{{$id}}-checkbox absolute  w-6 h-6 rounded-full bg-white border-4 "/>
+            <input type="checkbox" name="{{$id}}" id="{{$id}}" 
+            {{-- wire:ignore.self --}}
+             wire:model.defer="{{$prop}}"  
+            class="{{$id}}-checkbox absolute  w-6 h-6 rounded-full bg-white border-4 "/>
             <label for="{{$id}}" class="{{$id}}-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
         </div>
     

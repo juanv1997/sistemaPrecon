@@ -15,7 +15,7 @@
                     <li class="px-4 py-2 font-semibold text-gray-800 rounded-t opacity-50"><a href="#codigo" onclick="changeToCode()">Codigo</a></li>
                 </ul> --}}
 
-                <select id="cbOption" onchange="changeOption()" wire:model.defer="inputType">
+                <select class="block appearance-none  bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbOption" onchange="changeOption()" wire:model.defer="inputType">
 
                     <option value="product" selected>Producto</option>
                     <option value="code">Codigo</option>
@@ -121,9 +121,6 @@
                                     wire:loading.remove 
                                     wire:click="addItemByPro" 
                                     disabled
-                                    {{-- @if($buttonActivated)
-                                        disabled
-                                    @endif --}}
                         >
                         
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,10 +186,6 @@
                                             id="btnAddCod"
                                             wire:loading.remove 
                                             wire:click="addItemByCode" 
-                                             
-                                            {{-- @if($buttonActivated)
-                                                disabled
-                                            @endif --}}
                                 >
                                 
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -203,14 +196,7 @@
                 
                                 </button>
                 
-                                {{-- <x-jet-button wire:loading.remove id="btnAddPro" wire:click="{{$addMethod}}" >
-                
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 px-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    Agregar
-                
-                                </x-jet-button> --}}
+                                
                             </div>
                         
                 </div> 
