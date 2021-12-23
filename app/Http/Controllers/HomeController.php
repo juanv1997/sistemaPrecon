@@ -17,6 +17,8 @@ class DashboardController extends Controller
         $materiales = Material::all();
         $prefabricados = Prefabricado::all();
 
+        
+
         $maCount = count((array)$materiales);
 
         return view('home',compact('materiales','prefabricados','maCount'));

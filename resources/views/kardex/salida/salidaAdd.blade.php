@@ -162,15 +162,6 @@
         
    }
 
-    const resetToDefault = () => {
-
-        let cbPro = document.getElementById('cbPro')
-
-        Livewire.emit('reset');
-
-        resetCount();
-
-    }
 
     const resetCount = ()=>{
 

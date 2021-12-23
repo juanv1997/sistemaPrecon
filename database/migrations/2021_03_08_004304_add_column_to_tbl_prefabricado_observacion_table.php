@@ -15,7 +15,7 @@ class AddColumnToTblPrefabricadoObservacionTable extends Migration
     {
         Schema::table('tbl_prefabricado', function (Blueprint $table) {
 
-            $table->string('pre_observacion',100)->nullable()->after('pre_descripcion');
+            $table->string('pre_observacion',200)->nullable()->after('pre_descripcion');
         });
     }
 

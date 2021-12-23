@@ -1,7 +1,5 @@
 <div>
 
-   {{$inputType}}
-   
     <div class="py-4">
 
         <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500">
@@ -30,10 +28,10 @@
 
                     <div  class="-mx-2 md:flex mb-3">
 
-                                <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                                <div class="md:w-1/4 px-3 mb-6 md:mb-0">
 
 
-                                    <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbTipo"  wire:model="tipoProducto"  onchange="resetToDefault()" >
+                                    <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbTipo"  wire:model="tipoProducto" >
 
                                         <option value="Prefabricado" selected>Prefabricado</option>
                                         <option value="Material">Material</option>
@@ -44,7 +42,7 @@
 
                                 </div>
 
-                                <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+                                <div class="md:w-2/3 px-3 mb-6 md:mb-0">
 
 
                                     <select  id="cbPro" class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded"  wire:model.defer="producto"  onchange="getStockPro()">
@@ -60,24 +58,27 @@
 
                                                 @if ($prefabricado->pre_stock > 0)
 
-                                                    <option value="{{$prefabricado->pre_descripcion}}">{{$prefabricado->pre_descripcion}}-{{ $prefabricado->pre_stock  }} </option> 
+                                                    <option value="{{$prefabricado->pre_descripcion}}">{{$prefabricado->pre_descripcion}} - {{$prefabricado->unidad_nombre}} </option> 
                                                 
                                                 @endif
             
                                             @endforeach
+
                                         @endif
 
 
                                         @if ($tipoProducto == "Material")
+
                                             @foreach ($materiales as $material)
 
                                                 @if ($material->material_stock > 0)
 
-                                                    <option value="{{$material->material_descrip}}" >{{$material->material_descrip}}</option>
+                                                    <option value="{{$material->material_descrip}}" > {{$material->material_descrip}} - {{$material->unidad_nombre}} </option>
                                                 
                                                 @endif
 
                                             @endforeach
+
                                         @endif
 
 
@@ -94,7 +95,7 @@
                                 @livewire('inventario-count')   
                                  
 
-                                <div  class="md:w-1/2 px-3 mb-6 md:mb-0">
+                                <div  class="md:w-1/4 px-3 mb-6 md:mb-0">
 
                                     <input  type="number" min="1"  step="1" placeholder="Número de items" id="txtNumberPro"
                                     class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" wire:model.defer="cantidadPro">

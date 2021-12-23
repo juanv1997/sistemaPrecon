@@ -15,15 +15,21 @@
   <x-app-layout>
 
     @livewire('message-banners')
+
     <div class="inline-flex">
+
         @livewire('add-pre')
+
         @livewire('add-feature',['tipoProducto'=>'pre'])
+
         <form action="{{ route('excelPre')  }}" method="get">
             <button  type="submit" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
                 <i class="far fa-file-excel text-lg text-white"></i>
             </button>
         </form>
+
     </div>
+
     @livewire('show-pre')
     
    
@@ -38,7 +44,6 @@
 
 @section('js')
    
-
     {{-- <script >
 
          function getDataEdit(attributes) {
@@ -80,12 +85,7 @@
 
         }
 
-
-
-
-
     </script>
-
     <script>
 
             @if (isset($_GET['procedure']))
@@ -158,7 +158,8 @@
 
             }
         )
-         Livewire.on('preDestroyed', function() {
+        
+        Livewire.on('preDestroyed', function() {
 
                  document.getElementById('destroyPreModal').close();
 
@@ -195,30 +196,74 @@
 
     </script>
 
-    {{-- <script>
-        const setup = () => {
-            return {
-                var : false
+ 
+    <script>
+
+        Livewire.on('addFeature',()=>{
+            
+            document.getElementById('addfeatureModal').showModal();
+            
             }
+        )
+
+        Livewire.on('featureAdded',()=>{
+            
+            document.getElementById('addfeatureModal').close();
+            
+            }
+        )
+
+        Livewire.on('setParameters',()=>{
+
+            let mainData = document.getElementById('mainData');
+
+            mainData.classList.remove('hidden');
+
+        })
+
+        const onChangeSelect = (data)=>{
+
+            let selectId = data.id;
+            let select = document.getElementById(selectId);
+
+
+            if (select.value == 'default') {
+                
+                Livewire.emit('reset',selectId);
+            }
+
+            if (selectId != "cbUnidad" && selectId != "cbDimension") {
+
+    
+                checkSetParameters();
+
+            }
+
+           
+
         }
-    </script> --}}
 
-<script>
-  Livewire.on('addFeature',()=>{
-    
-    document.getElementById('addfeatureModal').showModal();
-    
-    }
-  )
+        const checkSetParameters = () =>{
 
-  Livewire.on('featureAdded',()=>{
-    
-    document.getElementById('addfeatureModal').close();
-    
-    }
-  )
+            let fillParameters = true;
 
-</script>
+            Livewire.emit('checkSetParameters',fillParameters);
+                   
+        }
+
+        var input = document.getElementById('txtDescrip');
+
+        input.onkeydown = function() {
+            var key = event.keyCode || event.charCode;
+
+            if( key == 8 || key == 46 )
+                return false;
+        };
+        
+
+        
+
+    </script>
 
 
 

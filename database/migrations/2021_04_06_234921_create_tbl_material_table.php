@@ -22,7 +22,7 @@ class CreateTblMaterialTable extends Migration
             $table->foreign('unidad_id')->references('unidad_id')->on('tbl_unidad')->onDelete('set null');
             $table->double('material_precio',8,2);
             $table->string('material_descrip',100);
-            $table->string('material_observacion',100);
+            $table->string('material_observacion',200);
         });
     }
 

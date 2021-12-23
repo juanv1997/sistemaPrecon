@@ -16,7 +16,6 @@ class TransactionFilter extends Component
     protected $listeners = ['productChanged'=>'removeDefaultItem','reset'=>'resetProduct','activateButton','resetDate'];
     public $defaultPre = true;
     public $defaultMaterial = true;
-    //public $test = "es un test";
     public $search;
     public $tipoProducto="Prefabricado";
     public $tipoTransaccion = "Entradas";
@@ -55,20 +54,49 @@ class TransactionFilter extends Component
         }
     }
 
-
     public function filter(){
 
+        $date = date("Y-m-d");
+
         if ( $this->dateIntervalToggle==1 || 
-        ($this->productoToggle==1 && $this->dateIntervalToggle==1) ) 
+           ($this->productoToggle==1 && $this->dateIntervalToggle==1) ) 
         {
             $this->validate();
         }
-        
-        $parameters = ["tipo"=>$this->tipoProducto,"transaccion"=>$this->tipoTransaccion,
+
+        if ($this->dateIntervalToggle==1) {
+
+
+
+            if ( $this->dateBegin > $this->dateEnd  ) {
+            
+                $this->emit('dateError');  
+                
+            }elseif($date < $this->dateBegin || $date < $this->dateEnd){
+
+                $this->emit('dateOutOfRange');
+
+            }else{
+
+                $parameters = ["tipo"=>$this->tipoProducto,"transaccion"=>$this->tipoTransaccion,
+                               "producto"=>$this->producto,"dateBegin"=>$this->dateBegin,
+                               "dateEnd"=>$this->dateEnd,"dateToggle"=>$this->dateIntervalToggle,
+                               "productoToggle"=>$this->productoToggle];
+    
+                $this->emit('filter',$parameters);
+            }
+
+        }else {
+
+            $parameters = ["tipo"=>$this->tipoProducto,"transaccion"=>$this->tipoTransaccion,
                        "producto"=>$this->producto,"dateBegin"=>$this->dateBegin,
                        "dateEnd"=>$this->dateEnd,"dateToggle"=>$this->dateIntervalToggle,
-                        "productoToggle"=>$this->productoToggle];
-         $this->emit('filter',$parameters);
+                       "productoToggle"=>$this->productoToggle];
+
+            $this->emit('filter',$parameters);
+        }
+           
+        
     }
 
     public function resetProduct(){

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Material;
 use App\Models\Prefabricado;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\Livewire;
 
@@ -14,7 +15,7 @@ class AddSalida extends Component
     public $cantidadPro;
     public $codigo;
     public $cantidadCod;
-    public $addMethod = "addItemByPro";
+    //public $addMethod = "addItemByPro";
     //public $byProduct = true;
     //public $byCode = false;
     public $stockProducto = 0;
@@ -57,23 +58,17 @@ class AddSalida extends Component
                 
 
     }
-
-    public function resetSelect(){
-        
-         //$this->reset('producto');
-         //$this->buttonActivated = true;
-    }
  
-    public function activateButton(){
+    // public function activateButton(){
 
-        //$this->buttonActivated = false;
+    //     //$this->buttonActivated = false;
 
-    }
-    public function desactivateButton(){
+    // }
+    // public function desactivateButton(){
 
-        $this->buttonActivated = true;
+    //     $this->buttonActivated = true;
 
-    }
+    // }
     
     public function addItemByCode(){
 
@@ -174,9 +169,7 @@ class AddSalida extends Component
                 
             } else {
 
-
                 $this->emit('productNotExist');   
-                
             }
             
             
@@ -359,29 +352,34 @@ class AddSalida extends Component
         // }
     }
 
-    public function changeSelect($inputType){
+    // public function changeSelect($inputType){
 
-        if($inputType=='byProduct'){
+    //     if($inputType=='byProduct'){
 
-            $this->byProduct = true;
-            $this->byCode = false;
-            $this->addMethod = "addItemByPro";
+    //         $this->byProduct = true;
+    //         $this->byCode = false;
+    //         $this->addMethod = "addItemByPro";
 
-        }
-        else{
+    //     }
+    //     else{
 
-            $this->byProduct = false;
-            $this->byCode = true;
-            $this->addMethod = "addItemByCode";
-        }
+    //         $this->byProduct = false;
+    //         $this->byCode = true;
+    //         $this->addMethod = "addItemByCode";
+    //     }
 
 
-    }
+    // }
 
     public function render()
     {   
-        $prefabricados = Prefabricado::all();
-        $materiales = Material::all();
+        $prefabricados = DB::table('tbl_prefabricado')
+                            ->join('tbl_unidad','tbl_prefabricado.unidad_id','=','tbl_unidad.unidad_id')
+                            ->get();
+        $materiales = DB::table('tbl_material')
+                            ->join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
+                            ->get();
+
         $this->emit('render');
         return view('livewire.salida.add-salida',compact('prefabricados','materiales'));
     }

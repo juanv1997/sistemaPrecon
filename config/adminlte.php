@@ -256,6 +256,20 @@ return [
             'icon' => 'fas fa-exchange-alt',
         ],
 
+        ['header' => 'Movimientos'],
+
+        [
+            'text' => 'Entrada',
+            'route'  => 'entrada',
+            'icon' => 'fas fa-arrow-up',
+        ],
+        [
+            'text' => 'Salida',
+            'route'  => 'salida',
+            'icon' => 'fas fa-arrow-down',
+        ],
+
+
         ['header' => 'Productos'],
 
         [
@@ -269,18 +283,7 @@ return [
             'icon' => 'fas fa-boxes',
         ],
 
-        ['header' => 'Movimientos'],
-
-        [
-            'text' => 'Entrada',
-            'route'  => 'entrada',
-            'icon' => 'fas fa-arrow-up',
-        ],
-        [
-            'text' => 'Salida',
-            'route'  => 'salida',
-            'icon' => 'fas fa-arrow-down',
-        ],
+      
       
         // [
         //     'text'    => 'multilevel',

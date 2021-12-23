@@ -17,7 +17,29 @@ class ShowEntrada extends Component
     
 
     public function add($pro){
-        array_push($this->productos,$pro);
+        
+        //Codigo anterior
+
+        //array_push($this->productos,$pro);
+
+        //Nuevo codigo
+
+        $productExists = false;
+
+        foreach ($this->productos as $item){
+
+            if($item['codigo'] == $pro['codigo']){
+
+                $productExists = true;
+                $this->emit('itemExists');
+                break;
+            }
+        }
+    
+        if (!$productExists) {
+            array_push($this->productos,$pro);
+        }
+        
 
     }
 
@@ -32,16 +54,11 @@ class ShowEntrada extends Component
 
     public function removeItem(){
 
-       
-
         unset($this->productos[$this->itemId]);
         $this->emit('itemRemoved');
-
-
     }
 
    
-
     public function addEntrada(){
         
         date_default_timezone_set("America/Lima");

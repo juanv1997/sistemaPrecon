@@ -25,6 +25,9 @@ class AddFeature extends Component
     public function addFeature(){
 
         $this->validate();
+
+
+
         $tipoProducto = 0;
         if($this->tipoProducto=="pre"){
 
@@ -90,6 +93,11 @@ class AddFeature extends Component
         }
 
         $this->emit('featureAdded');
+    }
+
+    public function checkSameFeature(){
+
+        
     }
 
     public function render()

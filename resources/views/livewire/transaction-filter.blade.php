@@ -1,5 +1,13 @@
 <div>
 
+
+{{-- etiqueta para mostrar una pagina en un cuadrado --}}
+
+    {{-- <h1>The iframe element</h1>
+
+<iframe src="http://localhost/sistemaPrecon/public/" title="W3Schools Free Online Web Tutorials">
+</iframe> --}}
+
    <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500 overflow-x-auto">
                     
     <div class=" p-2">
@@ -26,8 +34,6 @@
  
          </div>
 
-        
-
       <div class=" flex space-x-3 justify-center font-semibold mb-3">
      
             {{-- <div class=" px-2 py-1 text-sm rounded ">
@@ -47,7 +53,6 @@
             <div class=" px-2 py-1 text-sm rounded ">
                 <select wire:model="tipoProducto" onchange="validateSelect()" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
                     
-
                     @foreach ($tipo_productos as $tipo)
                         <option value="{{$tipo->tipo_pro_nombre}}">{{$tipo->tipo_pro_nombre}}</option>
                     @endforeach
@@ -187,6 +192,68 @@
         </div>
 
     </div>
+
+    <x-modal-small>
+     
+        <x-slot name="colorIcon">red-100</x-slot>
+
+        <x-slot name="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+        </x-slot>
+
+        <x-slot name="action">false</x-slot>
+
+        <x-slot name="cancel">false</x-slot>
+
+        <x-slot name="targetMethodLoading"></x-slot>
+
+        <x-slot name="loadingMessage">Procesando solicitud...</x-slot>
+
+        <x-slot name="modalId">dateError</x-slot>
+
+        <x-slot name="eventClick"></x-slot>
+
+        <x-slot name="buttonText"></x-slot>
+
+        <x-slot name="title">Fecha incorrecta</x-slot>
+
+       La fecha de inicio no puede ser mayor a la de fin.
+
+
+    </x-modal-small>
+
+    <x-modal-small>
+     
+        <x-slot name="colorIcon">red-100</x-slot>
+
+        <x-slot name="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+        </x-slot>
+
+        <x-slot name="action">false</x-slot>
+
+        <x-slot name="cancel">false</x-slot>
+
+        <x-slot name="targetMethodLoading"></x-slot>
+
+        <x-slot name="loadingMessage">Procesando solicitud...</x-slot>
+
+        <x-slot name="modalId">dateOutOfRange</x-slot>
+
+        <x-slot name="eventClick"></x-slot>
+
+        <x-slot name="buttonText"></x-slot>
+
+        <x-slot name="title">Fecha incorrecta</x-slot>
+
+       La fecha ingresada en uno de los campos, supera el rango maximo aceptado, es decir , el dia de hoy.
+
+
+    </x-modal-small>
 
 
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Material;
 use App\Models\Prefabricado;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\Livewire;
 
@@ -14,13 +15,55 @@ class AddEntrada extends Component
     public $cantidadPro;
     public $codigo;
     public $cantidadCod;
-    public $addMethod = "addItemByPro";
-    public $byProduct = true;
-    public $byCode = false;
+    //public $addMethod = "addItemByPro";
+    //public $byProduct = true;
+    //public $byCode = false;
+    public $stockProducto = 0;
+    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput','desactivateButton'];
+    public $inputType = "product";
 
+    protected $messages = [
+
+        "cantidadCod.required"=>"Debe ingresar una cantidad de items",
+        "cantidadPro.required"=>"Debe ingresar una cantidad de items",
+        "codigo.required"=>"Debe ingresar un codigo de producto",
+        "producto.required"=>"Debe escoger un producto de la lista"
+
+    ];
+    
+    protected function rules(){
+
+        
+        
+        if ($this->inputType == "product") {
+            
+            return[
+
+                'producto'=>'required',
+                'cantidadPro'=>'required'
+                
+            ];
+
+        } else {
+            return[
+
+                'codigo'=>'required',
+                'cantidadCod'=>'required'
+
+            ];
+        }
+                
+
+    }
 
     public function addItemByCode(){
         
+        $this->validate();
+
+        $productExits = $this->checkProduct($this->codigo);
+
+        if ($productExits) {
+           
             $pro = array();
             $item = null;
             $item = Prefabricado::where('pre_codigo',$this->codigo)->first();
@@ -58,19 +101,24 @@ class AddEntrada extends Component
 
                 }else{
 
-
-
-
                 }
 
             }
 
+        }else {
+
+            $this->emit('productNotExist');
+
+        }
 
 
     }
 
     public function addItemByPro(){
 
+        $this->validate();
+
+        $this->getStock();
 
         $pro = array();
         $item = null;
@@ -120,29 +168,99 @@ class AddEntrada extends Component
 
     }
 
-    public function changeSelect($inputType){
+    public function getStock(){
 
-        if($inputType=='byProduct'){
+        $item = null;
 
-            $this->byProduct = true;
-            $this->byCode = false;
-            $this->addMethod = "addItemByPro";
+        if ($this->inputType == "product") {
+            
+            if ($this->tipoProducto=="Prefabricado") {
+           
+                $item = Prefabricado::where('pre_descripcion',$this->producto)->first(); 
+               $this->stockProducto = $item->pre_stock;
+               
+            } 
+            else {
+               
+                $item = Material::where('material_descrip',$this->producto)->first();
+                $this->stockProducto = $item->material_stock;
+            }
+
+        } elseif($this->inputType == "code") {
+            
+              $cod = trim($this->codigo);
+               
+              $item = Prefabricado::where('pre_codigo', $cod )->first(); 
+        
+               if ($item) {
+                    
+                    $this->stockProducto = $item->pre_stock;
+
+               }else {
+
+                    $item = Material::where('material_cod', $cod )->first();
+                    $this->stockProducto = $item->material_stock;
+                    
+               }
+        }
+
+   }
+
+    public function checkProduct(){
+
+        $exits = false;
+        $item = null;
+        $cod = trim($this->codigo);
+
+        $item = Prefabricado::where( 'pre_codigo', $cod )->first();
+    
+        if ($item) {
+            
+            $exits = true;
+        }
+        else {
+            
+            $item = Material::where( 'material_cod', $cod )->first();
+            if ($item) {
+                
+                $exits = true;
+            }
 
         }
-        else{
 
-            $this->byProduct = false;
-            $this->byCode = true;
-            $this->addMethod = "addItemByCode";
-        }
-
+        return $exits;
 
     }
 
+    // public function changeSelect($inputType){
+
+    //     if($inputType=='byProduct'){
+
+    //         $this->byProduct = true;
+    //         $this->byCode = false;
+    //         $this->addMethod = "addItemByPro";
+
+    //     }
+    //     else{
+
+    //         $this->byProduct = false;
+    //         $this->byCode = true;
+    //         $this->addMethod = "addItemByCode";
+    //     }
+
+
+    // }
+
     public function render()
     {
-        $prefabricados = Prefabricado::all();
-        $materiales = Material::all();
+        $prefabricados = DB::table('tbl_prefabricado')
+                            ->join('tbl_unidad','tbl_prefabricado.unidad_id','=','tbl_unidad.unidad_id')
+                            ->get();
+        $materiales = DB::table('tbl_material')
+                            ->join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
+                            ->get();
+                            
+        $this->emit('render');
         return view('livewire.entrada.add-entrada',compact('prefabricados','materiales'));
     }
 }

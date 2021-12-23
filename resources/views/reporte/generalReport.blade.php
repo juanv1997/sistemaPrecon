@@ -40,6 +40,19 @@
 
     <script>
         
+        Livewire.on('dateError',()=>{
+
+            document.getElementById('dateError' ).showModal();
+        })
+
+         
+        Livewire.on('dateOutOfRange',()=>{
+
+           document.getElementById('dateOutOfRange' ).showModal();
+
+        })
+
+        
         let productoToggle = document.getElementById('productoToggle');
 
         let dateToggle = document.getElementById('dateToggle');

@@ -1,6 +1,5 @@
 <div>
 
-    {{-- {{$pre->dimension_id}} --}}
     <x-modal>
 
         <x-slot name="colorIcon">green-100</x-slot>
@@ -8,7 +7,7 @@
         <x-slot name="icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
-              </svg>
+            </svg>
         </x-slot>
 
         <x-slot name="action">true</x-slot>
@@ -32,9 +31,9 @@
                 <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                     <x-jet-label value="Tipo"/>
 
-                    <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="pre.tipo_id">
+                    <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbTipo" onchange="onChangeSelect(this)" wire:model.defer="pre.tipo_id">
 
-                        <option >Seleccione una opción</option>
+                        <option value="default">Seleccione una opción</option>
 
                         @foreach ($tipos as $tipo)
 
@@ -53,9 +52,9 @@
                 <div class="md:w-1/2 px-3">
                     <x-jet-label value="Color"/>
 
-                    <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="pre.color_id">
+                    <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbColor" onchange="onChangeSelect(this)" wire:model.defer="pre.color_id">
 
-                        <option >Seleccione una opción</option>
+                        <option value="default">Seleccione una opción</option>
 
                         @foreach ($colores as $color)
 
@@ -77,9 +76,9 @@
 
                 <x-jet-label value="Espesor"/>
                 
-                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="pre.espesor_id">
+                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbEspesor" onchange="onChangeSelect(this)" wire:model.defer="pre.espesor_id">
 
-                    <option >Seleccione una opción</option>
+                    <option value="default">Seleccione una opción</option>
 
                     @foreach ($espesores as $espesor)
 
@@ -107,9 +106,9 @@
                 <x-jet-label value="Resistencia"/>
 
 
-                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent focus:border-transparentr text-grey-darker  rounded" id="grid-state" wire:model.defer="pre.resistencia_id">
+                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent focus:border-transparentr text-grey-darker  rounded" id="cbResistencia" onchange="onChangeSelect(this)"wire:model.defer="pre.resistencia_id">
 
-                    <option >Seleccione una opción</option>
+                    <option value="default">Seleccione una opción</option>
 
                     @foreach ($resistencias as $resistencia)
 
@@ -133,9 +132,9 @@
 
                 <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                 <x-jet-label value="Dimensión"/>
-                <select class="block appearance-none w-full bg-grey-lighter  border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="pre.dimension_id">
+                <select class="block appearance-none w-full bg-grey-lighter  border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbDimension" onchange="onChangeSelect(this)" wire:model.defer="pre.dimension_id">
 
-                    <option >Seleccione una opción</option>
+                    <option value="default">Seleccione una opción</option>
 
                     @foreach ($dimensiones as $dimension)
 
@@ -152,9 +151,9 @@
                 <x-jet-label value="Capa"/>
 
 
-                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="pre.capa_id">
+                <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="cbCapa" onchange="onChangeSelect(this)" wire:model.defer="pre.capa_id">
 
-                    <option >Seleccione una opción</option>
+                    <option value="default">Seleccione una opción</option>
 
                     @foreach ($capas as $capa)
 
@@ -173,17 +172,16 @@
 
                 <div class="md:w-1/2 px-3">
                     <x-jet-label value="Precio"/>
-                        <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='pre.pre_precio'/>
-                        <x-jet-input-error for="pre.pre_precio"/>
+                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" min="1" max="100" placeholder="Precio del producto" wire:model.defer='pre.pre_precio'/>
+                    <x-jet-input-error for="pre.pre_precio"/>
 
                 </div>
 
-
                 <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                     <x-jet-label value="Unidad"/>
-                    <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" id="grid-state" wire:model.defer="pre.unidad_id">
+                    <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" id="cbUnidad" onchange="onChangeSelect(this)" wire:model.defer="pre.unidad_id">
 
-                        <option >Seleccione una opción</option>
+                        <option value="default">Seleccione una opción</option>
 
                         @foreach ($unidades as $unidad)
 
@@ -204,10 +202,40 @@
               
                 <div class="md:w-1/2 px-3">
                     <x-jet-label value="Stock inicial"/>
-                        <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='pre.pre_stock'/>
+                        <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Escriba el stock inical del producto" wire:model.defer='pre.pre_stock'/>
                     <x-jet-input-error for="pre.pre_stock"/>
                 </div>
 
+            </div>
+
+            <div class="hidden" id="mainData">
+                <div  class="-mx-2 md:flex ">
+                
+                    <div class="md:w-1/4 px-3">
+                            <label>{{$descrip}}</label> 
+                    </div>
+
+                    {{-- <div class="md:w-1/4 px-3">
+                        <x-jet-label value="Descripcion"/>
+                </div> --}}
+
+                    <div class="md:w-1/3 ">
+                        
+                        <input id="txtDescrip" class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text"  wire:model='descrip' />
+                            
+                        <x-jet-input-error for="descrip"/>
+
+                    </div>
+
+                    <div class="md:w-1/3 ">
+                        <x-jet-label value="Codigo"/>
+
+                        <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text"  wire:model='codigo'/>
+                        
+                        <x-jet-input-error for="codigo"/>
+                    </div>
+
+                </div>
             </div>
 
 

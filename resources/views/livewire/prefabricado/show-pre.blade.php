@@ -1,4 +1,5 @@
 <div>
+
     <!--Loading para cualquier proceso-->
     <x-no-target-loading>
         
@@ -35,11 +36,15 @@
         <div class="-mx-2 md:flex mb-3">
 
             <div class="md:w-1/2 px-3">
+
                 <x-jet-label value="Precio"/>  
-                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='prefa.pre_precio'/>
-                    
+
+                <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='prefa.pre_precio'/>
+                
+                <x-jet-input-error for="prefa.pre_precio"/>
 
             </div>
+            
 
         </div>
 
@@ -47,7 +52,8 @@
 
         <textarea name="fr" class="py-2 px-3 mb-3 rounded-lg border-2 border-gray-600 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" placeholder="Breve descripción de la categoría" rows="4" wire:model.defer='prefa.pre_observacion'></textarea>
         
-       
+        <x-jet-input-error for="prefa.pre_observacion"/>
+        
         <x-jet-label value="Imagen"/>
 
         <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 rounded-md">
@@ -270,8 +276,6 @@
 
     </x-modal-small>
 
-
-
     {{--<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div class="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
@@ -387,7 +391,6 @@
 
 
     </div> --}}
-
 
       @if ($preCount)
           

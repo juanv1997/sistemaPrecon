@@ -21,8 +21,7 @@ class ShowPre extends Component
     use WithPagination;
     use WithFileUploads;
 
-
-    public $openModal = false;
+    //public $openModal = false;
     protected $listeners = ['preAdded'=>'render','findPrefabricado'];
     public $val=5;
     public Prefabricado $prefa,$pre;
@@ -30,12 +29,17 @@ class ShowPre extends Component
     public $destroyBanner = false;
     public $editBanner = false;
     public $preCount = 0;
-
+   
 
     protected $rules = [
 
         'prefa.pre_observacion'=>'required',
         'prefa.pre_precio'=>'required',
+    ];
+
+    protected $messages = [
+        'prefa.pre_observacion.required' => 'El campo observacion es obligatorio',
+        'prefa.pre_precio.required' => 'El campo precio es obligatorio',
     ];
 
     public function findPrefabricado($idPre,$eventName){
@@ -81,6 +85,8 @@ class ShowPre extends Component
 
         $this->validate();
 
+        $isEdited = false;
+
         $imageName =  $this->prefa->pre_descripcion."_".substr($this->prefa->pre_image_path,-14);
 
          if($this->image){
@@ -88,7 +94,14 @@ class ShowPre extends Component
             $this->prefa->pre_image_path = $this->image->storeAs('img/prefabricados',$imageName); 
          }
         
-        $this->prefa->save();
+        $isEdited = $this->prefa->save();
+
+        if($isEdited){
+
+            $this->prefa->pre_importe = $this->prefa->pre_precio * $this->prefa->pre_stock; 
+            $this->prefa->save();
+        }
+
         $this->reset('image');
         $this->emit('preEdited');
         $this->emit('itemEdited');

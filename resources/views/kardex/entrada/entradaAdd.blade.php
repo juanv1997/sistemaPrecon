@@ -107,10 +107,159 @@
             document.getElementById('addEntrada').showModal();
 
         }
+        Livewire.on('itemExists',() => {
+            
+        
+            document.getElementById('productExists').showModal();
+    
+        }); 
+    
+        Livewire.on('productNotExist',() => {
+    
+            document.getElementById('productNoExist').showModal();
+    
+        });
+    
+
+
 
         
 
     </script>
+
+<script>
+    
+    
+    Livewire.on('render',()=>{
+
+        let cbPro = document.getElementById('cbPro')
+    
+        let descripPro = cbPro.value    
+
+        if (descripPro != "default") {
+
+            activateAddButton()
+
+        }else{
+
+            disabledButton();
+            resetCount(); 
+
+        }
+
+    })
+    
+    
+   const getStockPro = ()=>{
+
+    let cbPro = document.getElementById('cbPro') , cbTipo  = document.getElementById('cbTipo') ;
+    
+    let descripPro = cbPro.value, tipoPro = cbTipo.value;
+
+    if (descripPro != "default") {
+
+        Livewire.emit('getStockPro',descripPro,tipoPro); 
+        activateAddButton()
+
+    }else{
+
+        disabledButton();
+        resetCount(); 
+
+    }
+        
+   }
+
+    const resetCount = ()=>{
+
+        Livewire.emit('resetCount');
+
+    }
+
+    const disabledButton = () => {
+
+         let btnAdd = document.getElementById('btnAddPro');
+
+         btnAdd.disabled = true;
+
+    }
+
+//    const getStockCod = ()=>{
+    
+//         let btn_stock = document.getElementById('btn_stock') ;
+        
+//         let codPro = btn_stock.value;
+
+//         Livewire.emit('getStockCod',codPro);
+
+//    }
+
+   const activateAddButton = ()=>{
+
+        let btnAdd = document.getElementById('btnAddPro')
+        
+        btnAdd.disabled = false
+   }
+
+    
+    const changeOption = () =>{
+
+        let inputType = ""
+
+        productView = document.getElementById('product')
+        codView = document.getElementById('code')
+        cbOption = document.getElementById('cbOption')
+
+        inputType = cbOption.value
+
+        if (inputType == "product") {
+            
+            productView.classList.remove('hidden')
+            code.classList.add('hidden')
+
+        } else {
+            
+            productView.classList.add('hidden')
+            code.classList.remove('hidden')
+
+        }
+        
+        if (inputType == "code") {
+            
+            Livewire.emit('resetCount');
+             
+        }else{
+
+            
+            let cbPro = document.getElementById('cbPro') , cbTipo  = document.getElementById('cbTipo') ;
+            
+            let descripPro = cbPro.value, tipoPro = cbTipo.value;
+
+
+            if (descripPro != "default") {
+
+                Livewire.emit('getStockPro',descripPro,tipoPro); 
+
+            }else{
+
+                Livewire.emit('resetCount');
+            }
+
+        }
+
+    }
+
+    function copyToClipBoard() {
+
+        var content = document.getElementById();
+
+        content.select();
+        document.execCommand('copy');
+
+        alert("Copied!");
+   }
+
+</script>
 
 @stop
 
