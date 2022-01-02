@@ -39,7 +39,21 @@
 @stop
 
 @section('css')
-   
+
+    <style>              
+        .test-checkbox:checked {
+            box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2); 
+        @apply: right-0 border-green-400;
+        left: 0;
+        border-color: #68D391;
+        }
+        .test-checkbox:checked + .test-label {
+            box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2);
+            @apply: bg-green-400;
+        background-color: #68D391;
+        }
+    </style>
+
 @stop
 
 @section('js')
@@ -259,6 +273,14 @@
             if( key == 8 || key == 46 )
                 return false;
         };
+
+        const updateStatus = (data)=>{
+
+            let preId = data.id
+            
+            Livewire.emit('updateStatus',preId);
+
+        }
         
 
         

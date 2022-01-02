@@ -1,9 +1,7 @@
 <div>
 
     <!--Loading para cualquier proceso-->
-    <x-no-target-loading>
-        
-    </x-no-target-loading>
+    <x-no-target-loading></x-no-target-loading>
 
     <!--Editar-->
     <x-modal>
@@ -110,7 +108,6 @@
     </x-modal>
 
     <!--Visualizar-->
-
     <x-modal>
 
 
@@ -243,10 +240,8 @@
     </x-modal>
 
      <!--Eliminar-->
-
     <x-modal-small>
 
-     
         <x-slot name="colorIcon">red-100</x-slot>
 
         <x-slot name="icon">
@@ -399,17 +394,17 @@
                   <thead class="text-center">
                       <tr class='bg-gray-200 text-gray-600  text-sm leading-normal'>
 
-                          <th class='py-3 px-6'>Código</th>
-                          <th class='py-3 px-6'>Tipo</th>
-                          <th class='py-3 px-6'>Espesor</th>
-                          <th class='py-3 px-6'>Resistencia</th>
-                          <th class='py-3 px-6'>Color</th>
-                          <th class='py-3 px-6'>Unidad</th>
-                          <th class='py-3 px-6'>Precio</th>
-                          <th class='py-3 px-6'>Dimensión</th>
-                          {{-- <th class='py-3 px-6'>Descripción</th> --}}
-                          <th class='py-3 px-6'>Stock</th>
-                          <th class='py-3 px-6'>Acciones</th>
+                          <th class='py-3 px-3'>Código</th>
+                          <th class='py-3 px-4'>Tipo</th>
+                          <th class='py-3 px-4'>Espesor</th>
+                          <th class='py-3 px-4'>Resistencia</th>
+                          <th class='py-3 px-4'>Color</th>
+                          <th class='py-3 px-4'>Unidad</th>
+                          <th class='py-3 px-4'>Precio</th>
+                          <th class='py-3 px-4'>Dimensión</th>
+                          <th class='py-3 px-4'>Stock</th>
+                          <th class='py-3 px-1'>Status</th>
+                          <th class='py-3 px-3'>Acciones</th>
                       </tr>
                   </thead>
                   <tbody class='text-gray-600 text-sm font-light text-center'>
@@ -425,19 +420,21 @@
                           
                             <tr class="
                                       transition-all hover:bg-{{$hover}} hover:shadow-lg border-b
-                                      @if ($prefabricado->pre_stock == 0)
+                                      @if ($prefabricado->pre_status == "I")
+                                        bg-blue-100
+                                      @elseif ($prefabricado->pre_stock == 0)
                                         bg-red-100
                                       @endif "
                             >
-
-
-                                  <td class="py-3 px-6  whitespace-nowrap" >
+                                  <td class="py-3 px-3  whitespace-nowrap" >
                                       {{ $prefabricado->pre_codigo }}
                                   </td>
-                                  <td class="py-3 px-6 w-0">
+                                  
+                                  <td class="py-3 px-4 w-0">
                                       {{ $prefabricado->tipo_nombre }}
                                   </td>
-                                  <td  class="py-3 px-6  w-0">
+                                  
+                                  <td  class="py-3 px-4 w-0">
                                     @if ($prefabricado->espesor_cantidad==0)
                                         N/A
                                     @else
@@ -445,7 +442,8 @@
                                     @endif  
                                     
                                   </td >
-                                  <td class="py-3 px-6  w-0">
+
+                                  <td class="py-3 px-4  w-0">
                                     @if ($prefabricado->resistencia_cantidad==0)
                                         N/A
                                     @else
@@ -453,69 +451,92 @@
                                     @endif  
                                     
                                   </td>
-                                  <td class="py-3 px-6  w-0" >
+
+                                  <td class="py-3 px-4  w-0" >
                                       {{ $prefabricado->color_nombre }}
                                   </td>
-                                  <td  class="py-3 px-6  w-0">
+
+                                  <td  class="py-3 px-4  w-0">
                                       {{ $prefabricado->unidad_termino }}
                                   </td>
 
-                                  <td  class="py-3 px-6  w-0">
+                                  <td  class="py-3 px-4  w-0">
                                       {{ $prefabricado->pre_precio }}
                                   </td>
 
-                                  <td class="py-3 px-6  w-0">
+                                  <td class="py-3 px-4  w-0">
                                       {{ $prefabricado->dimension_medida }}
                                   </td>
-                                  {{-- <td class="py-3 px-6 w-4">
-                                      {{ $prefabricado->pre_descripcion}}
-                                  </td> --}}
-                                  <td class="py-3 px-6 w-4">
+                                  
+                                  <td class="py-3 px-4 w-4">
                                     {{ $prefabricado->pre_stock}}
                                 </td>
 
-                                <td class="py-3 px-6 whitespace-nowrap">
+                               
+                              <td class="py-3 px-1 w-4">
 
-                                          <input type="hidden" >
+                                  <div  class="relative w-12 transition duration-200 origin-center">
 
-                                          <button  id="view_{{$prefabricado->pre_id}}" onclick="viewPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" >
+                                    <input type="checkbox" 
+                                           class="test-checkbox absolute w-6 h-6 rounded-full bg-white border-4 "
+                                           onchange="updateStatus(this)"
+                                           id="{{$prefabricado->pre_id}}"
+                                           @if ($prefabricado->pre_status == "A")
+                                              checked
+                                           @endif
+                                           />
+                                           
+                                    <label  class="test-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                 
+                                  </div>
+                        
+                               </td>
+                              
 
-                                              {{-- <div wire:loading class="w-5 h-5 items-center border-4 border-blue-500 rounded-full loader"></div> --}}
+                                <td class="py-3 px-3 whitespace-nowrap">
+  
+                                  <button  id="view_{{$prefabricado->pre_id}}" onclick="viewPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" >
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                                    
+                                    </svg>
 
-                                              {{-- <div  wire:loading class="w-5 h-5">Cargando</div> --}}
+                                  </button>
 
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                                              </svg>
-                                          </button>
+                                  <button  id="edit_{{$prefabricado->pre_id}}"  onclick="editPre(this)"  class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                      
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    
+                                    </svg>
 
+                                  </button>
 
-                                          <button  id="edit_{{$prefabricado->pre_id}}"  onclick="editPre(this)"  class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                              </svg>
-                                          </button>
+                                  <button  id="destroy_{{$prefabricado->pre_id}}"  onclick="destroyPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm racking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    
+                                    </svg>
 
-                                          <button  id="destroy_{{$prefabricado->pre_id}}"  onclick="destroyPre(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm racking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                              </svg>
-                                          </button>
+                                  </button>
 
-
-                                      </td>
-
-
-
-
-
+                                </td>
+                                
                               </tr>
-
-
+                              
                           @endforeach
+
                       </tr>
+
                   </tbody>
+
               </table>
+
         </div>
 
       @endif

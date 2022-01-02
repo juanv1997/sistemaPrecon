@@ -3,6 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -50,63 +51,41 @@
         }
       }
     </style>
-{{-- <style>
+   
+    @livewireStyles
 
-    .hasImage:hover section {
-      background-color: rgba(5, 5, 5, 0.4);
-    }
-    .hasImage:hover button:hover {
-      background: rgba(5, 5, 5, 0.45);
-    }
+  </head>
 
-    #overlay p,
-    i {
-      opacity: 0;
-    }
+  <body>
 
-    #overlay.draggedover {
-      background-color: rgba(255, 255, 255, 0.7);
-    }
-    #overlay.draggedover p,
-    #overlay.draggedover i {
-      opacity: 1;
-    }
+    <div class="overflow-x-auto">  
+      <!-- Page Content -->
+      <main>
+        {{ $slot }}
+      </main>
+      
+    </div>
 
-    .group:hover .group-hover\:text-blue-800 {
-      color: #2b6cb0;
-    }
-    </style> --}}
+    @stack('modals')
 
-        @livewireStyles
+    @livewireScripts
 
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+   <!-- Scripts -->
+
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js" integrity="sha512-O2fWHvFel3xjQSi9FyzKXWLTvnom+lOYR/AUEThL/fbP4hv1Lo5LCFCGuTXBRyKC4K4DJldg5kxptkgXAzUpvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         
         {{-- <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script> --}}
         {{-- <script src="https://unpkg.com/idb/build/iife/index-min.js"></script> --}}
         {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js"></script> --}}
         {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>  --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js" integrity="sha512-O2fWHvFel3xjQSi9FyzKXWLTvnom+lOYR/AUEThL/fbP4hv1Lo5LCFCGuTXBRyKC4K4DJldg5kxptkgXAzUpvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+       
         {{-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  --}}
+        {{-- <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script> --}}
+        
 
-    </head>
-
-    <body>
-
-        <div class="overflow-x-auto">  
-          <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-
-        @stack('modals')
-
-        @livewireScripts
-        <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
-
-    </body>
+  </body>
 
 </html>

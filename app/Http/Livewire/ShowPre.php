@@ -22,13 +22,14 @@ class ShowPre extends Component
     use WithFileUploads;
 
     //public $openModal = false;
-    protected $listeners = ['preAdded'=>'render','findPrefabricado'];
+    protected $listeners = ['preAdded'=>'render','findPrefabricado','updateStatus'];
     public $val=5;
     public Prefabricado $prefa,$pre;
     public $image;
     public $destroyBanner = false;
     public $editBanner = false;
     public $preCount = 0;
+    public $test = 0;
    
 
     protected $rules = [
@@ -106,6 +107,22 @@ class ShowPre extends Component
         $this->emit('preEdited');
         $this->emit('itemEdited');
             
+    }
+
+    public function updateStatus($preId){
+
+        $preToUpdate = Prefabricado::find($preId);
+        
+        if ($preToUpdate->pre_status == "A") 
+        {
+            $preToUpdate->pre_status = "I";
+
+        }else{
+
+            $preToUpdate->pre_status = "A";
+        }
+
+        $preToUpdate->save();
     }
 
     public function render()
