@@ -24,6 +24,7 @@ class AddSalida extends Component
     protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput','desactivateButton'];
     public $test = "hola";
     public $inputType = "product";
+    public $searchResults ;
     
     protected $messages = [
 
@@ -352,6 +353,18 @@ class AddSalida extends Component
         // }
     }
 
+    public function searchFilter(){
+
+        
+
+    }
+
+    public function updatedCodigo(){
+
+        $this->searchFilter();        
+
+    }
+
     // public function changeSelect($inputType){
 
     //     if($inputType=='byProduct'){
@@ -375,9 +388,11 @@ class AddSalida extends Component
     {   
         $prefabricados = DB::table('tbl_prefabricado')
                             ->join('tbl_unidad','tbl_prefabricado.unidad_id','=','tbl_unidad.unidad_id')
+                            ->where('tbl_prefabricado.pre_status','=','A')
                             ->get();
         $materiales = DB::table('tbl_material')
                             ->join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
+                            ->where('tbl_material.material_status','=','A')
                             ->get();
 
         $this->emit('render');

@@ -208,6 +208,15 @@
             }
         )
 
+        Livewire.on('sameFeature', function() {
+
+            document.getElementById('sameFeature').showModal();
+
+            }
+        )
+
+
+
     </script>
 
  
@@ -265,26 +274,74 @@
                    
         }
 
-        var input = document.getElementById('txtDescrip');
+        var inputDescrip = document.getElementById('txtDescrip');
 
-        input.onkeydown = function() {
+        inputDescrip.onkeydown = function() {
+
             var key = event.keyCode || event.charCode;
 
-            if( key == 8 || key == 46 )
-                return false;
+            let txtDescripOriginal = document.getElementById('txtDescripOriginal').value;
+            let txtDescrip = document.getElementById('txtDescrip').value;
+            let posicion = document.getElementById('txtDescrip').selectionEnd;
+            let descripLength = txtDescrip.length; 
+           
+
+            if(txtDescripOriginal == txtDescrip ){
+
+                if( key == 8 || key == 46 ){
+                    event.preventDefault();
+                }
+
+            }
+
+            if (posicion != descripLength) {
+
+                event.preventDefault();
+
+            }
+               
         };
+
+        
+        var inputCodigo = document.getElementById('txtCodigo');
+
+        inputCodigo.onkeydown = function() {
+
+            var key = event.keyCode || event.charCode;
+
+            let txtCodigoOriginal = document.getElementById('txtCodigoOriginal').value;
+            let txtCodigo = document.getElementById('txtCodigo').value;
+            let posicion = document.getElementById('txtCodigo').selectionEnd;
+            let codigoLength = txtCodigo.length; 
+
+
+            if(txtCodigoOriginal == txtCodigo ){
+
+                if( key == 8 || key == 46 ){
+                    event.preventDefault();
+                }
+
+            }
+
+             if (posicion != codigoLength) {
+
+                 event.preventDefault();
+
+             }
+                
+            
+               
+        };
+
 
         const updateStatus = (data)=>{
 
             let preId = data.id
-            
+        
             Livewire.emit('updateStatus',preId);
 
         }
-        
-
-        
-
+   
     </script>
 
 

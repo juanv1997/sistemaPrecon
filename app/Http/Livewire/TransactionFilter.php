@@ -8,6 +8,7 @@ use App\Models\Material;
 use App\Models\Prefabricado;
 //use App\Models\Salida;
 use App\Models\TipoProducto;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 //use Maatwebsite\Excel\Facades\Excel;
 
@@ -111,9 +112,14 @@ class TransactionFilter extends Component
         return view('livewire.transaction-filter',[
 
             'tipo_productos'=>TipoProducto::all(),
-            'prefabricados'=>Prefabricado::all(),
-            'materiales'=>Material::all()
+            'prefabricados'=>DB::table('tbl_prefabricado')
+                                ->where('pre_status','=','A')
+                                ->get(), 
+            'materiales'=>DB::table('tbl_material')
+                            ->where('material_status','=','A')
+                            ->get()
 
         ]);
     }
 }
+

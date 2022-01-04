@@ -31,7 +31,6 @@
 
             <div x-data="{ openAction: {{$action}} }">
 
-
                     <x-jet-button wire:click='{{$eventClick}}' x-show="openAction">
 
 
@@ -47,6 +46,7 @@
 
                 </x-jet-danger-button>
             </div>
+            
         </div>
 
         <x-loading >

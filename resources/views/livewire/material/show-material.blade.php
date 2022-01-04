@@ -308,18 +308,27 @@
                         <th class='py-3 px-6'>Precio</th>
                         <th class='py-3 px-6'>Descripción</th>
                         <th class='py-3 px-6'>Stock</th>
+                        <th class='py-3 px-6'>Status</th>
                         <th class='py-3 px-6'>Acciones</th>
                     </tr>
                 </thead>
                 <tbody class='text-gray-600 text-sm font-light text-center'>
-                    <tr class='border-b border-gray-200 hover:bg-gray-100'>
+                    <tr class='border-b border-gray-200 hover:bg-gray-100'
+                    >
 
                         @php
                             $i=1;
                         @endphp
 
                         @foreach ($materiales as $material)
-                            <tr class="hover:bg-gray-100 hover:shadow-lg border-b">
+                            <tr class="hover:bg-gray-100 hover:shadow-lg border-b
+
+                                    @if ($material->material_status == "I")
+                                        bg-blue-100
+                                    @elseif ($material->material_stock == 0)
+                                        bg-red-100
+                                    @endif"
+                            >
                             
 
                                 <td class="py-3 px-6  whitespace-nowrap" >
@@ -341,7 +350,24 @@
                                     {{ $material->material_stock }}
                                 </td>
 
-                              
+                                <td class="py-3 px-6 w-4">
+
+                                    <div  class="relative w-12 transition duration-200 origin-center">
+  
+                                      <input type="checkbox" 
+                                             class="test-checkbox absolute w-6 h-6 rounded-full bg-white border-4 "
+                                             onchange="updateStatus(this)"
+                                             id="{{$material->material_id}}"
+                                             @if ($material->material_status == "A")
+                                                checked
+                                             @endif
+                                             />
+                                             
+                                      <label  class="test-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                   
+                                    </div>
+                          
+                                 </td>
                                 
 
                                <td class="py-3 px-6 whitespace-nowrap">
@@ -350,26 +376,27 @@
 
                                         <button  id="view_{{$material->material_id}}" onclick="viewMaterial(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" >
 
-                                            {{-- <div wire:loading class="w-5 h-5 items-center border-4 border-blue-500 rounded-full loader"></div> --}}
-
-                                            {{-- <div  wire:loading class="w-5 h-5">Cargando</div> --}}
-
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                                             </svg>
+
                                         </button>
 
 
                                         <button  id="edit_{{$material->material_id}}"  onclick="editMaterial(this)"  class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                            
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
+
                                         </button>
 
                                         <button  id="destroy_{{$material->material_id}}"  onclick="destroyMaterial(this)" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm racking-widest hover:bg-gray-400 bg-gray-200 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                            
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
+                                            
                                         </button>
 
 

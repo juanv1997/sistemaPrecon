@@ -261,6 +261,22 @@
         alert("Copied!");
    }
 
+   const showSearchTab = ()=>{
+    
+        let searchTab = document.getElementById('searchTab')
+        
+        searchTab.classList.remove('hidden')
+
+   }
+
+   const hideSearchTab = ()=>{
+    
+        let searchTab = document.getElementById('searchTab')
+        
+        searchTab.classList.add('hidden')
+
+   }
+
 
 
 </script>

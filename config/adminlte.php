@@ -273,12 +273,12 @@ return [
         ['header' => 'Productos'],
 
         [
-            'text' => 'Lista de prefabricados',
+            'text' => 'Prefabricados',
             'route'  => 'prefabricado',
             'icon' => 'fas fa-warehouse',
         ],
         [
-            'text' => 'Lista de materiales',
+            'text' => 'Materiales',
             'route'  => 'material',
             'icon' => 'fas fa-boxes',
         ],

@@ -24,6 +24,8 @@
     
             {{-- <div id="tab-contents" wire:ignore.self> --}}
             
+                {{-- Entrada por producto --}}
+
                 <div id="product" class="p-4" wire:ignore.self>
 
                     <div  class="-mx-2 md:flex mb-3">
@@ -136,6 +138,8 @@
 
                 </div>
 
+                {{-- Entrada por codigo --}}
+
                 <div id="code" class="hidden p-4" wire:ignore.self>
                            
                     <div class="mx-8 md:flex mb-3 justify-center">
@@ -154,7 +158,36 @@
 
                                     <input type="text" placeholder="Ingrese el código del producto" id="btn_stock"
                                             wire:model.defer="codigo"
+                                            onfocus="showSearchTab()"
+                                            onblur="hideSearchTab()"
                                             class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent">
+                                    
+                                    <div id="searchTab" class=" hidden inline-block bg-white rounded overflow-y-auto  w-72 absolute border-2 border-black">
+
+                                        <ul>
+
+                                            @if ($searchResults)
+
+                                                @foreach ($searchResults as $result)
+
+                                                    <li class="p-2 hover:bg-gray-100 cursor-pointer" ></li>
+                                            
+                                                @endforeach
+                                            @else
+
+                                                <label >No se ha encontrado ningun resultado</label>
+
+                                            @endif
+
+                                          
+                                            
+                                        </ul>
+
+                                    </div>
+                                    
+
+                                    
+
                                     <x-jet-input-error for="codigo"/>
 
                                 </div>

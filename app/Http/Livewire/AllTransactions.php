@@ -49,11 +49,12 @@ class AllTransactions extends Component
 
                         switch ($this->tipoProducto) {
                             case "Prefabricado":
-
+                               
                                 $this->listItems = Entrada::join('tbl_prefabricado','tbl_entrada.pre_id','=','tbl_prefabricado.pre_id')
                                                    ->where('tbl_entrada.entrada_fecha',">=",$this->dateBegin)
                                                    ->where('tbl_entrada.entrada_fecha',"<=",$this->dateEnd)
                                                    ->where('tbl_entrada.pre_id',$this->producto)
+                                                   ->orderBy('tbl_entrada.entrada_fecha','desc')
                                                    ->get();
                                                    $producto = Prefabricado::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
@@ -69,6 +70,7 @@ class AllTransactions extends Component
                                                             ->where('tbl_entrada.entrada_fecha',">=",$this->dateBegin)
                                                             ->where('tbl_entrada.entrada_fecha',"<=",$this->dateEnd)
                                                             ->where('tbl_entrada.material_id',$this->producto)
+                                                            ->orderBy('tbl_entrada.entrada_fecha','desc')
                                                             ->get();
                                                             $producto = Material::find($this->producto);
                                                             $this->stringResult = $this->tipoTransaccion." de ".
@@ -90,6 +92,7 @@ class AllTransactions extends Component
                                                         ->where('tbl_salida.salida_fecha',">=",$this->dateBegin)
                                                         ->where('tbl_salida.salida_fecha',"<=",$this->dateEnd)
                                                         ->where('tbl_salida.pre_id',$this->producto)
+                                                        ->orderBy('tbl_salida.salida_fecha','desc')
                                                         ->get();
                                                         $producto = Prefabricado::find($this->producto);
                                                         $this->stringResult = $this->tipoTransaccion." de ".
@@ -104,6 +107,7 @@ class AllTransactions extends Component
                                                         ->where('tbl_salida.salida_fecha',">=",$this->dateBegin)
                                                         ->where('tbl_salida.salida_fecha',"<=",$this->dateEnd)
                                                         ->where('tbl_salida.material_id',$this->producto)
+                                                        ->orderBy('tbl_salida.salida_fecha','desc')
                                                         ->get();
                                                         $producto = Material::find($this->producto);
                                                         $this->stringResult = $this->tipoTransaccion." de ".
@@ -128,7 +132,9 @@ class AllTransactions extends Component
                             case "Prefabricado":
 
                                 $this->listItems = Entrada::join('tbl_prefabricado','tbl_entrada.pre_id','=','tbl_prefabricado.pre_id')
-                                                   ->where('tbl_entrada.pre_id',$this->producto)->get();
+                                                   ->where('tbl_entrada.pre_id',$this->producto)
+                                                   ->orderBy('tbl_entrada.entrada_fecha','desc')
+                                                   ->get();
                                                    $producto = Prefabricado::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                      $producto->pre_descripcion;
@@ -139,7 +145,9 @@ class AllTransactions extends Component
                             case "Material":
 
                                 $this->listItems = Entrada::join('tbl_material','tbl_entrada.material_id','=','tbl_material.material_id')
-                                                   ->where('tbl_entrada.material_id',$this->producto)->get();
+                                                   ->where('tbl_entrada.material_id',$this->producto)
+                                                   ->orderBy('tbl_entrada.entrada_fecha','desc')
+                                                   ->get();
                                                    $producto = Material::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                      $producto->material_descrip;
@@ -155,7 +163,9 @@ class AllTransactions extends Component
                         case "Prefabricado":
                             
                             $this->listItems = Salida::join('tbl_prefabricado','tbl_salida.pre_id','=','tbl_prefabricado.pre_id')
-                            ->where('tbl_salida.pre_id',$this->producto)->get();
+                                                    ->where('tbl_salida.pre_id',$this->producto)
+                                                    ->orderBy('tbl_salida.salida_fecha','desc')
+                                                    ->get();
                             $producto = Prefabricado::find($this->producto);
                             $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                      $producto->pre_descripcion;
@@ -166,7 +176,9 @@ class AllTransactions extends Component
                         
                         case "Material":
                             $this->listItems = Salida::join('tbl_material','tbl_salida.material_id','=','tbl_material.material_id')
-                                                   ->where('tbl_salida.material_id',$this->producto)->get();
+                                                   ->where('tbl_salida.material_id',$this->producto)
+                                                   ->orderBy('tbl_salida.salida_fecha','desc')
+                                                   ->get();
                                                    $producto = Material::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                      $producto->material_descrip;
@@ -190,6 +202,7 @@ class AllTransactions extends Component
                                 $this->listItems = Entrada::join('tbl_prefabricado','tbl_entrada.pre_id','=','tbl_prefabricado.pre_id')
                                                    ->where('tbl_entrada.entrada_fecha',">=",$this->dateBegin)
                                                    ->where('tbl_entrada.entrada_fecha',"<=",$this->dateEnd)
+                                                   ->orderBy('tbl_entrada.entrada_fecha','desc')
                                                    ->get();
                                                    $producto = Prefabricado::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
@@ -204,6 +217,7 @@ class AllTransactions extends Component
                                 $this->listItems = Entrada::join('tbl_material','tbl_entrada.material_id','=','tbl_material.material_id')
                                                             ->where('tbl_entrada.entrada_fecha',">=",$this->dateBegin)
                                                             ->where('tbl_entrada.entrada_fecha',"<=",$this->dateEnd)
+                                                            ->orderBy('tbl_entrada.entrada_fecha','desc')
                                                             ->get();
                                                             $producto = Material::find($this->producto);
                                                             $this->stringResult = $this->tipoTransaccion." de ".
@@ -224,6 +238,7 @@ class AllTransactions extends Component
                             $this->listItems = Salida::join('tbl_prefabricado','tbl_salida.pre_id','=','tbl_prefabricado.pre_id')
                                                         ->where('tbl_salida.salida_fecha',">=",$this->dateBegin)
                                                         ->where('tbl_salida.salida_fecha',"<=",$this->dateEnd)
+                                                        ->orderBy('tbl_salida.salida_fecha','desc')
                                                         ->get();
                                                         $producto = Prefabricado::find($this->producto);
                                                         $this->stringResult = $this->tipoTransaccion." de ".
@@ -237,6 +252,7 @@ class AllTransactions extends Component
                             $this->listItems = Salida::join('tbl_material','tbl_salida.material_id','=','tbl_material.material_id')
                                                         ->where('tbl_salida.salida_fecha',">=",$this->dateBegin)
                                                         ->where('tbl_salida.salida_fecha',"<=",$this->dateEnd)
+                                                        ->orderBy('tbl_salida.salida_fecha','desc')
                                                         ->get();
                                                         $producto = Material::find($this->producto);
                                                         $this->stringResult = $this->tipoTransaccion." de ".
@@ -260,9 +276,11 @@ class AllTransactions extends Component
                             case "Prefabricado":
 
                                 $this->listItems = Entrada::join('tbl_prefabricado','tbl_entrada.pre_id','=','tbl_prefabricado.pre_id')
-                                                   ->get();
+                                                            ->where('tbl_prefabricado.pre_status','=','A')
+                                                            ->orderBy('tbl_entrada.entrada_fecha','desc')
+                                                            ->get();
                                                    $producto = Prefabricado::find($this->producto);
-                                                 $this->stringResult = $this->tipoTransaccion." de ".
+                                                   $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                      $this->tipoProducto;
                                 
 
@@ -271,7 +289,9 @@ class AllTransactions extends Component
                             case "Material":
 
                                 $this->listItems = Entrada::join('tbl_material','tbl_entrada.material_id','=','tbl_material.material_id')
-                                                   ->get();
+                                                            ->where('tbl_material.material_status','=','A')
+                                                            ->orderBy('tbl_entrada.entrada_fecha','desc')    
+                                                            ->get();
                                                    $producto = Material::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                   $this->tipoProducto;
@@ -286,7 +306,9 @@ class AllTransactions extends Component
                     switch ($this->tipoProducto) {
                         case "Prefabricado":
                             $this->listItems = Salida::join('tbl_prefabricado','tbl_salida.pre_id','=','tbl_prefabricado.pre_id')
-                            ->get();
+                                                        ->orderBy('tbl_salida.salida_fecha','desc')
+                                                        ->where('tbl_prefabricado.pre_status','=','A')
+                                                        ->get();
                             $producto = Prefabricado::find($this->producto);
                             $this->stringResult = $this->tipoTransaccion." de ".
                                                                                 $this->tipoProducto;
@@ -294,7 +316,9 @@ class AllTransactions extends Component
                         
                         case "Material":
                             $this->listItems = Salida::join('tbl_material','tbl_salida.material_id','=','tbl_material.material_id')
-                                                   ->get();
+                                                    ->orderBy('tbl_salida.salida_fecha','desc')
+                                                    ->where('tbl_material.material_status','=','A')
+                                                    ->get();
                                                    $producto = Material::find($this->producto);
                                                    $this->stringResult = $this->tipoTransaccion." de ".
                                                                                                   $this->tipoProducto;

@@ -34,9 +34,23 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous"> --}}
+
+        <style>              
+            .test-checkbox:checked {
+                box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2); 
+            @apply: right-0 border-green-400;
+            left: 0;
+            border-color: #68D391;
+            }
+            .test-checkbox:checked + .test-label {
+                box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2);
+                @apply: bg-green-400;
+            background-color: #68D391;
+            }
+        </style>
 @stop
 
 @section('js')
@@ -119,6 +133,13 @@ document.getElementById('editMaterialModal').close();
         }
     )
 
+    Livewire.on('sameFeature', function() {
+
+        document.getElementById('sameFeature').showModal();
+
+        }
+    )
+
 </script>
 
 
@@ -136,6 +157,14 @@ document.getElementById('editMaterialModal').close();
       
       }
     )
+
+    const updateStatus = (data)=>{
+
+        let materialId = data.id
+
+        Livewire.emit('updateStatus',materialId);
+
+    }
   
   </script>
 

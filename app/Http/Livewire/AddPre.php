@@ -23,6 +23,8 @@ class AddPre extends Component
     public $image;
     public $listeners = ['featureAdded'=>'render','reset'=>'resetSelect','checkSetParameters'];
     public $codigo;
+    public $codigoOriginal;
+    public $descripOriginal;
     public $descrip;
     
     public function mount(Prefabricado $prefabricado){
@@ -121,186 +123,190 @@ class AddPre extends Component
         $codigo = null;
         $descrip = null;
 
-            if($tipo->tipo_nombre =="Bloq"){
+            // if($tipo->tipo_nombre =="Bloq"){
 
           
-                if($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A"){
+            //     if($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A"){
     
-                    $codigo = "BLOQ".$espesor->espesor_cantidad."-".$color->color_inicial;
-                    $descrip = "Bloq"." "."E"."=".$espesor->espesor_cantidad." ".$color->color_nombre;
+            //         $codigo = "BLOQ".$espesor->espesor_cantidad."-".$color->color_inicial;
+            //         $descrip = "Bloq"." "."E"."=".$espesor->espesor_cantidad." ".$color->color_nombre;
     
-                }
-                else{
+            //     }
+            //     else{
     
-                    if($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A"){
+            //         if($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A"){
     
-                        $codigo = "BLOQ".$espesor->espesor_cantidad;
-                        $descrip = "Bloq"." "."E"."=".$espesor->espesor_cantidad;
+            //             $codigo = "BLOQ".$espesor->espesor_cantidad;
+            //             $descrip = "Bloq"." "."E"."=".$espesor->espesor_cantidad;
         
-                    }
-                    else{
-                            $codigo = "BLOQ"."-".$color->color_inicial;
-                            $descrip = "Bloq"." ".$color->color_nombre;
-                        }
-                }
+            //         }
+            //         else{
+            //                 $codigo = "BLOQ"."-".$color->color_inicial;
+            //                 $descrip = "Bloq"." ".$color->color_nombre;
+            //             }
+            //     }
     
     
-            }
-            else{
+            // }
+            // else{
     
-                $tipoPre = substr($tipo->tipo_nombre,4);
+            //     $tipoPre = substr($tipo->tipo_nombre,4);
                 
-                if($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A"){
+            //     if($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A"){
     
-                    $subTipoCod = strtoupper($tipoPre);
-                    $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
-                    $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
+            //         $subTipoCod = strtoupper($tipoPre);
+            //         $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
+            //         $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
                    
-                }
-                else{
+            //     }
+            //     else{
     
-                    if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A"){
+            //         if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A"){
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
         
-                    }
-                    elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$capa->capa_nombre;
     
-                    }
-                    elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
     
-                    }
-                    elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$color->color_inicial;
-                        $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$color->color_inicial;
+            //             $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre;
     
-                    }
-                    if($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A"){
+            //         }
+            //         if($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre!="N/A"){
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$capa->capa_nombre;
         
-                    }
-                    if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A"){
+            //         }
+            //         if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A"){
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod."-".$color->color_inicial."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod."-".$color->color_inicial."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
         
-                    }
-                    if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A"){
+            //         }
+            //         if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A"){
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad."-".$color->color_inicial;
-                        $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad."-".$color->color_inicial;
+            //             $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre;
         
-                    }
-                    elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"."MPA"." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"."MPA"." ".$capa->capa_nombre;
     
-                    }
-                    elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad;
-                        $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA";
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad;
+            //             $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA";
     
-                    }
-                    elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$color->color_inicial;
-                        $descrip = $tipo->tipo_nombre." ".$color->color_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm";
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$color->color_inicial;
+            //             $descrip = $tipo->tipo_nombre." ".$color->color_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm";
     
-                    }
-                    elseif ($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod." ".$color->color_inicial;
-                        $descrip = $tipo->tipo_nombre." ".$color->color_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod." ".$color->color_inicial;
+            //             $descrip = $tipo->tipo_nombre." ".$color->color_nombre;
     
-                    }
-                    elseif ($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
     
-                         $subTipoCod = strtoupper($tipoPre);
-                         $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad;
-                         $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad;
+            //              $subTipoCod = strtoupper($tipoPre);
+            //              $codigo = $subTipoCod."-".$resistencia->resistencia_cantidad;
+            //              $descrip = $tipo->tipo_nombre." "."R"."=".$resistencia->resistencia_cantidad;
     
-                    }
-                    elseif ($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A") {
+            //         }
+            //         elseif ($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre!="N/A") {
     
-                        $subTipoCod = strtoupper($tipoPre);
-                        $codigo = $subTipoCod."-".$capa->capa_nombre[0];
-                        $descrip = $tipo->tipo_nombre." ".$capa->capa_nombre;
+            //             $subTipoCod = strtoupper($tipoPre);
+            //             $codigo = $subTipoCod."-".$capa->capa_nombre[0];
+            //             $descrip = $tipo->tipo_nombre." ".$capa->capa_nombre;
     
-                   }
-                   elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
+            //        }
+            //        elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
     
-                    $subTipoCod = strtoupper($tipoPre);
-                    $codigo = $subTipoCod.$espesor->espesor_cantidad;
-                    $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad;
-                }
-                elseif ($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
+            //         $subTipoCod = strtoupper($tipoPre);
+            //         $codigo = $subTipoCod.$espesor->espesor_cantidad;
+            //         $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad;
+            //     }
+            //     elseif ($espesor->espesor_cantidad==0 && $color->color_nombre=="N/A" && $resistencia->resistencia_cantidad==0 && $capa->capa_nombre=="N/A") {
     
-                 $subTipoCod = strtoupper($tipoPre);
-                 $codigo = $subTipoCod;
-                 $descrip = $tipo->tipo_nombre;
+            //      $subTipoCod = strtoupper($tipoPre);
+            //      $codigo = $subTipoCod;
+            //      $descrip = $tipo->tipo_nombre;
                     
     
-                }
+            //     }
                     
-                }
+            //     }
     
     
-                // $subTipoCod = strtoupper($tipoPre);
+               
+
+           
+            // }
+
+             // $subTipoCod = strtoupper($tipoPre);
                 // $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
                 // $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
             
             $sameProduct = $this->validateProductDescrip($descrip);
             
             if (false) {
-                
+                    
                 $this->emit('sameProduct');
 
             } else {
 
-                $this->pre->pre_codigo = $codigo;
-                $this->pre->pre_descripcion = $descrip;
+                $this->pre->pre_codigo = $this->codigo;
+                $this->pre->pre_descripcion = $this->descrip;
                 $this->pre->pre_importe = $this->pre->pre_stock*$this->pre->pre_precio; 
+                $this->pre->pre_status = "A";
                 $imageName = $this->pre->pre_descripcion."_".date('d-m-Y').".png";
                 $imagePath = $this->image->storeAs('img/prefabricados',$imageName);
                 $this->pre->pre_image_path = $imagePath;
-        
+
+            
                 $this->pre->save();
-        
+            
                 $prefa = new Prefabricado();
-        
+            
                 $this->pre = $prefa;
         
                 $this->emit('itemAdded');
                 $this->emit('preAdded');
-        
                 $this->showBanner = true;
+                
             }
-
-           
-        }
 
        
 
@@ -456,6 +462,8 @@ class AddPre extends Component
           
         $this->descrip = $descrip;
         $this->codigo = $codigo;
+        $this->codigoOriginal = $codigo;
+        $this->descripOriginal = $descrip;
 
     }
     

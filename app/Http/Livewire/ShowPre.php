@@ -137,6 +137,7 @@ class ShowPre extends Component
                             ->join('tbl_resistencia','tbl_prefabricado.resistencia_id','=','tbl_resistencia.resistencia_id')
                             ->join('tbl_tipo','tbl_prefabricado.tipo_id','=','tbl_tipo.tipo_id')
                             ->join('tbl_unidad','tbl_prefabricado.unidad_id','=','tbl_unidad.unidad_id')
+                            ->orderBy('pre_id','desc')
                             ->paginate(5),
             'tipos' => Tipo::all()->where('tipo_pro_id','1'),
             'colores' => Color::all(),

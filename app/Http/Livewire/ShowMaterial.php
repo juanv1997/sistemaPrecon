@@ -18,7 +18,7 @@ class ShowMaterial extends Component
 
     //public $test="perro";
     public $openModal = false;
-    protected $listeners = ['materialAdded'=>'render','findMaterial'];
+    protected $listeners = ['materialAdded'=>'render','findMaterial','updateStatus'];
     public $val=5;
     public Material $material , $materialEdit, $infoMaterialToShow; 
     public $image;
@@ -34,7 +34,7 @@ class ShowMaterial extends Component
         'material.material_precio'=>'required',
         'material.material_observacion'=>'required', 
 
-      ];
+    ];
 
     public function findMaterial($idMaterial,$eventName){
 
@@ -60,8 +60,6 @@ class ShowMaterial extends Component
         }
    }
 
-   
-
    public function destroyMaterial(){
 
         $materialToDestroy = Material::find($this->material->material_id);
@@ -72,7 +70,7 @@ class ShowMaterial extends Component
         $this->emit('materialDestroyed');
         $this->emit('itemDestroyed');
 
-    }
+}
 
     public function editMaterial(){
 
@@ -92,12 +90,29 @@ class ShowMaterial extends Component
             
     }
 
+    public function updateStatus($materialId){
+
+        $materialToUpdate = Material::find($materialId);
+        
+        if ($materialToUpdate->material_status == "A") 
+        {
+            $materialToUpdate->material_status = "I";
+
+        }else{
+
+            $materialToUpdate->material_status = "A";
+        }
+
+        $materialToUpdate->save();
+    }
+
     public function render()
     {
         return view('livewire.material.show-material',[
 
             'materiales'=>Material::join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
                         ->join('tbl_tipo','tbl_material.tipo_id','=','tbl_tipo.tipo_id')
+                        ->orderBy('material_id','desc')
                         ->paginate(7),
             'tipos'=>Tipo::all()->where('tipo_pro_id','3'),
             'unidades' => Unidad::all()->where('tipo_pro_id','3'),

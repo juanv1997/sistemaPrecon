@@ -5,9 +5,13 @@
         <x-slot name="colorIcon">green-100</x-slot>
 
         <x-slot name="icon">
+
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+            
             </svg>
+
         </x-slot>
 
         <x-slot name="action">true</x-slot>
@@ -208,44 +212,56 @@
 
             </div>
 
-            <div class="hidden" id="mainData">
-                <div  class="-mx-2 md:flex ">
-                
-                    <div class="md:w-1/4 px-3">
-                            <label>{{$descrip}}</label> 
-                    </div>
+            {{-- Visualizacion y edicion del codigo y descripcion del producto --}}
 
+            <div class="hidden" id="mainData">
+                
+                <div  class="-mx-2 md:flex mb-3">
+                
+                   
                     {{-- <div class="md:w-1/4 px-3">
                         <x-jet-label value="Descripcion"/>
                 </div> --}}
 
-                    <div class="md:w-1/3 ">
+                    <div class="md:w-2/3 px-3">
+
+                        <input type="hidden" id="txtDescripOriginal" wire:model="descripOriginal">
+
+                        <input type="hidden" id="txtCodigoOriginal" wire:model="codigoOriginal">
                         
+                        <x-jet-label value="Descripcion "/>
+
                         <input id="txtDescrip" class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text"  wire:model='descrip' />
                             
                         <x-jet-input-error for="descrip"/>
 
                     </div>
 
-                    <div class="md:w-1/3 ">
-                        <x-jet-label value="Codigo"/>
+                    <div class="md:w-1/3 mb-6">
+                        <x-jet-label value="Codigo "/>
 
-                        <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text"  wire:model='codigo'/>
+                        <input id="txtCodigo" class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text"  wire:model='codigo'/>
                         
                         <x-jet-input-error for="codigo"/>
                     </div>
 
                 </div>
+
             </div>
 
 
             <x-jet-label value="Observaciones"/>
+
             <textarea class="py-2 px-3 mb-3 rounded-lg border-2 border-gray-600 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" type="text" placeholder="Breve descripción de la categoría" rows="4" wire:model.defer='pre.pre_observacion'></textarea>
+            
             <x-jet-input-error for="pre.pre_observacion"/>
 
             <x-jet-label value="Imagen"/>
+
             <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 rounded-md">
+
                 <div class="flex w-full">
+
                     <div class="w-full">
                         <center>
                             <x-loading-medium>
@@ -298,7 +314,6 @@
            
 
     </x-modal>
-
 
     <!--Botón para agregar un nuevo prefabricado-->
 

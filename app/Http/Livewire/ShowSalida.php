@@ -80,6 +80,8 @@ class ShowSalida extends Component
         $this->emit('itemRemoved');
     }
 
+    
+
     public function destroyItem($id){
 
         unset($this->productos[$id]);

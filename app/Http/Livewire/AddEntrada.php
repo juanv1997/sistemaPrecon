@@ -255,9 +255,11 @@ class AddEntrada extends Component
     {
         $prefabricados = DB::table('tbl_prefabricado')
                             ->join('tbl_unidad','tbl_prefabricado.unidad_id','=','tbl_unidad.unidad_id')
+                            ->where('tbl_prefabricado.pre_status','=','A')
                             ->get();
         $materiales = DB::table('tbl_material')
                             ->join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
+                            ->where('tbl_material.material_status','=','A')
                             ->get();
                             
         $this->emit('render');
