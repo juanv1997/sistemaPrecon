@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class AllTransactions extends Component
 {
 
-    protected $listeners = ['filter'=>'setParameters'];
+    protected $listeners = ['filter'=>'setParameters','render'];
     public $search;
     public $tipoProducto="Prefabricado";
     public $tipoTransaccion = "Entradas";
@@ -26,6 +26,7 @@ class AllTransactions extends Component
     public $productoToggle = 0;
     public $stringResult = "hola";
     
+    
 
     public function setParameters($parameters){
 
@@ -36,6 +37,7 @@ class AllTransactions extends Component
         $this->dateEnd = $parameters["dateEnd"];
         $this->dateIntervalToggle = $parameters["dateToggle"];
         $this->productoToggle = $parameters["productoToggle"];
+       
     }
 
     public function filter(){

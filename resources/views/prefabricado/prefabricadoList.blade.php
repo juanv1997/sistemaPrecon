@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Prefabricado')
+@section('title', 'Prefabricados')
 
 @section('content_header')
 
@@ -18,15 +18,23 @@
 
     <div class="inline-flex">
 
+        
         @livewire('add-pre')
+        
 
         @livewire('add-feature',['tipoProducto'=>'pre'])
 
         <form action="{{ route('excelPre')  }}" method="get">
+
             <button  type="submit" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+               
                 <i class="far fa-file-excel text-lg text-white"></i>
+
             </button>
+            
         </form>
+
+        @livewire('create-qr',['queryType'=>'prefabricado'])
 
     </div>
 
@@ -339,6 +347,12 @@
             let preId = data.id
         
             Livewire.emit('updateStatus',preId);
+
+        }
+
+        const showQrModal = ()=>{
+
+            document.getElementById('createQr').showModal();
 
         }
    

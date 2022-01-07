@@ -1,8 +1,10 @@
 <div>
 
-     <x-jet-button wire:click="$emit('addFeature')">
-        Agregar característica
-     </x-jet-button> 
+    <div class="px-2">
+        <x-jet-button wire:click="$emit('addFeature')">
+            Agregar característica
+        </x-jet-button>
+    </div> 
 
     <x-modal-small>
 

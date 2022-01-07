@@ -30,9 +30,9 @@
                 <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                     <x-jet-label value="Tipo"/>
  
-                    <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" id="grid-state" wire:model.defer="material.tipo_id">
+                    <select  class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker  rounded" onchange="onChangeSelect(this)" id="cbTipo" wire:model.defer="material.tipo_id">
  
-                        <option >Seleccione una opción</option>
+                        <option value="default">Seleccione una opción</option>
  
                         @foreach ($tipos as $tipo)
  
@@ -50,9 +50,9 @@
  
                 <div class="md:w-1/2 px-3 mb-6 md:mb-0">
                  <x-jet-label value="Unidad"/>
-                 <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" id="grid-state" wire:model.defer="material.unidad_id">
+                 <select class="block appearance-none w-full bg-grey-lighter border-gray-600 focus:ring-gray-700 focus:border-transparent text-grey-darker rounded" onchange="onChangeSelect(this)" id="cbUnidad" wire:model.defer="material.unidad_id">
  
-                     <option >Seleccione una opción</option>
+                     <option value="default">Seleccione una opción</option>
  
                      @foreach ($unidades as $unidad)
  
@@ -90,15 +90,23 @@
              <div class="-mx-2 md:flex mb-3">
  
                  <div class="md:w-1/2 px-3">
-                     <x-jet-label value="Código"/>
-                         <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_cod'/>
-                     <x-jet-input-error for="material.material_cod"/>
+
+                    <x-jet-label value="Código"/>
+                    
+                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_cod'/>
+                    
+                    <x-jet-input-error for="material.material_cod"/>
+
                  </div>
  
                  <div class="md:w-1/2 px-3">
-                     <x-jet-label value="Stock inicial"/>
-                         <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Cantidad de stock inicial" wire:model.defer='material.material_stock'/>
-                     <x-jet-input-error for="material.material_stock"/>
+
+                    <x-jet-label value="Stock inicial"/>
+
+                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" min="1" placeholder="Cantidad de stock inicial" wire:model.defer='material.material_stock'/>
+                    
+                    <x-jet-input-error for="material.material_stock"/>
+
                  </div>
                  
              </div>

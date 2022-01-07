@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Prefabricado')
+@section('title', 'Materiales')
 
 @section('content_header')
     <center>
@@ -12,6 +12,7 @@
 
     <x-app-layout>
     
+       
 
         @livewire('message-banners')
         <div class="inline-flex ">
@@ -25,6 +26,9 @@
                     <i class="far fa-file-excel text-lg text-white"></i>
                 </button>
             </form>
+
+            @livewire('create-qr',['queryType'=>'material'])
+
         </div>
         @livewire('show-material')
         
@@ -63,7 +67,7 @@
             }
         )
     </script>
-     <script>
+    <script>
 
         function editMaterial(data) {
 
@@ -165,6 +169,27 @@ document.getElementById('editMaterialModal').close();
         Livewire.emit('updateStatus',materialId);
 
     }
+
+    const onChangeSelect = (data)=>{
+
+        let selectId = data.id;
+        let select = document.getElementById(selectId);
+
+
+        if (select.value == 'default') {
+            
+            Livewire.emit('reset',selectId);
+        }
+
+    }
+
+    const showQrModal = ()=>{
+
+        document.getElementById('createQr').showModal();
+
+    }
+
+    
   
   </script>
 

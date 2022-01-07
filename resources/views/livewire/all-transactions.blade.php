@@ -1,13 +1,17 @@
 <div >
    
     @php
+
         $productCount = 0;
+
     @endphp
 
     @foreach ($listItems as $item)
 
        @php
+
            $productCount++;
+
        @endphp
 
     @endforeach
@@ -24,9 +28,24 @@
                     </span>
                     
                         @if ( ($dateIntervalToggle == 1 || $productoToggle == 1) && $productCount!= 0  )
-                                        <button  wire:click="createReport" type="button" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
-                                            <i class="far fa-file-excel text-lg text-white"></i>
-                                        </button>
+                                        
+                            <button  wire:click="createReport" type="button" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+
+                                <i class="far fa-file-excel text-lg text-white"></i>
+
+                            </button>
+                            
+                            
+                             @livewire('create-qr', ['queryType' => 'transaccion',
+                                                     'tipo' => $tipoProducto,
+                                                     'transaccion' => $tipoTransaccion,
+                                                     'producto' => $producto,
+                                                     'dateBegin' => $dateBegin,
+                                                     'dateEnd' => $dateEnd,
+                                                     'dateToggle' => $dateIntervalToggle,
+                                                     'productoToggle' => $productoToggle,
+                                                     'stringResult' => $stringResult
+                                                    ] ) 
                         @endif
                     
                 </div>  

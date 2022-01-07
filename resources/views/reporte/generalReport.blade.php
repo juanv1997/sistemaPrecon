@@ -145,5 +145,12 @@
 
          }    
 
+         const showQrModal = ()=>{
+
+            document.getElementById('createQr').showModal();
+            Livewire.emit('render');
+
+        }
+
     </script>
 @stop

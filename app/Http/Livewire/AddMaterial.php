@@ -5,9 +5,11 @@ namespace App\Http\Livewire;
 use App\Models\Material;
 use App\Models\Tipo;
 use App\Models\Unidad;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AddMaterial extends Component
 {
@@ -17,7 +19,7 @@ class AddMaterial extends Component
     public $openModal = false;
     public Material $material;
     public $image;
-    public $listeners = ['featureAdded'=>'render'];
+    public $listeners = ['featureAdded'=>'render','reset'=>'resetSelect'];
     
     public function mount(Material $material){
 
@@ -70,14 +72,34 @@ class AddMaterial extends Component
 
     }
 
-    public function render()
-    {
+    public function resetSelect($selectId){
 
+        switch ($selectId) {
+
+            case 'cbTipo':
+
+                $this->material->tipo_id = null;
+
+                break;
+
+            case 'cbUnidad':
+
+                $this->material->unidad_id = null;
+            
+                break;
+        }
+
+    }
+
+
+    public function render()
+    
+    {
         return view('livewire.material.add-material',[
 
             'tipos'=>Tipo::all()->where('tipo_pro_id','3'),
-            'unidades' => Unidad::all()->where('tipo_pro_id','3')
-
+            'unidades' => Unidad::all()->where('tipo_pro_id','3'),
+             
         ]);
     }
 }
