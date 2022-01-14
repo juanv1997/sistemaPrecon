@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => '<b>PRECON</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'img/image_precon.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -285,60 +285,60 @@ return [
 
       
       
-        // [
+        //  [
         //     'text'    => 'multilevel',
         //     'icon'    => 'fas fa-fw fa-share',
         //     'submenu' => [
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text'    => 'level_one',
-        //             'url'     => '#',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'level_two',
-        //                     'url'  => '#',
-        //                 ],
-        //                 [
-        //                     'text'    => 'level_two',
-        //                     'url'     => '#',
-        //                     'submenu' => [
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                         [
-        //                             'text' => 'level_three',
-        //                             'url'  => '#',
-        //                         ],
-        //                     ],
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
+        //          [
+        //              'text' => 'level_one',
+        //              'url'  => '#',
+        //          ],
+        //          [
+        //              'text'    => 'level_one',
+        //              'url'     => '#',
+        //              'submenu' => [
+        //              [
+        //                      'text' => 'level_two',
+        //                      'url'  => '#',
+        //                  ],
+        //                  [
+        //                      'text'    => 'level_two',
+        //                      'url'     => '#',
+        //                      'submenu' => [
+        //                      [
+        //                              'text' => 'level_three',
+        //                              'url'  => '#',
+        //                          ],
+        //                          [
+        //                              'text' => 'level_three',
+        //                              'url'  => '#',
+        //                          ],
+        //                      ],
+        //                  ],
+        //              ],
+        //          ],
+        //          [
+        //              'text' => 'level_one',
+        //          'url'  => '#',
+        //          ],
         //     ],
-        // ],
-        // ['header' => 'labels'],
-        // [
-        //     'text'       => 'important',
-        //     'icon_color' => 'red',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url'        => '#',
-        // ],
-        // [
+        //  ],
+        //  ['header' => 'labels'],
+        //  [
+        //      'text'       => 'important',
+        //      'icon_color' => 'red',
+        //      'url'        => '#',
+        //  ],
+        //  [
+        //      'text'       => 'warning',
+        //      'icon_color' => 'yellow',
+        //      'url'        => '#',
+        //  ],
+        //  [
         //     'text'       => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url'        => '#',
-        // ],
+        //  'icon_color' => 'cyan',
+        //      'url'        => '#',
+        //  ],
     ],
 
     /*
@@ -412,12 +412,12 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.min.js',
                 ],
             ],
         ],

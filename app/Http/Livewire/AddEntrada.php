@@ -19,13 +19,19 @@ class AddEntrada extends Component
     //public $byProduct = true;
     //public $byCode = false;
     public $stockProducto = 0;
-    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput','desactivateButton'];
+
+    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput','desactivateButton','getProducts','setCode','setResultList'];
+    
     public $inputType = "product";
 
     protected $messages = [
 
-        "cantidadCod.required"=>"Debe ingresar una cantidad de items",
+        "cantidadCod.required"=>"Debe ingresar una cantidad ",
+        "cantidadCod.min"=>"Debe ingresar una cantidad  mayor a 0",
+        "cantidadCod.max"=>"Debe ingresar una cantidad menor a 10000",
         "cantidadPro.required"=>"Debe ingresar una cantidad de items",
+        "cantidadPro.min"=>"Debe ingresar una cantidad mayor a 0",
+        "cantidadPro.max"=>"Debe ingresar una cantidad menor a 10000",
         "codigo.required"=>"Debe ingresar un codigo de producto",
         "producto.required"=>"Debe escoger un producto de la lista"
 
@@ -40,7 +46,7 @@ class AddEntrada extends Component
             return[
 
                 'producto'=>'required',
-                'cantidadPro'=>'required'
+                'cantidadPro'=>'required|numeric|min:1|max:10000',
                 
             ];
 
@@ -48,7 +54,7 @@ class AddEntrada extends Component
             return[
 
                 'codigo'=>'required',
-                'cantidadCod'=>'required'
+                'cantidadCod'=>'required|numeric|min:1|max:10000'
 
             ];
         }
@@ -232,24 +238,29 @@ class AddEntrada extends Component
 
     }
 
-    // public function changeSelect($inputType){
+    public function getProducts(){
 
-    //     if($inputType=='byProduct'){
+        $prefabricados = DB::table('tbl_prefabricado')
+                        ->where('tbl_prefabricado.pre_status','=','A')
+                        ->select('tbl_prefabricado.pre_codigo','tbl_prefabricado.pre_descripcion',
+                                'tbl_prefabricado.pre_id')
+                        ->get();
+        $materiales = DB::table('tbl_material')
+                        ->where('tbl_material.material_status','=','A')
+                        ->select('tbl_material.material_cod','tbl_material.material_descrip',
+                                'tbl_material.material_id')
+                        ->get();
 
-    //         $this->byProduct = true;
-    //         $this->byCode = false;
-    //         $this->addMethod = "addItemByPro";
+         $this->emit('loadProducts',$prefabricados,$materiales);
 
-    //     }
-    //     else{
+    }
 
-    //         $this->byProduct = false;
-    //         $this->byCode = true;
-    //         $this->addMethod = "addItemByCode";
-    //     }
+    public function setCode($code){
 
+        $this->codigo = $code;
 
-    // }
+    }
+
 
     public function render()
     {

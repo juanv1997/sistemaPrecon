@@ -147,7 +147,7 @@
 
     </div>
 
-    <div wire:loading  wire:target="filter" class="fixed inset-0 px-96 bg-gray-800 bg-opacity-70">
+    <div wire:loading  wire:target="filter,tipoProducto" class="fixed inset-0 px-96 bg-gray-800 bg-opacity-70">
 
         <div class="text-center py-48 px-72">
 

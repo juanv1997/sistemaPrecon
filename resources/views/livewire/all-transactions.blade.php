@@ -1,5 +1,5 @@
 <div >
-   
+    
     @php
 
         $productCount = 0;
@@ -15,10 +15,80 @@
        @endphp
 
     @endforeach
+    
+    <x-modal>
 
-    <div class="py-8">
+        <x-slot name="colorIcon">blue-100</x-slot>
 
-        <div class="py-2 bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500 ">
+        <x-slot name="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+            </svg>
+        </x-slot>
+
+        <x-slot name="action">false</x-slot>
+
+        <x-slot name="cancel">false</x-slot>
+
+        <x-slot name="targetMethodLoading"></x-slot>
+
+       <x-slot name="loadingMessage"></x-slot>
+
+       <x-slot name="modalId">createQr</x-slot>
+
+       <x-slot name="headerIcon"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-red-700" width="24" height="24" viewBox="0 0 24 24"><path d="M12 5.177l8.631 15.823h-17.262l8.631-15.823zm0-4.177l-12 22h24l-12-22zm-1 9h2v6h-2v-6zm1 9.75c-.689 0-1.25-.56-1.25-1.25s.561-1.25 1.25-1.25 1.25.56 1.25 1.25-.561 1.25-1.25 1.25z"/></svg></x-slot>
+
+       <x-slot name="eventClick"></x-slot>
+
+       <x-slot name="buttonText"></x-slot>
+
+       <x-slot name="title">
+               
+            <div class="text-center">
+
+                Descargar busqueda de {{$stringResult}} en formato {{$documentType}}
+
+            </div>
+
+       </x-slot>
+
+        <div class="text-center py-1">
+            <select wire:model="documentType" class="rounded-full w-1/3 text-center"> 
+                <option value="pdf">Documento PDF</option>
+                <option value="excel">Documento Excel</option>
+            </select> 
+        </div>
+
+        <div class="px-44 text-center">
+
+            <label >Escanee el codigo para descargar {{$stringResult}} en formato {{$documentType}}</label >
+
+        </div>
+
+        
+        <div class="py-6 px-44">
+
+            {{$qrCode}}
+
+        </div>     
+        
+        
+        <x-loading>
+
+            <x-slot name="targetMethod">
+    
+                documentType
+    
+            </x-slot>
+    
+        </x-loading>
+
+
+    </x-modal>
+
+    <div class="py-4">
+
+        <div class="py-1 bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500 ">
             
             @if ($productCount != 0)
 
@@ -28,24 +98,141 @@
                     </span>
                     
                         @if ( ($dateIntervalToggle == 1 || $productoToggle == 1) && $productCount!= 0  )
+
+
+                        <div class=" w-1/3 mx-auto ">
+                           
+                            <div
+                              class="bg-gray-200 px-6 py-4 my-3 w-3/4 mx-auto rounded-md flex items-center space-x-7"
+                            >
+
+                                {{-- Boton excel  --}}
+
+                                <button  wire:click="createReport" type="button" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+
+                                    <i class="far fa-file-excel text-lg text-white"></i>
+
+                                </button>
+
+                                {{-- Boton descargar pdf --}}
+
+                                <form action="{{ route('pdfTransaccion',['action'=>"download" ])  }}"  method="GET">
+        
+                                    <button  type="submit" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                    
+                                        <i class="far fa-file-pdf text-lg text-white"></i>
+                            
+                                    </button>
+
+                                    <input type="hidden" name="dateIsSet" id="dateIsSet" value="{{$dateIntervalToggle}}">
+
+                                    <input type="hidden" name="productoIsSet" id="productoIsSet" value="{{$productoToggle}}">
+
+                                    <input type="hidden" name="tipo" id="tipo" wire:model="tipoProducto">
+
+                                    <input type="hidden" name="transaccion" id="transaccion" wire:model="tipoTransaccion">
+
+                                    @if($productoToggle==1) 
+                                    
+                                        <input type="hidden" name="productoId" id="productoId" wire:model="producto">
                                         
-                            <button  wire:click="createReport" type="button" class="inline-flex items-center px-2 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                    @endif 
 
-                                <i class="far fa-file-excel text-lg text-white"></i>
+                                    @if($dateIntervalToggle==1) 
+                                    
+                                        <input type="hidden" name="dateEnd" id="dateEnd" wire:model="dateEnd">
+                                        
+                                        <input type="hidden" name="dateBegin" id="dateBegin" wire:model="dateBegin">
 
-                            </button>
+                                    @endif 
+                                
+                                    
+                                </form>
+
+                                {{-- Boton visualizar pdf --}}
+
+                                 {{-- <a  href="{{ route('pdfMaterial',['action'=>"view"])  }}" 
+                                    class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" 
+                                    target="_blank"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                    
+                                </a>  --}}
+
+
+                                <button  onclick="redirectRequest()" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                    
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+
+                        
+                                </button>
+
+                                {{-- <input type="hidden" id="productoIsSet" wire:model="dateIntervalToggle">
+
+                                <input type="hidden" id="dateIsSet" wire:mode="produtoToggle" > --}}
+
+                                {{-- <form action="{{ route('pdfTransaccion',['action'=>"view"])  }}" method="GET">
+        
+                                    <button  type="submit" class="inline-flex items-center px-1 py-1 bg- border border-transparent rounded-md font-medium text-sm  tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                    
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
                             
+                                    </button>
+
+
+                                    <input type="hidden" name="dateIsSet" value="{{$dateIntervalToggle}}">
+
+                                    <input type="hidden" name="productoIsSet" value="{{$productoToggle}}">
+
+                                    <input type="hidden" name="tipo" wire:model="tipoProducto">
+
+                                    <input type="hidden" name="transaccion" wire:model="tipoTransaccion">
+
+                                    @if($productoToggle==1) 
+                                    
+                                        <input type="hidden" name="productoId" wire:model="producto">
+                                        
+                                    @endif 
+
+                                    @if($dateIntervalToggle==1) 
+                                        
+                                        <input type="hidden" name="dateBegin" wire:model="dateBegin">
+
+                                        <input type="hidden" name="dateEnd" wire:model="dateEnd">
+
+                                    @endif 
+                                    
+                                </form> --}}
+
+                                {{-- Boton codigo qr --}}
+
+                                @if ($qrCode)
+
+                                        <button onclick="showQrModal()" type="submit" class="items-center px-1 py-1 border-transparent rounded-md font-medium text-sm tracking-widest hover:bg-gray-700 bg-gray-800 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                        
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             
-                             @livewire('create-qr', ['queryType' => 'transaccion',
-                                                     'tipo' => $tipoProducto,
-                                                     'transaccion' => $tipoTransaccion,
-                                                     'producto' => $producto,
-                                                     'dateBegin' => $dateBegin,
-                                                     'dateEnd' => $dateEnd,
-                                                     'dateToggle' => $dateIntervalToggle,
-                                                     'productoToggle' => $productoToggle,
-                                                     'stringResult' => $stringResult
-                                                    ] ) 
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                            
+                                            </svg>
+                            
+                                        </button>
+                            
+                                @endif
+                            
+                            </div>
+                          
+                        </div>
+                            
                         @endif
                     
                 </div>  
@@ -248,11 +435,9 @@
 
             @endif 
 
-    </div>
+            </div>
 
     </div>
-
-    
 
     <div wire:loading  class="fixed inset-0 px-96 bg-gray-800 bg-opacity-70">
 
@@ -301,6 +486,8 @@
             </div>
     
     </div>
+
+
 
    
 

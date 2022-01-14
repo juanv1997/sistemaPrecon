@@ -32,25 +32,36 @@ class AddMaterial extends Component
    
       'material.tipo_id'=>'required',
       'material.unidad_id'=>'required',
-      'material.material_precio'=>'required',
-      'material.material_descrip'=>'required',
-      'material.material_observacion'=>'required',
-      'material.material_cod'=>'required',
-      'material.material_stock'=>'required',
+      'material.material_precio'=>'required|numeric|min:1|max:10000',
+      'material.material_descrip'=>'required|max:50',
+      'material.material_observacion'=>'required|max:120',
+      'material.material_cod'=>'required|max:50',
+      'material.material_stock'=>'required|numeric|min:1|max:10000',
       'image'=>'required'
 
     ];
 
     protected $messages = [
        
-        'material.material_precio.required' => 'Dede ingresar un valor en el precio',
         'material.material_descrip.required' => 'Dede ingresar una descripción',
+        'material.material_descrip.max' => 'La descripción debe tener máximo 50 caracteres',
         'material.unidad_id.required' => 'Debe seleccionar una unidad para el material',
         'material.tipo_id.required' => 'Debe seleccionar un tipo de material ',
         'image.required'=>'Debe insertar una imagen para el material',
         'material.material_observacion.required' => 'Dede ingresar una descripción',
+        'material.material_observacion.max' => 'La descripción debe tener máximo 120 caracteres', 
         'material.material_cod.required' => 'Dede ingresar un código para el material',
+        'material.material_cod.max' => 'El código debe tener máximo 50 caracteres',
         'material.material_stock.required' => 'Dede ingresar un stock',
+        'material.material_stock.min' => 'El stock debe ser mayor a 0',
+        'material.material_stock.max' => 'El stock debe ser menor a 10000',
+        'material.material_precio.required' => 'Dede ingresar un valor en el precio',
+        'material.material_precio.min' => 'El precio debe ser mayor a 0',
+        'material.material_precio.max' => 'El precio debe ser menor a 10000',
+        
+       
+        
+        
     ];
 
     public function addMaterial(){

@@ -26,7 +26,7 @@
 
         <x-slot name="action">false</x-slot>
 
-        <x-slot name="cancel">true</x-slot>
+        <x-slot name="cancel">false</x-slot>
 
         <x-slot name="targetMethodLoading"></x-slot>
 
@@ -42,43 +42,59 @@
 
        <x-slot name="title">
 
+
          @switch($queryType)
 
             @case('material')
 
-                Descargar lista de materiales
+                Descargar lista de materiales en formato {{$documentType}}
 
                 @break
 
             @case('prefabricado')
                
-                Descargar lista de prefabricados
+                Descargar lista de prefabricados en formato {{$documentType}}
 
                 @break
 
-            {{-- @case('transaccion')
-               
-                Descargar busqueda de {{$stringResult}}
-
-            @break  --}}
         
         @endswitch
 
        </x-slot>
 
+        <div class="text-center py-1">
+            <select wire:model="documentType" class="rounded-full w-1/3 text-center"> 
+                <option value="pdf">Documento PDF</option>
+                <option value="excel">Documento Excel</option>
+            </select> 
+        </div>
+
+
+
+        
+        
         @switch($queryType)
 
             @case('material')
 
                 <div class="px-44 text-center">
 
-                    <label >Escanee el codigo para descargar la lista de materiales</label> 
+                    <label >Escanee el codigo para descargar la lista de materiales en formato {{$documentType}} </label> 
                        
                 </div>
 
                 <div class="py-6 px-44">
 
-                    {{QrCode::size(300)->color('0','128','255')->generate("http://192.168.100.4/sistemaPrecon/public/api/materiales");}}
+                    @if ($documentType == 'excel')
+
+                        {{QrCode::size(300)->color('0','128','255')->generate("http://192.168.100.4/sistemaPrecon/public/api/excelMateriales");}}
+
+                    @else
+
+                        {{QrCode::size(300)->color('0','128','255')->generate("http://192.168.100.4/sistemaPrecon/public/pdfMaterial/download");}}
+
+                    @endif
+
 
                 </div>
 
@@ -88,44 +104,45 @@
                 
                 <div class="px-44 text-center">
 
-                    <label >Escanee el codigo para descargar la lista de prefabricados</label>
+                    <label class="text-center">Escanee el codigo para descargar la lista de prefabricados en formato {{$documentType}}</label>
 
                 </div>
 
                 <div class="py-6 px-44">
 
-                    {{QrCode::size(300)->color('0','128','255')->generate("http://192.168.100.4/sistemaPrecon/public/api/prefabricados");}}
+                    @if ($documentType == 'excel')
+
+                        {{QrCode::size(300)->color('0','128','255')->generate("http://192.168.100.4/sistemaPrecon/public/api/excelPrefabricados");}}
+
+                    @else
+
+                        {{QrCode::size(300)->color('0','128','255')->generate("http://192.168.100.4/sistemaPrecon/public/pdfPre/download");}}
+                    
+                    @endif
+
+                    
 
                 </div>
 
-                @break
-            
-            {{-- @case('transaccion')
-                
-                <div class="px-44 text-center">
-
-                    <label >Escanee el codigo para descargar {{$stringResult}}</label>
-
-                </div>
-
-                <div class="py-6 px-44">
-
-                    @php
-                        $stringQuery = str_replace(" ", "", $stringResult); 
-                    @endphp
-
-                     {{QrCode::size(300)->color('0','128','255')->generate(" http://192.168.100.4/sistemaPrecon/public/api/transaccion?tipo=$tipo&transaccion=$transaccion&producto=$producto&dateBegin=$dateBegin&dateEnd=$dateEnd&dateToggle=$dateToggle&productoToggle=$productoToggle&stringResult=$stringQuery");}} 
-
-                </div>
-
-            @break --}}
+                @break   
 
         @endswitch
 
 
+        <x-loading>
+
+            <x-slot name="targetMethod">
+    
+                documentType
+    
+            </x-slot>
+    
+        </x-loading>
         
 
 
     </x-modal>
+
+    
 
 </div>

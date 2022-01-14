@@ -22,12 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('prefabricados',function ()
+//Creacion de excel
+
+Route::get('excelPrefabricados',function ()
 {
     return Excel::download(new PreExport,'prefabricados.xlsx');
 });
 
-Route::get('materiales',function ()
+Route::get('excelMateriales',function ()
 {
     return Excel::download(new MaterialExport,'materiales.xlsx');
 });
@@ -80,5 +82,14 @@ Route::get('transaccion', function () {
 
     
 });
+
+//Creacion de PDF
+
+// Route::get('pdfPre/{action}' , [PdfController::class,'createPrePdf'])->name('pdfPre');
+
+// Route::get('pdfMaterial/{action}', [PdfController::class,'createMaterialPdf'])->name('pdfMaterial');
+
+
+
 
 

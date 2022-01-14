@@ -1,4 +1,5 @@
 <div>
+
     <dialog wire:ignore.self id='{{$modalId}}' class="h-auto w-11/12 md:w-1/2 bg-white rounded-md ">
 
 
@@ -11,7 +12,7 @@
                    {{$icon}}
                 </div> 
 
-                <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold">
+                <div class="flex w-10/12 h-auto py-3 justify-center text-center items-center text-2xl font-bold">
                       {{$title}}
                 </div>
 
@@ -54,15 +55,13 @@
             <x-slot name="targetMethod">
                 {{$targetMethodLoading}}
             </x-slot>
-
+    
             <x-slot name="message">
                 {{$loadingMessage}}
             </x-slot>
-
-        </x-loading>
-
-    </dialog>
-
     
+        </x-loading> 
+       
+    </dialog>
 
 </div>

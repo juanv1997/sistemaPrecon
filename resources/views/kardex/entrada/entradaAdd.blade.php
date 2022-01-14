@@ -249,15 +249,242 @@
 
     }
 
-    function copyToClipBoard() {
+    //Buscador de entrada por codigo 
 
-        var content = document.getElementById();
+    const showSearchTab = ()=>{
+        
 
-        content.select();
-        document.execCommand('copy');
+        if (txtCode.value.length > 0) {
 
-        alert("Copied!");
+             searchTab.classList.remove('hidden')
+
+        }else{
+
+            searchTab.classList.add('hidden');
+
+        }
+
+
+
    }
+
+   const hideSearchTab = ()=>{
+    
+
+        if (!itemPressed) {
+
+            searchTab.classList.add('hidden')
+            
+        }
+
+
+   }
+
+     window.addEventListener('click', (e)=> {
+        
+         if (!document.getElementById('txtCode').contains(e.target)) {
+            
+            searchTab.classList.add('hidden')
+
+         } 
+     })
+
+ 
+
+    let txtCode = document.getElementById('txtCode');
+
+    let searchList = document.getElementById('searchList');
+
+    let searchFilter = document.getElementById('searchFilter');
+
+    let searchTab = document.getElementById('searchTab');
+
+    let itemPressed = false;
+
+    let prefabricados = null;
+
+    let materiales = null;
+
+    
+
+
+    window.onload = ()=>{
+
+        Livewire.emit('getProducts');
+ 
+    }
+
+   Livewire.on('loadProducts',(prefabricadosList,materialesList) => {         
+           
+         prefabricados = prefabricadosList;
+
+         materiales = materialesList;
+
+         console.log(prefabricados);
+
+         console.log(materiales);
+
+     });
+
+
+    const setCode = (data)=>{
+
+        itemPressed = true;
+        
+        txtCode.value = data.dataset.code;
+
+        Livewire.emit('setCode',data.dataset.code);
+       
+        searchTab.classList.add('hidden');
+
+    } 
+
+    txtCode.addEventListener('keyup',function(e){
+
+        let resultList = [];
+
+        let code = txtCode.value.toUpperCase();
+
+        let codeLength = code.length;
+
+        let filter = searchFilter.value;
+
+        let notFoundMsg = document.getElementById('notFoundMsg');
+
+       
+
+
+      $('#searchList li').remove();
+
+     
+
+
+        if (codeLength > 0) {
+
+            searchTab.classList.remove('hidden');
+
+            if (filter == "todos") {
+                
+
+                materiales.forEach( (material) =>{ 
+
+                    if (codeLength <= material.material_cod.length  ) {
+
+
+                            if (code == material.material_cod.substring(0,codeLength)) {
+
+                                resultList.push({
+                                    "code" : material.material_cod,
+                                    "descrip" : material.material_descrip,
+                                    "id" : "li-material-"+material.material_id
+                                });
+
+                            }
+
+                    }
+
+                }) 
+
+                prefabricados.forEach( (pre) =>{ 
+
+                    if (codeLength <= pre.pre_codigo.length  ) {
+
+
+                            if (code == pre.pre_codigo.substring(0,codeLength)) {
+
+                                resultList.push({
+                                    "code" : pre.pre_codigo,
+                                    "descrip" : pre.pre_descripcion,
+                                    "id" : "li-pre-"+pre.pre_id
+                                });
+
+                            }
+
+                    }
+
+                })
+
+            }else{
+
+                if (filter=="material") {
+
+                    materiales.forEach( (material) =>{ 
+
+                        if (codeLength <= material.material_cod.length  ) {
+
+                                if (code == material.material_cod.substring(0,codeLength)) {
+
+                                    resultList.push({
+                                        "code" : material.material_cod,
+                                        "descrip" : material.material_descrip,
+                                        "id" : "li-material-"+material.material_id
+                                    });
+
+                                }
+
+                        }
+
+                    })
+                    
+                }else{
+
+                    prefabricados.forEach( (pre) =>{ 
+
+                        if (codeLength <= pre.pre_codigo.length  ) {
+
+                                if (code == pre.pre_codigo.substring(0,codeLength)) {
+
+                                    resultList.push({
+                                        "code" : pre.pre_codigo,
+                                        "descrip" : pre.pre_descripcion,
+                                        "id" : "li-pre-"+pre.pre_id
+                                    });
+
+                                }
+
+                        }
+
+                    })
+
+
+                }
+
+            }
+
+            resultList.forEach( (result) =>{ 
+
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(result.code + "(" + result.descrip + ")"));
+                li.setAttribute('class','p-2 hover:bg-gray-100 cursor-pointer');
+                li.setAttribute('id',result.id);
+                li.setAttribute('data-code',result.code);
+                li.setAttribute('onclick','setCode(this)');
+                searchList.appendChild(li);
+
+            })
+
+            if (resultList.length == 0) {
+
+                notFoundMsg.classList.remove('hidden');
+                
+
+            }else{
+
+                notFoundMsg.classList.add('hidden');
+
+            }
+                
+        }else{
+
+            notFoundMsg.classList.add('hidden');
+
+            searchTab.classList.add('hidden');
+
+        }
+        
+
+    })
+
 
 </script>
 

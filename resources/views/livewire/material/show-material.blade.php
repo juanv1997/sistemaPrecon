@@ -300,7 +300,7 @@
       <div class='bg-white shadow-md rounded my-2'>
             <table class='min-w-max w-full table-auto'>
                 <thead class="text-center">
-                    <tr class='bg-gray-200 text-gray-600  text-sm leading-normal'>
+                    <tr class='bg-gray-200 text-gray-600 text-sm leading-normal'>
 
                         <th class='py-3 px-6'>Código</th>
                         <th class='py-3 px-6'>Tipo</th>

@@ -13,6 +13,8 @@ use App\Models\Unidad;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Ramsey\Uuid\Type\Time;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class AddPre extends Component
 {
@@ -42,13 +44,14 @@ class AddPre extends Component
         'pre.resistencia_id'=>'required',
         'pre.tipo_id'=>'required',
         'pre.unidad_id'=>'required',
-        'pre.pre_observacion'=>'required',
-        'pre.pre_precio'=>'required|max:4',
-        'pre.pre_stock'=>'required|max:4',
+        'pre.pre_observacion'=>'required|max:120',
+        'pre.pre_precio'=>'required|max:10000|numeric|min:1',
+        'pre.pre_stock'=>'required|max:10000|numeric|min:1',    
         'image' => 'required',
     ];
 
     protected $messages = [
+
         'pre.pre_precio.required' => 'Dede ingresar un valor en el precio',
         'pre.capa_id.required'=>'Debe seleccionar una capa',
         'pre.color_id.required'=>'Debe seleccionar un color',
@@ -61,8 +64,12 @@ class AddPre extends Component
         'pre.pre_precio.required'=>'Debe ingresar un precio',
         'pre.pre_stock.required'=>'Debe ingresar un stock',
         'image.required' => 'Debe seleccionar una imagen',
-        'pre.pre_stock.max'=>'Solo se puede ingresar un valor maximo de 4 digitos',
-        'pre.pre_precio.max'=>'Solo se puede ingresar un valor maximo de 4 digitos'
+        'pre.pre_stock.max'=>'Solo se puede ingresar un valor maximo 10000',
+        'pre.pre_precio.max'=>'Solo se puede ingresar un valor maximo 10000',
+        'pre.pre_stock.min'=>'Se debe ingresar un valor mayor a 0',
+        'pre.pre_precio.min'=>'Se debe ingresar un valor mayor a 0',
+        'pre.pre_observacion.max'=>'Solo se puede ingresar una observacion de maximo 120 caracteres',
+
 
     ];
 
@@ -115,13 +122,13 @@ class AddPre extends Component
         
         date_default_timezone_set("America/Lima");
 
-        $tipo = Tipo::find($this->pre->tipo_id);
-        $espesor = Espesor::find($this->pre->espesor_id);
-        $color = Color::find($this->pre->color_id);
-        $resistencia = Resistencia::find($this->pre->resistencia_id);
-        $capa = Capa::find($this->pre->capa_id);
-        $codigo = null;
-        $descrip = null;
+        // $tipo = Tipo::find($this->pre->tipo_id);
+        // $espesor = Espesor::find($this->pre->espesor_id);
+        // $color = Color::find($this->pre->color_id);
+        // $resistencia = Resistencia::find($this->pre->resistencia_id);
+        // $capa = Capa::find($this->pre->capa_id);
+        // $codigo = null;
+        // $descrip = null;
 
             // if($tipo->tipo_nombre =="Bloq"){
 
@@ -279,9 +286,9 @@ class AddPre extends Component
                 // $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$resistencia->resistencia_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
                 // $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."R"."=".$resistencia->resistencia_cantidad." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
             
-            $sameProduct = $this->validateProductDescrip($descrip);
+            $sameProduct = $this->checkSameProduct($this->descrip, $this->codigo);
             
-            if (false) {
+            if ($sameProduct) {
                     
                 $this->emit('sameProduct');
 
@@ -328,7 +335,6 @@ class AddPre extends Component
         }
 
     } 
-
     
     public function fillMainParameters(){
 
@@ -467,17 +473,24 @@ class AddPre extends Component
 
     }
     
-    public function validateProductDescrip($descrip){
+    
+    public function checkSameProduct($descrip, $codigo){
+
+        $value = false;
 
         $prefabricados = Prefabricado::all();
 
         foreach ($prefabricados as $prefabricado) {
-            if ($prefabricado->pre_descripcion == $descrip) {
-                return true;
+
+            if ($prefabricado->pre_descripcion == $descrip || $prefabricado->pre_codigo == $codigo) {
+                
+                $value = true;
+
             }
         }
 
-        return false;
+
+        return $value;
 
     }
 

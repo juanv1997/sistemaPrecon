@@ -36,7 +36,7 @@
 
 @section('js')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 
     <script>
         
@@ -147,10 +147,62 @@
 
          const showQrModal = ()=>{
 
-            document.getElementById('createQr').showModal();
-            Livewire.emit('render');
+            document.getElementById('createQr').showModal();  
+        }
+
+        const redirectRequest = ()=>{
+
+            let dateIsSet = document.getElementById('dateIsSet').value;
+
+            let productoIsSet = document.getElementById('productoIsSet').value;
+
+            let tipo = document.getElementById('tipo').value;
+
+            let transaccion = document.getElementById('transaccion').value;
+            
+            let urlBase = "{{ route('pdfTransaccion',['action'=>"view"])}}"+"?"+"dateIsSet="+dateIsSet+"&productoIsSet="+productoIsSet+"&tipo="+tipo+"&transaccion="+transaccion;
+
+            let urlRequest = "";
+
+
+            if(productoIsSet == 1 &&  dateIsSet == 1){
+
+                let dateBegin = document.getElementById('dateBegin').value;
+
+                let dateEnd = document.getElementById('dateEnd').value;
+
+                let productoId = document.getElementById('productoId').value;
+
+                urlRequest = urlBase+"&productoId="+productoId+"&dateBegin="+dateBegin+"&dateEnd="+dateEnd;
+
+            }else{
+
+                if (dateIsSet == 1) {
+
+                    let dateBegin = document.getElementById('dateBegin').value;
+
+                    let dateEnd = document.getElementById('dateEnd').value;
+
+                    urlRequest = urlBase+"&dateBegin="+dateBegin+"&dateEnd="+dateEnd;
+
+                }else{
+
+                    if (productoIsSet == 1) {
+
+                        let productoId = document.getElementById('productoId').value;
+                        
+                        urlRequest = urlBase+"&productoId="+productoId;
+
+                    }
+
+                }
+
+            }
+                            
+            window.open(urlRequest,"_blank");
 
         }
+
 
     </script>
 @stop

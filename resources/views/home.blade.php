@@ -125,7 +125,7 @@
                 </dl>
             </div>
 
-            <div class=" hover:bg-blue-200 transform hover:scale-110 transition-all duration-150 p-6 bg-blue-100 shadow rounded-2xl">
+            {{-- <div class=" hover:bg-blue-200 transform hover:scale-110 transition-all duration-150 p-6 bg-blue-100 shadow rounded-2xl">
                 
                 <h1 class="text-2xl font-medium text-gray-800">Entradas de hoy : {{$date}} </h1>
 
@@ -143,17 +143,17 @@
                     <label for="">Prefabricados: {{$countSalidasPre}} </label>
                     <label for="">Materiales : {{$countSalidasMaterial}} </label>
                 </div>
-            </div>
+            </div> --}}
 
         </section>
-
-        <section class="grid gap-6 my-6 md:grid-cols-3 px-3">
+{{-- 
+         <section class="grid gap-6 my-6 md:grid-cols-3 px-3">
     
                 <div class="hover:bg-blue-200 transform hover:scale-110 transition-all duration-150 p-6 bg-blue-100 shadow rounded-2xl">
                     <canvas id="myChart" width="50" height="50"></canvas>
                 </div>
             
-        </section>
+        </section>  --}}
            
         {{-- <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Material;
 use App\Models\Prefabricado;
+use App\Models\Unidad;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\Livewire;
@@ -21,15 +22,26 @@ class AddSalida extends Component
     public $stockProducto = 0;
     public $buttonActivated = false;
     public $showDefaultOption = true;
-    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput','desactivateButton'];
+    protected $listeners  = ['defaultItemRemoved','reset' => 'resetSelect','activateButton','resetProductOption','changeToCode'=>'selectTypeProductInput','changeToProduct'=>'selectTypeProductInput','desactivateButton','getProducts','setCode','setResultList','getStockProducto'];
     public $test = "hola";
     public $inputType = "product";
     public $searchResults ;
+    public $stockCod = 0;
+
+    public $itemUnidad;
+
+    public $stringResult= "";
     
+   
+   
     protected $messages = [
 
-        "cantidadCod.required"=>"Debe ingresar una cantidad de items",
+        "cantidadCod.required"=>"Debe ingresar una cantidad",
+        "cantidadCod.min"=>"Debe ingresar una cantidad  mayor a 0",
+        "cantidadCod.max"=>"Debe ingresar una cantidad menor a 10000",
         "cantidadPro.required"=>"Debe ingresar una cantidad de items",
+        "cantidadPro.min"=>"Debe ingresar una cantidad mayor a 0",
+        "cantidadPro.max"=>"Debe ingresar una cantidad menor a 10000",
         "codigo.required"=>"Debe ingresar un codigo de producto",
         "producto.required"=>"Debe escoger un producto de la lista"
 
@@ -44,7 +56,7 @@ class AddSalida extends Component
             return[
 
                 'producto'=>'required',
-                'cantidadPro'=>'required'
+                'cantidadPro'=>'required|numeric|min:1|max:10000',
                 
             ];
 
@@ -52,7 +64,7 @@ class AddSalida extends Component
             return[
 
                 'codigo'=>'required',
-                'cantidadCod'=>'required'
+                'cantidadCod'=>'required|numeric|min:1|max:10000'
 
             ];
         }
@@ -64,15 +76,16 @@ class AddSalida extends Component
 
     //     //$this->buttonActivated = false;
 
-    // }
+    // }'
     // public function desactivateButton(){
 
     //     $this->buttonActivated = true;
 
     // }
-    
+
     public function addItemByCode(){
 
+            
         
             $this->validate();
 
@@ -310,6 +323,227 @@ class AddSalida extends Component
 
    }
 
+   public function getStockProducto(){
+
+    $item = null;
+
+    $cod = trim($this->codigo);
+
+    $item = null;
+
+    $vocales = array("a","e","i","o","u");
+
+    $isVocal = false;
+
+
+    if ($this->inputType == "product") {
+
+        if ($this->tipoProducto=="Prefabricado") {
+            
+            $item = Prefabricado::where('pre_descripcion',$this->producto)->first(); 
+
+            $this->stockProducto = $item->pre_stock;
+
+            $unidad = Unidad::find($item->unidad_id);
+
+            $this->itemUnidad = $unidad->unidad_nombre;
+
+
+            if ($this->itemUnidad == "metro cuadrado") { 
+                   
+               $this->stringResult = $this->stockProducto." "."m2";
+
+            }elseif($this->itemUnidad == "unidad"){
+
+               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+                
+            }else{
+
+               $lastLetter = substr($this->itemUnidad, -1);
+
+               foreach ($vocales as $data => $vocal ) {
+                   
+                   if ($vocal == $lastLetter) {
+                       
+                       $isVocal = true;
+                       break;
+                   }
+
+               }
+
+                if ($isVocal) {
+                  
+                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+
+                }else {
+                   
+                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+
+                }
+
+               
+
+            }
+           
+            
+           
+           
+        } 
+        else {
+           
+            $item = Material::where('material_descrip',$this->producto)->first();
+
+            $this->stockProducto = $item->material_stock;
+
+            $unidad = Unidad::find($item->unidad_id);
+
+            $this->itemUnidad = $unidad->unidad_nombre;
+
+            if ($this->itemUnidad == "metro cuadrado") { 
+                   
+               $this->stringResult = $this->stockProducto." "."m2";
+
+            }elseif($this->itemUnidad == "unidad"){
+
+               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+                
+            }else{
+
+               $lastLetter = substr($this->itemUnidad, -1);
+
+               foreach ($vocales as $data => $vocal ) {
+                   
+                   if ($vocal == $lastLetter) {
+                       
+                       $isVocal = true;
+                       break;
+                   }
+
+               }
+
+                if ($isVocal) {
+                  
+                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+
+                }else {
+                   
+                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+
+                }
+
+            }
+            
+            
+        }
+
+
+    }else {
+
+       $item = Prefabricado::where('pre_codigo',$cod)->first(); 
+    
+        if ($item!=null) {
+
+        
+        $this->stockProducto = $item->pre_stock;
+
+        $unidad = Unidad::find($item->unidad_id);
+
+        $this->itemUnidad = $unidad->unidad_nombre;
+
+
+        if ($this->itemUnidad == "metro cuadrado") { 
+               
+           $this->stringResult = $this->stockProducto." "."m2";
+
+        }elseif($this->itemUnidad == "unidad"){
+
+           $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+            
+        }else{
+
+           $lastLetter = substr($this->itemUnidad, -1);
+
+           foreach ($vocales as $data => $vocal ) {
+               
+               if ($vocal == $lastLetter) {
+                   
+                   $isVocal = true;
+                   break;
+               }
+
+           }
+
+            if ($isVocal) {
+              
+               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+
+            }else {
+               
+               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+
+            }
+
+           
+
+        }
+        
+
+
+
+        }else {
+            
+        $item = Material::where('material_cod',$cod)->first();
+
+        $this->stockProducto = $item->material_stock;
+
+         $unidad = Unidad::find($item->unidad_id);
+
+         $this->itemUnidad = $unidad->unidad_nombre;
+
+         if ($this->itemUnidad == "metro cuadrado") { 
+                
+            $this->stringResult = $this->stockProducto." "."m2";
+
+         }elseif($this->itemUnidad == "unidad"){
+
+            $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+             
+         }else{
+
+            $lastLetter = substr($this->itemUnidad, -1);
+
+            foreach ($vocales as $data => $vocal ) {
+                
+                if ($vocal == $lastLetter) {
+                    
+                    $isVocal = true;
+                    break;
+                }
+
+            }
+
+             if ($isVocal) {
+               
+                $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+
+             }else {
+                
+                $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+
+             }
+
+         }
+         
+         
+     }
+       
+        
+    }
+
+    
+    
+}
+
     public function checkProduct(){
 
         $exits = false;
@@ -355,13 +589,65 @@ class AddSalida extends Component
 
     public function searchFilter(){
 
-        
+        $prefabricados = Prefabricado::all();
+        $materiales = Material::all();
+
+       foreach($materiales as $material){
+
+            if ($material->material_cod == $this->codigo) {
+
+                $ma = array('code' => $material->material_cod);
+
+               array_push($this->searchResults,$ma);
+
+
+                $this->emit('match');
+
+                $this->test = "chao";
+
+            }
+
+       }
+
 
     }
 
+    public function setResultList($resultList){
+
+        $this->searchResults =  $resultList;       
+
+    }
+
+    public function getProducts(){
+
+        $prefabricados = DB::table('tbl_prefabricado')
+                        ->where('tbl_prefabricado.pre_status','=','A')
+                        ->where('tbl_prefabricado.pre_stock','>','0')
+                        ->select('tbl_prefabricado.pre_codigo','tbl_prefabricado.pre_descripcion',
+                                'tbl_prefabricado.pre_id')
+                        ->get();
+        $materiales = DB::table('tbl_material')
+                        ->where('tbl_material.material_status','=','A')
+                        ->where('tbl_material.material_stock','>','0')
+                        ->select('tbl_material.material_cod','tbl_material.material_descrip',
+                                'tbl_material.material_id')
+                        ->get();
+
+         $this->emit('loadProducts',$prefabricados,$materiales);
+
+    }
+
+    public function setCode($code){
+
+        $this->codigo = $code;
+
+    }
+
+
     public function updatedCodigo(){
 
-        $this->searchFilter();        
+        //$this->emit('test',$this->codigo);
+        //$this->searchFilter();        
 
     }
 
@@ -395,7 +681,9 @@ class AddSalida extends Component
                             ->where('tbl_material.material_status','=','A')
                             ->get();
 
+
         $this->emit('render');
+
         return view('livewire.salida.add-salida',compact('prefabricados','materiales'));
     }
 }

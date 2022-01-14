@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Salida')
 
 @section('content_header')
     <center>
@@ -79,7 +79,7 @@
         document.getElementById('productNoExist').showModal();
 
     });
-
+    
 
 </script>
 
@@ -179,9 +179,9 @@
 
    const getStockCod = ()=>{
     
-        let btn_stock = document.getElementById('btn_stock') ;
+        let code = document.getElementById('txtCode') ;
         
-        let codPro = btn_stock.value;
+        let codPro = code.value;
 
         Livewire.emit('getStockCod',codPro);
 
@@ -262,23 +262,309 @@
    }
 
    const showSearchTab = ()=>{
-    
-        let searchTab = document.getElementById('searchTab')
         
-        searchTab.classList.remove('hidden')
+
+        if (txtCode.value.length > 0) {
+
+             searchTab.classList.remove('hidden')
+
+        }else{
+
+            searchTab.classList.add('hidden');
+
+        }
+
+
 
    }
 
    const hideSearchTab = ()=>{
     
-        let searchTab = document.getElementById('searchTab')
-        
-        searchTab.classList.add('hidden')
+
+        if (!itemPressed) {
+
+            searchTab.classList.add('hidden')
+            
+        }
+
 
    }
 
+     window.addEventListener('click', (e)=> {
+        
+         if (!document.getElementById('txtCode').contains(e.target)) {
+            
+            searchTab.classList.add('hidden')
+
+         } 
+     })
+
+ 
+
+    let txtCode = document.getElementById('txtCode');
+
+    let searchList = document.getElementById('searchList');
+
+    let searchFilter = document.getElementById('searchFilter');
+
+    let searchTab = document.getElementById('searchTab');
+
+    let itemPressed = false;
+
+    let prefabricados = null;
+
+    let materiales = null;
+
+    
 
 
+    window.onload = ()=>{
+
+        Livewire.emit('getProducts');
+ 
+    }
+
+   Livewire.on('loadProducts',(prefabricadosList,materialesList) => {         
+           
+         prefabricados = prefabricadosList;
+
+         materiales = materialesList;
+
+         console.log(prefabricados);
+
+         console.log(materiales);
+
+     });
+
+    const setCode = (data)=>{
+
+        itemPressed = true;
+        
+        txtCode.value = data.dataset.code;
+
+        Livewire.emit('setCode',data.dataset.code);
+
+        //Livewire.emit('getStockProducto');
+
+        searchTab.classList.add('hidden');
+
+    } 
+
+    txtCode.addEventListener('keyup',function(e){
+
+        let resultList = [];
+
+        let code = txtCode.value.toUpperCase();
+
+        let codeLength = code.length;
+
+        let filter = searchFilter.value;
+
+        let notFoundMsg = document.getElementById('notFoundMsg');
+
+       
+
+      //console.log('Codigo: ' + code);
+
+      //console.log('Length del codigo :' + codeLength);
+ 
+      //let cuentaLista = searchList.querySelectorAll('li') ;
+
+
+      $('#searchList li').remove();
+
+      //$("#searchList").children().slice(1, -1).remove()
+
+      //searchList.remove();
+        
+    //       resultList.forEach( (result)=>{
+            
+    //             console.log('entro a borrrar');
+
+    //             console.log('id');
+
+    //            li = document.getElementById(result.id);
+
+    //           console.log(li);
+
+    //           li.remove();
+
+    //    })
+
+          
+    //    console.log('Length de la lista des pues del metodo: '+cuentaLista.length);
+       
+        // Eliminando todos los hijos de un elemento
+
+        // while (searchList.firstChild) {
+
+        //     console.log('entro a borrrar');
+
+        //     console.log(searchList.firstChild);
+
+        //     searchList.removeChild(searchList.firstChild);
+
+        // }
+
+        // var lis = document.getElementsByTagName('li');
+
+        // var nodos_a_eliminar = new Array();
+    
+        // function eliminar(){
+
+        //     console.log('entro a eliminar');
+
+        //     for (var i=0;i<lis.length;i++){
+        //         nodos_a_eliminar[nodos_a_eliminar.length] = lis[i];
+        //     }
+        //     for (var j=0;j<nodos_a_eliminar.length;j++){
+        //         nodos_a_eliminar[j].parentNode.removeChild(nodos_a_eliminar[j]);
+        //     }
+        // }
+
+
+        // eliminar();
+
+
+        if (codeLength > 0) {
+
+            searchTab.classList.remove('hidden');
+
+            if (filter == "todos") {
+                
+
+                materiales.forEach( (material) =>{ 
+
+                    if (codeLength <= material.material_cod.length  ) {
+
+
+                            if (code == material.material_cod.substring(0,codeLength)) {
+
+                                resultList.push({
+                                    "code" : material.material_cod,
+                                    "descrip" : material.material_descrip,
+                                    "id" : "li-material-"+material.material_id
+                                });
+
+                            }
+
+                    }
+
+                }) 
+
+                prefabricados.forEach( (pre) =>{ 
+
+                    if (codeLength <= pre.pre_codigo.length  ) {
+
+
+                            if (code == pre.pre_codigo.substring(0,codeLength)) {
+
+                                resultList.push({
+                                    "code" : pre.pre_codigo,
+                                    "descrip" : pre.pre_descripcion,
+                                    "id" : "li-pre-"+pre.pre_id
+                                });
+
+                            }
+
+                    }
+
+                })
+
+            }else{
+
+                if (filter=="material") {
+
+                    materiales.forEach( (material) =>{ 
+
+                        if (codeLength <= material.material_cod.length  ) {
+
+                                if (code == material.material_cod.substring(0,codeLength)) {
+
+                                    resultList.push({
+                                        "code" : material.material_cod,
+                                        "descrip" : material.material_descrip,
+                                        "id" : "li-material-"+material.material_id
+                                    });
+
+                                }
+
+                        }
+
+                    })
+                    
+                }else{
+
+                    prefabricados.forEach( (pre) =>{ 
+
+                        if (codeLength <= pre.pre_codigo.length  ) {
+
+                                if (code == pre.pre_codigo.substring(0,codeLength)) {
+
+                                    resultList.push({
+                                        "code" : pre.pre_codigo,
+                                        "descrip" : pre.pre_descripcion,
+                                        "id" : "li-pre-"+pre.pre_id
+                                    });
+
+                                }
+
+                        }
+
+                    })
+
+
+                }
+
+            }
+
+            resultList.forEach( (result) =>{ 
+
+                let li = document.createElement('li');
+                li.appendChild(document.createTextNode(result.code + "(" + result.descrip + ")"));
+                li.setAttribute('class','p-2 hover:bg-gray-100 cursor-pointer');
+                li.setAttribute('id',result.id);
+                li.setAttribute('data-code',result.code);
+                li.setAttribute('onclick','setCode(this)');
+                //li.setAttribute('wire:click','getStockProducto');
+
+                console.log(li);
+
+                searchList.appendChild(li);
+
+            })
+
+            if (resultList.length == 0) {
+
+                notFoundMsg.classList.remove('hidden');
+                
+
+            }else{
+
+                notFoundMsg.classList.add('hidden');
+
+            }
+                
+        }else{
+
+            notFoundMsg.classList.add('hidden');
+
+            searchTab.classList.add('hidden');
+
+        }
+        
+
+    })
+
+    // searchTab.addEventListener( 'mouseover' ,()=>{
+
+    //     console.log('entro a mouseover');
+
+    //     searchTab.classList.remove('hidden');
+
+    // })
+
+   
 </script>
 
 

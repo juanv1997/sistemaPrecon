@@ -10,6 +10,7 @@ use App\Models\Salida;
 use App\Models\TipoProducto;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AllTransactions extends Component
 {
@@ -19,14 +20,14 @@ class AllTransactions extends Component
     public $tipoProducto="Prefabricado";
     public $tipoTransaccion = "Entradas";
     public $producto = null;
-    public $dateBegin;
-    public $dateEnd;
-    public $listItems = 0;
+    public $dateBegin = null;
+    public $dateEnd = null;
+    public $listItems = null;
     public $dateIntervalToggle = 0;
     public $productoToggle = 0;
-    public $stringResult = "hola";
-    
-    
+    public $stringResult = "";
+    public $documentType = "excel";
+
 
     public function setParameters($parameters){
 
@@ -42,7 +43,7 @@ class AllTransactions extends Component
 
     public function filter(){
 
-        $producto = "";
+        $producto = null;
 
         if($this->productoToggle==1 && $this->dateIntervalToggle==1){
 
@@ -372,10 +373,76 @@ class AllTransactions extends Component
 
     }
 
+    public function createQrCode(){
+        
+        $qrCode = null;
+
+        if ($this->documentType == "excel") {
+            
+            $stringQuery = str_replace(" ", "", $this->stringResult); 
+
+             $urlExcel = "http://192.168.100.4/sistemaPrecon/public/api/transaccion?tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&producto={$this->producto}&dateBegin={$this->dateBegin}&dateEnd={$this->dateEnd}&dateToggle={$this->dateIntervalToggle}&productoToggle={$this->productoToggle}&stringResult={$stringQuery}";
+            
+
+            // if($this->productoToggle == 1 && $this->dateIntervalToggle == 1){
+
+            //     $urlExcel = "http://192.168.100.4/sistemaPrecon/public/pdfTransaccion/download?dateIsSet={$this->dateIntervalToggle}&productoIsSet={$this->productoToggle}&tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&productoId={$this->producto}&dateBegin={$this->dateBegin}&dateEnd={$this->dateEnd}&stringResult={$stringQuery}";
+
+            // }elseif($this->dateIntervalToggle == 1){
+
+            //     $urlExcel = "http://192.168.100.4/sistemaPrecon/public/pdfTransaccion/download?dateIsSet={$this->dateIntervalToggle}&productoIsSet={$this->productoToggle}&tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&dateBegin={$this->dateBegin}&dateEnd={$this->dateEnd}&stringResult={$stringQuery}";
+
+            // }elseif ($this->productoToggle == 1) {
+               
+            //     $urlExcel = "http://192.168.100.4/sistemaPrecon/public/pdfTransaccion/download?dateIsSet={$this->dateIntervalToggle}&productoIsSet={$this->productoToggle}&tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&productoId={$this->producto}&stringResult={$stringQuery}";
+
+            // }
+            
+            $qrCode = QrCode::size(300)->color('0','128','255')->generate($urlExcel);
+
+        
+        }else {
+
+            if($this->productoToggle == 1 && $this->dateIntervalToggle == 1){
+
+                $urlPdf = "http://192.168.100.4/sistemaPrecon/public/pdfTransaccion/download?dateIsSet={$this->dateIntervalToggle}&productoIsSet={$this->productoToggle}&tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&productoId={$this->producto}&dateBegin={$this->dateBegin}&dateEnd={$this->dateEnd}";
+
+            }elseif($this->dateIntervalToggle == 1){
+
+                $urlPdf = "http://192.168.100.4/sistemaPrecon/public/pdfTransaccion/download?dateIsSet={$this->dateIntervalToggle}&productoIsSet={$this->productoToggle}&tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&dateBegin={$this->dateBegin}&dateEnd={$this->dateEnd}";
+
+            }elseif ($this->productoToggle == 1) {
+               
+                $urlPdf = "http://192.168.100.4/sistemaPrecon/public/pdfTransaccion/download?dateIsSet={$this->dateIntervalToggle}&productoIsSet={$this->productoToggle}&tipo={$this->tipoProducto}&transaccion={$this->tipoTransaccion}&productoId={$this->producto}";
+
+            }
+            
+
+            $qrCode = QrCode::size(300)->color('0','128','255')->generate($urlPdf);
+
+        }
+
+        return $qrCode;
+
+    }
+
     public function render()
     {       
         $this->filter();
 
-        return view('livewire.all-transactions');
+        if ( $this->dateIntervalToggle || $this->productoToggle ) {
+            
+            $qrCode = $this->createQrCode();
+
+        }else{
+
+            $qrCode = null;
+        }
+
+        return view('livewire.all-transactions',[
+            
+            'qrCode'=>$qrCode
+            
+        ]);
     }
 }

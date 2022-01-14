@@ -16,11 +16,31 @@ class AddFeature extends Component
     public $featureValue;
     public $tipoProducto;
 
-    protected $rules = [
+    protected $messages =[
 
-        'feature'=>'required',
-        'featureValue'=>'required'
+        'feature.required' => 'Debe seleccionar una caracteristica',
+        'featureValue.required' => 'Debe ingresar un valor',
+        'featureValue.numeric' => 'El valor debe ser numerico',
+        'featureValue.min' => 'El valor debe ser mayor a 0',
     ];
+
+    protected function rules()  {
+
+        if ($this->feature == 'Espesor') {
+            
+            return[
+                'feature'=>'required',
+                'featureValue'=>'required|numeric|min:1'];
+
+        }else {
+            
+            return[
+                'feature'=>'required',
+                'featureValue'=>'required'];
+        
+        }
+        
+    }
 
     public function addFeature(){
 
@@ -28,23 +48,27 @@ class AddFeature extends Component
 
         $sameFeature = $this->checkSameFeature();
 
-        if ($sameFeature){
+        if ($sameFeature || $this->featureValue == 'N/A' || $this->featureValue == 'n/a' || $this->featureValue == 'N/a' || $this->featureValue == 'n/A') {
             
             $this->emit('sameFeature');
             
         }else{
 
             $tipoProducto = 0;
+
             if($this->tipoProducto=="pre"){
 
                 $tipoProducto = 2;
 
             }else{
+
                 $tipoProducto = 3;
+
             }
 
             switch ($this->feature) {
                 case 'Tipo':
+
                 Tipo::create([
 
                     'tipo_nombre'=>$this->featureValue,

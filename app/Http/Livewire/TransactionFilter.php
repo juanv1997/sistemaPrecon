@@ -57,6 +57,8 @@ class TransactionFilter extends Component
 
     public function filter(){
 
+        date_default_timezone_set("America/Lima");
+
         $date = date("Y-m-d");
 
         if ( $this->dateIntervalToggle==1 || 
@@ -66,7 +68,6 @@ class TransactionFilter extends Component
         }
 
         if ($this->dateIntervalToggle==1) {
-
 
 
             if ( $this->dateBegin > $this->dateEnd  ) {

@@ -5,6 +5,7 @@ use App\Exports\MaterialExport;
 use App\Exports\PreExport;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,36 +25,43 @@ Route::view('prefabricado','prefabricado.prefabricadoList')->name('prefabricado'
 Route::view('materiales','material.materialList')->name('material');
 Route::view('entrada','kardex.entrada.entradaAdd')->name('entrada');
 Route::view('salida','kardex.salida.salidaAdd')->name('salida');
-Route::view('reporte/general','reporte.generalReport')->name('reporte.general');
+Route::view('transacciones','reporte.generalReport')->name('reporte.general');
 Route::get('excelPre',function(){
 
     return Excel::download(new PreExport,'prefabricados.xlsx');
 
 })->name('excelPre');
+
 Route::get('excelMaterial',function(){
 
     return Excel::download(new MaterialExport,'materiales.xlsx');
 
 })->name('excelMaterial');
-Route::get('filter',function(){
 
-    //return Excel::download(new FilterReportExport,'filter.xlsx');
+Route::get('pdfPre/{action}' , [PdfController::class,'createPrePdf'])->name('pdfPre');
 
-})->name('filter');
+Route::get('pdfMaterial/{action}', [PdfController::class,'createMaterialPdf'])->name('pdfMaterial');
 
-Route::get('test', function () {
-    return view('kardex.entrada.entrada-view');
-});
+Route::get('pdfTransaccion/{action}', [PdfController::class,'createTransaccionPdf'])->name('pdfTransaccion');
 
-Route::get('/domain', function () {
-     $var = [
+// Route::get('filter',function(){
 
-        "34"=>2
+//     //return Excel::download(new FilterReportExport,'filter.xlsx');
 
-    ];
+// })->name('filter');
+ Route::get('test', function () {
+     return view('kardex.entrada.entrada-view');
+ });
 
-    return $var;
-})->domain('blog.'.env('APP_URL'));
+// Route::get('/domain', function () {
+//      $var = [
+
+//         "34"=>2
+
+//     ];
+
+//     return $var;
+// })->domain('blog.'.env('APP_URL'));
 
 Route::view('lista', 'policy');
 

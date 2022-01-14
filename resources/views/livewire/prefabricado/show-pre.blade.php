@@ -225,7 +225,7 @@
                     @if ($prefa)
 
 
-                    <img clas="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$prefa->pre_image_path}}"/>
+                    <img class="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$prefa->pre_image_path}}"/>
 
                     @endif
 
@@ -386,6 +386,39 @@
 
 
     </div> --}}
+
+    <x-modal-small>
+
+      <x-slot name="colorIcon">red-100</x-slot>
+
+      <x-slot name="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+      </x-slot>
+
+      <x-slot name="action">false</x-slot>
+
+      <x-slot name="cancel">false</x-slot>
+
+      <x-slot name="headerIcon"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-red-700" width="24" height="24" viewBox="0 0 24 24"><path d="M12 5.177l8.631 15.823h-17.262l8.631-15.823zm0-4.177l-12 22h24l-12-22zm-1 9h2v6h-2v-6zm1 9.75c-.689 0-1.25-.56-1.25-1.25s.561-1.25 1.25-1.25 1.25.56 1.25 1.25-.561 1.25-1.25 1.25z"/></svg></x-slot>
+
+      <x-slot name="targetMethodLoading"></x-slot>
+
+      <x-slot name="loadingMessage">Procesando solicitud...</x-slot>
+
+      <x-slot name="modalId">sameProduct</x-slot>
+
+      <x-slot name="eventClick"></x-slot>
+
+      <x-slot name="buttonText"></x-slot>
+
+      <x-slot name="title">Parametros duplicados</x-slot>
+
+      Lo sentimos, ya existe un producto con la misma descripcion y/o codigo.      
+
+
+  </x-modal-small>
 
       @if ($preCount)
           

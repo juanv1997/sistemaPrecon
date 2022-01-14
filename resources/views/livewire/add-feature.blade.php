@@ -44,15 +44,20 @@
 
                     <option >Seleccione una</option>
 
-                    <option >Tipo</option>
+                    <option value="Tipo" >Tipo</option>
 
-                    <option >Unidad</option>
+                    <option value="Unidad">Unidad</option>
 
                     @if ($tipoProducto=='pre') 
-                        <option >Resistencia</option>
-                        <option >Espesor</option>
-                        <option >Color</option>
-                        <option >Dimensión</option>
+                    
+                        <option value="Resistencia">Resistencia</option>
+
+                        <option value="Espesor">Espesor</option>
+
+                        <option value="Color">Color</option>
+
+                        <option value="Dimension">Dimensión</option>
+
                     @endif
 
                 </select>

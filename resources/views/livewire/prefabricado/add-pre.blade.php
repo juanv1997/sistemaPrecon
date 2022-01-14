@@ -39,6 +39,8 @@
 
                         <option value="default">Seleccione una opción</option>
 
+                        {{-- <option value="N/A">N/A</option> --}}
+
                         @foreach ($tipos as $tipo)
 
                             <option value="{{ $tipo->tipo_id}}">{{ $tipo->tipo_nombre }}</option>
@@ -218,11 +220,6 @@
                 
                 <div  class="-mx-2 md:flex mb-3">
                 
-                   
-                    {{-- <div class="md:w-1/4 px-3">
-                        <x-jet-label value="Descripcion"/>
-                </div> --}}
-
                     <div class="md:w-2/3 px-3">
 
                         <input type="hidden" id="txtDescripOriginal" wire:model="descripOriginal">
@@ -252,7 +249,7 @@
 
             <x-jet-label value="Observaciones"/>
 
-            <textarea class="py-2 px-3 mb-3 rounded-lg border-2 border-gray-600 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" type="text" placeholder="Breve descripción de la categoría" rows="4" wire:model.defer='pre.pre_observacion'></textarea>
+            <textarea class="py-2 px-3 mb-3 rounded-lg border-2 border-gray-600 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" type="text" placeholder="Breve descripción de la categoría"  wire:model.defer='pre.pre_observacion'></textarea>
             
             <x-jet-input-error for="pre.pre_observacion"/>
 
@@ -322,6 +319,7 @@
         Agregar Producto
 
     </x-jet-button>
+
 
 
 </div>
