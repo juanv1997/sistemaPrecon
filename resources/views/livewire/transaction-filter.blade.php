@@ -1,149 +1,150 @@
 <div>
 
+    {{-- etiqueta para mostrar una pagina en un cuadrado --}}
 
-{{-- etiqueta para mostrar una pagina en un cuadrado --}}
+        {{-- <h1>The iframe element</h1>
 
-    {{-- <h1>The iframe element</h1>
+    <iframe src="http://localhost/sistemaPrecon/public/" title="W3Schools Free Online Web Tutorials">
+    </iframe> --}}
 
-<iframe src="http://localhost/sistemaPrecon/public/" title="W3Schools Free Online Web Tutorials">
-</iframe> --}}
+    <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500 overflow-x-auto">
 
-   <div class="bg-white shadow-xl flex-row rounded-lg border-2 border-gray-500 overflow-x-auto">
                     
-    <div class=" p-2">
+        <div class=" p-2">
 
-        <div class="flex space-x-3 p-3 justify-center font-semibold">
+            <div class="flex space-x-3 p-3 justify-center font-semibold">
 
-            <span>Filtros:</span>
+                <span>Filtros:</span>
 
-            <span>Fecha</span>
+                <span>Fecha</span>
 
-            <x-toggle >
-                <x-slot name="id">dateToggle</x-slot>  
-                <x-slot name="prop">dateIntervalToggle</x-slot> 
-                
-            </x-toggle>
-
-            <span>Producto</span>
-
-            <x-toggle >
-                <x-slot name="id">productoToggle</x-slot>    
-                <x-slot name="prop">productoToggle</x-slot> 
-            </x-toggle>
-
- 
-         </div>
-
-      <div class=" flex space-x-3 justify-center font-semibold mb-3">
-     
-            {{-- <div class=" px-2 py-1 text-sm rounded ">
-                <select class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
-                    <option>10</option>
-                    <option>20</option>
-                </select>  
-            </div> --}}
-    
-            <div class=" px-2 py-1 text-sm rounded ">
-                <select wire:model.defer="tipoTransaccion" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
-                    <option>Entradas</option>
-                    <option>Salidas</option>
-                </select>  
-            </div>
-    
-            <div class=" px-2 py-1 text-sm rounded ">
-                <select wire:model="tipoProducto" onchange="validateSelect()" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
+                <x-toggle >
+                    <x-slot name="id">dateToggle</x-slot>  
+                    <x-slot name="prop">dateIntervalToggle</x-slot> 
                     
-                    @foreach ($tipo_productos as $tipo)
-                        <option value="{{$tipo->tipo_pro_nombre}}">{{$tipo->tipo_pro_nombre}}</option>
-                    @endforeach
+                </x-toggle>
 
-                </select>  
+                <span>Producto</span>
+
+                <x-toggle >
+                    <x-slot name="id">productoToggle</x-slot>    
+                    <x-slot name="prop">productoToggle</x-slot> 
+                </x-toggle>
+
+    
             </div>
-        
-            <div  wire:ignore.self class=" px-2 py-1 text-sm rounded hidden" id="product">
 
-                 <select wire:model.defer="producto" 
-                            onchange="checkSelect()" 
-                            class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  
-                            id="cbProduct"> 
-                        
-                    <option value="default" selected>Seleccione una opcion</option>
-
-                    @if ($tipoProducto=="Prefabricado")
-                        
-                    @foreach ($prefabricados as $producto)
-                        
-                            <option value="{{$producto->pre_id}}">{{$producto->pre_descripcion}}</option>
-                                    
-                    @endforeach
-    
-                    @endif
-    
-                    @if ($tipoProducto=="Material")
-    
-                       
-                    @foreach ($materiales as $producto)
+            <div class=" flex space-x-1 justify-center font-semibold mb-3">
+            
+                    {{-- <div class=" px-2 py-1 text-sm rounded ">
+                        <select class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
+                            <option>10</option>
+                            <option>20</option>
+                        </select>  
+                    </div> --}}
+            
+                    <div class=" px-1 py-1 text-sm rounded ">
+                        <select wire:model.defer="tipoTransaccion" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
+                            <option>Entradas</option>
+                            <option>Salidas</option>
+                        </select>  
+                    </div>
+            
+                    <div class=" px-1 py-1 text-sm rounded ">
+                        <select wire:model="tipoProducto" onchange="validateSelect()" class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"> 
                             
-                        <option value="{{$producto->material_id}}" selected>{{$producto->material_descrip}}</option>
-                                  
-                    @endforeach
-    
-                    @endif
-                        
-                    </select>  
+                            @foreach ($tipo_productos as $tipo)
+                                <option value="{{$tipo->tipo_pro_nombre}}">{{$tipo->tipo_pro_nombre}}</option>
+                            @endforeach
+
+                        </select>  
+                    </div>
+                
+                    <div  wire:ignore.self class=" px-1 py-1 text-sm rounded hidden" id="product">
+
+                        <select wire:model.defer="producto" 
+                                    onchange="checkSelect()" 
+                                    class="rounded-full border bg-white border-gray-400 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  
+                                    id="cbProduct"> 
+                                
+                            <option value="default" selected>Seleccione una opcion</option>
+
+                            @if ($tipoProducto=="Prefabricado")
+                                
+                            @foreach ($prefabricados as $producto)
+                                
+                                    <option value="{{$producto->pre_id}}">{{$producto->pre_descripcion}}</option>
+                                            
+                            @endforeach
+            
+                            @endif
+            
+                            @if ($tipoProducto=="Material")
+            
+                            
+                            @foreach ($materiales as $producto)
+                                    
+                                <option value="{{$producto->material_id}}" selected>{{$producto->material_descrip}}</option>
+                                        
+                            @endforeach
+            
+                            @endif
+                                
+                            </select>  
+                            
+                    </div>
                     
-            </div>
-            
-            <div  wire:ignore.self class="hidden" id="date">
-   
-                    <span class="py-2 px-1 justify-center text-base font-sans">
-                        Desde
-                    </span>
-
-                    <x-date-picker >
-
-                        <x-slot name="id">dateBegin</x-slot>
-                        <x-slot name="prop">dateBegin</x-slot> 
-                        
-                        <x-slot name="message"><x-jet-input-error for="dateBegin"/></x-slot>
-
-                    </x-date-picker> 
-             
-                    <span class="py-2 px-1 justify-center text-base font-sans">
-
-                        hasta
-
-                    </span>
-            
-                    <x-date-picker>
-
-                        <x-slot name="id">dateEnd</x-slot>
-                        <x-slot name="prop">dateEnd</x-slot> 
-                        <x-slot name="message"><x-jet-input-error for="dateEnd"/></x-slot>
-                        
-                    </x-date-picker> 
-
-            </div>
-      
-
-      <div class="text-center">
+                    <div  wire:ignore.self class="hidden flex" id="date">
         
-        <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-medium text-sm text-white  tracking-widest transform hover:scale-105 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"  
-                id="btnSearch" 
-                wire:click="filter" 
-                wire:ignore
-                {{-- wire:loading.attr="disabled"
-                wire:target="filter" --}}
-                >
-                Buscar
+                            <span class="py-2 px-1 justify-center text-base font-sans">
+                                Desde
+                            </span>
 
-        </button>
+                            <x-date-picker >
 
-      </div>
+                                <x-slot name="id">dateBegin</x-slot>
+                                <x-slot name="prop">dateBegin</x-slot> 
+                                
+                                <x-slot name="message"><x-jet-input-error for="dateBegin"/></x-slot>
+
+                            </x-date-picker> 
+                    
+                            <span class="py-2 px-1 justify-center text-base font-sans">
+
+                                hasta
+
+                            </span>
+                    
+                            <x-date-picker>
+
+                                <x-slot name="id">dateEnd</x-slot>
+                                <x-slot name="prop">dateEnd</x-slot> 
+                                <x-slot name="message"><x-jet-input-error for="dateEnd"/></x-slot>
+                                
+                            </x-date-picker> 
+
+                    </div>
 
 
-    </div>
-  </div>
+            </div>
+
+            
+            <div class="text-center">
+                    
+                <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-medium text-sm text-white  tracking-widest transform hover:scale-105 hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"  
+                        id="btnSearch" 
+                        wire:click="filter" 
+                        wire:ignore
+                        {{-- wire:loading.attr="disabled"
+                        wire:target="filter" --}}
+                        >
+                        Buscar
+
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 

@@ -73,6 +73,11 @@ img {
 
 }
 
+.bg-sold-out-row{
+
+	background-color: rgb(207, 62, 62);
+}
+
 footer {
 	
 	position: absolute;

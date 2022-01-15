@@ -72,21 +72,8 @@ class AddSalida extends Component
 
     }
  
-    // public function activateButton(){
-
-    //     //$this->buttonActivated = false;
-
-    // }'
-    // public function desactivateButton(){
-
-    //     $this->buttonActivated = true;
-
-    // }
-
     public function addItemByCode(){
 
-            
-        
             $this->validate();
 
             $productExits = $this->checkProduct($this->codigo);
@@ -335,211 +322,227 @@ class AddSalida extends Component
 
     $isVocal = false;
 
-
-    if ($this->inputType == "product") {
-
-        if ($this->tipoProducto=="Prefabricado") {
-            
-            $item = Prefabricado::where('pre_descripcion',$this->producto)->first(); 
-
-            $this->stockProducto = $item->pre_stock;
-
-            $unidad = Unidad::find($item->unidad_id);
-
-            $this->itemUnidad = $unidad->unidad_nombre;
-
-
-            if ($this->itemUnidad == "metro cuadrado") { 
-                   
-               $this->stringResult = $this->stockProducto." "."m2";
-
-            }elseif($this->itemUnidad == "unidad"){
-
-               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-                
-            }else{
-
-               $lastLetter = substr($this->itemUnidad, -1);
-
-               foreach ($vocales as $data => $vocal ) {
-                   
-                   if ($vocal == $lastLetter) {
-                       
-                       $isVocal = true;
-                       break;
-                   }
-
-               }
-
-                if ($isVocal) {
-                  
-                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
-
-                }else {
-                   
-                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-
-                }
-
-               
-
-            }
-           
-            
-           
-           
-        } 
-        else {
-           
-            $item = Material::where('material_descrip',$this->producto)->first();
-
-            $this->stockProducto = $item->material_stock;
-
-            $unidad = Unidad::find($item->unidad_id);
-
-            $this->itemUnidad = $unidad->unidad_nombre;
-
-            if ($this->itemUnidad == "metro cuadrado") { 
-                   
-               $this->stringResult = $this->stockProducto." "."m2";
-
-            }elseif($this->itemUnidad == "unidad"){
-
-               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-                
-            }else{
-
-               $lastLetter = substr($this->itemUnidad, -1);
-
-               foreach ($vocales as $data => $vocal ) {
-                   
-                   if ($vocal == $lastLetter) {
-                       
-                       $isVocal = true;
-                       break;
-                   }
-
-               }
-
-                if ($isVocal) {
-                  
-                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
-
-                }else {
-                   
-                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-
-                }
-
-            }
-            
-            
-        }
-
-
-    }else {
-
-       $item = Prefabricado::where('pre_codigo',$cod)->first(); 
-    
-        if ($item!=null) {
-
+    if ($this->codigo) {
         
-        $this->stockProducto = $item->pre_stock;
-
-        $unidad = Unidad::find($item->unidad_id);
-
-        $this->itemUnidad = $unidad->unidad_nombre;
-
-
-        if ($this->itemUnidad == "metro cuadrado") { 
-               
-           $this->stringResult = $this->stockProducto." "."m2";
-
-        }elseif($this->itemUnidad == "unidad"){
-
-           $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+        $productExits = $this->checkProduct($this->codigo);
             
-        }else{
+        if ($productExits){
 
-           $lastLetter = substr($this->itemUnidad, -1);
+            if ($this->inputType == "product") {
 
-           foreach ($vocales as $data => $vocal ) {
-               
-               if ($vocal == $lastLetter) {
+                if ($this->tipoProducto=="Prefabricado") {
+                    
+                    $item = Prefabricado::where('pre_descripcion',$this->producto)->first(); 
+        
+                    $this->stockProducto = $item->pre_stock;
+        
+                    $unidad = Unidad::find($item->unidad_id);
+        
+                    $this->itemUnidad = $unidad->unidad_nombre;
+        
+        
+                    if ($this->itemUnidad == "metro cuadrado") { 
+                           
+                       $this->stringResult = $this->stockProducto." "."m2";
+        
+                    }elseif($this->itemUnidad == "unidad"){
+        
+                       $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+                        
+                    }else{
+        
+                       $lastLetter = substr($this->itemUnidad, -1);
+        
+                       foreach ($vocales as $data => $vocal ) {
+                           
+                           if ($vocal == $lastLetter) {
+                               
+                               $isVocal = true;
+                               break;
+                           }
+        
+                       }
+        
+                        if ($isVocal) {
+                          
+                           $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+        
+                        }else {
+                           
+                           $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+        
+                        }
+        
+                       
+        
+                    }
                    
-                   $isVocal = true;
-                   break;
-               }
-
-           }
-
-            if ($isVocal) {
-              
-               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
-
+                    
+                   
+                   
+                } 
+                else {
+                   
+                    $item = Material::where('material_descrip',$this->producto)->first();
+        
+                    $this->stockProducto = $item->material_stock;
+        
+                    $unidad = Unidad::find($item->unidad_id);
+        
+                    $this->itemUnidad = $unidad->unidad_nombre;
+        
+                    if ($this->itemUnidad == "metro cuadrado") { 
+                           
+                       $this->stringResult = $this->stockProducto." "."m2";
+        
+                    }elseif($this->itemUnidad == "unidad"){
+        
+                       $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+                        
+                    }else{
+        
+                       $lastLetter = substr($this->itemUnidad, -1);
+        
+                       foreach ($vocales as $data => $vocal ) {
+                           
+                           if ($vocal == $lastLetter) {
+                               
+                               $isVocal = true;
+                               break;
+                           }
+        
+                       }
+        
+                        if ($isVocal) {
+                          
+                           $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+        
+                        }else {
+                           
+                           $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+        
+                        }
+        
+                    }
+                    
+                    
+                }
+        
+        
             }else {
-               
-               $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-
-            }
-
-           
-
-        }
         
-
-
+               $item = Prefabricado::where('pre_codigo',$cod)->first(); 
+            
+                if ($item!=null) {
+        
+                
+                $this->stockProducto = $item->pre_stock;
+        
+                $unidad = Unidad::find($item->unidad_id);
+        
+                $this->itemUnidad = $unidad->unidad_nombre;
+        
+        
+                if ($this->itemUnidad == "metro cuadrado") { 
+                       
+                   $this->stringResult = $this->stockProducto." "."m2";
+        
+                }elseif($this->itemUnidad == "unidad"){
+        
+                   $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+                    
+                }else{
+        
+                   $lastLetter = substr($this->itemUnidad, -1);
+        
+                   foreach ($vocales as $data => $vocal ) {
+                       
+                       if ($vocal == $lastLetter) {
+                           
+                           $isVocal = true;
+                           break;
+                       }
+        
+                   }
+        
+                    if ($isVocal) {
+                      
+                       $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+        
+                    }else {
+                       
+                       $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+        
+                    }
+        
+                   
+        
+                }
+                
+        
+        
+        
+                }else {
+                    
+                $item = Material::where('material_cod',$cod)->first();
+        
+                $this->stockProducto = $item->material_stock;
+        
+                 $unidad = Unidad::find($item->unidad_id);
+        
+                 $this->itemUnidad = $unidad->unidad_nombre;
+        
+                 if ($this->itemUnidad == "metro cuadrado") { 
+                        
+                    $this->stringResult = $this->stockProducto." "."m2";
+        
+                 }elseif($this->itemUnidad == "unidad"){
+        
+                    $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+                     
+                 }else{
+        
+                    $lastLetter = substr($this->itemUnidad, -1);
+        
+                    foreach ($vocales as $data => $vocal ) {
+                        
+                        if ($vocal == $lastLetter) {
+                            
+                            $isVocal = true;
+                            break;
+                        }
+        
+                    }
+        
+                     if ($isVocal) {
+                       
+                        $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
+        
+                     }else {
+                        
+                        $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
+        
+                     }
+        
+                 }
+                 
+                 
+             }
+               
+                
+            }
 
         }else {
-            
-        $item = Material::where('material_cod',$cod)->first();
 
-        $this->stockProducto = $item->material_stock;
-
-         $unidad = Unidad::find($item->unidad_id);
-
-         $this->itemUnidad = $unidad->unidad_nombre;
-
-         if ($this->itemUnidad == "metro cuadrado") { 
-                
-            $this->stringResult = $this->stockProducto." "."m2";
-
-         }elseif($this->itemUnidad == "unidad"){
-
-            $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-             
-         }else{
-
-            $lastLetter = substr($this->itemUnidad, -1);
-
-            foreach ($vocales as $data => $vocal ) {
-                
-                if ($vocal == $lastLetter) {
-                    
-                    $isVocal = true;
-                    break;
-                }
-
-            }
-
-             if ($isVocal) {
-               
-                $this->stringResult = $this->stockProducto." ".$this->itemUnidad."s";
-
-             }else {
-                
-                $this->stringResult = $this->stockProducto." ".$this->itemUnidad."es";
-
-             }
-
-         }
-         
-         
-     }
-       
+            $this->emit('productNotExist');   
+        }
         
-    }
 
+    }else{
+
+         $this->stockProducto = 0;
+
+    }
     
     
 }
@@ -643,7 +646,6 @@ class AddSalida extends Component
 
     }
 
-
     public function updatedCodigo(){
 
         //$this->emit('test',$this->codigo);
@@ -651,24 +653,6 @@ class AddSalida extends Component
 
     }
 
-    // public function changeSelect($inputType){
-
-    //     if($inputType=='byProduct'){
-
-    //         $this->byProduct = true;
-    //         $this->byCode = false;
-    //         $this->addMethod = "addItemByPro";
-
-    //     }
-    //     else{
-
-    //         $this->byProduct = false;
-    //         $this->byCode = true;
-    //         $this->addMethod = "addItemByCode";
-    //     }
-
-
-    // }
 
     public function render()
     {   

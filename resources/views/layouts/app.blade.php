@@ -13,6 +13,23 @@
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css" />
+    
+    <style>
+        @keyframes loader-rotate {
+            0% {
+                transform: rotate(0);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .loader {
+            border-right-color: transparent;
+            animation: loader-rotate 1s linear infinite;
+        }
+
+    </style>
+
     @livewireStyles
 
   </head>

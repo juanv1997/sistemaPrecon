@@ -451,7 +451,16 @@
                                   </td>
 
                                   <td  class="py-3 px-4  w-0">
-                                      {{ $prefabricado->unidad_termino }}
+                                    @if ($prefabricado->unidad_termino=="m")
+                                  
+                                      m2
+
+                                    @else
+
+                                    {{ $prefabricado->unidad_termino }}
+
+                                    @endif
+                                      
                                   </td>
 
                                   <td  class="py-3 px-4  w-0">

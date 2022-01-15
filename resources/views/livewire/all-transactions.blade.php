@@ -333,6 +333,8 @@
                                         $i++;
                                     @endphp
                                 @endforeach
+
+                                
             
                             @endif
             
@@ -415,8 +417,12 @@
                     </table>
                 </div>
 
+               
+               
+
             @else
 
+            
                 <center>
 
                     <div class="mb-8 py-4">
@@ -436,6 +442,8 @@
             @endif 
 
             </div>
+
+           
 
     </div>
 

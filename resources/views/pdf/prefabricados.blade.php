@@ -52,7 +52,9 @@
 
                 @foreach ($prefabricados as $prefabricado)
 
-                <tr>
+                <tr
+
+                >
                             <th scope="row" >
                                {{$i}}
                             </th>
