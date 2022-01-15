@@ -34,6 +34,7 @@
         <x-slot name="buttonText">Actualizar </x-slot>
 
         <x-slot name="title">Actualizar material 
+            
             <br> 
             @if ($material)
 
@@ -46,10 +47,13 @@
         <div class="-mx-2 md:flex mb-3">
 
              <div class="md:w-1/2 px-3">
+
                 <x-jet-label value="Precio"/>
                    
                 <input  class="appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
-                 
+                
+                <x-jet-input-error for="material.material_precio"/>
+
              </div>
 
          </div>
@@ -58,6 +62,7 @@
 
         <textarea class="py-2 px-3 mb-3 rounded-lg border-2 border-gray-600 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" type="text" placeholder="Breve descripción de la categoría" rows="4" wire:model.defer='material.material_observacion'></textarea>
         
+        <x-jet-input-error for="material.material_observacion"/>
 
         <x-jet-label value="Imagen"/>
 
@@ -96,19 +101,51 @@
 
                 <div class="w-full" wire:loading.remove wire:target="image">
 
-                    @if ($material)
+                    @empty(!$material)
 
-                        <div class="w-full md:w-full mb-4 px-2">
-                            <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
-                                   
-                                <span class="text-center">Imagen actual</span>
+                        @if ($material->material_image_path != "N/A")
 
-                                <img class="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$material->material_image_path}}"/>
-                            
+                            <div class="w-full md:w-full mb-4 px-2">
+                                <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
+                                    
+                                    <span class="text-center">Imagen actual</span>
+
+                                    <img class="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$material->material_image_path}}"/>
+                                
+                                </div>
                             </div>
-                      </div>
+                            
+                        @else
 
-                    @endif
+                            @empty($image)
+
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+
+                                <div class="px-32">
+        
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+        
+                                </div>
+        
+                                <div class="text-center">
+        
+                                <span >No se ha subido ninguna imagen para el producto</span>
+        
+                                </div>
+        
+                            </dd>
+                                
+                            @endempty
+
+                        
+
+                        @endif 
+                    
+                    @endempty 
+
+                 
 
                     <center>
                         @if ($image)
@@ -235,20 +272,43 @@
           </div>
 
           <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+
+
             <dt class="text-sm font-medium text-gray-500">
               Imagen
             </dt>
 
-                    @if ($material)
 
+            @empty(!$material)
 
-                      
+                    
+                @if ($material->material_image_path != "N/A")
 
                     <img clas="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$material->material_image_path}}"/>
 
-                    @endif 
+                @else
 
-            </dd>
+                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                    <div class="px-32">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+
+                    </div>
+
+                    <span >No se ha subido ninguna imagen para el producto</span>
+
+                </dd>
+
+                @endif 
+              
+            @endempty 
+
+
+
+            
           </div>
 
 
@@ -291,6 +351,39 @@
         ¿Esta seguro de querer borrar el material @if ($material) {{$material->material_descrip}} @endif ? 
 
 
+    </x-modal-small>
+
+    <x-modal-small>
+
+        <x-slot name="colorIcon">red-100</x-slot>
+  
+        <x-slot name="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+        </x-slot>
+  
+        <x-slot name="action">false</x-slot>
+  
+        <x-slot name="cancel">false</x-slot>
+  
+        <x-slot name="headerIcon"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-red-700" width="24" height="24" viewBox="0 0 24 24"><path d="M12 5.177l8.631 15.823h-17.262l8.631-15.823zm0-4.177l-12 22h24l-12-22zm-1 9h2v6h-2v-6zm1 9.75c-.689 0-1.25-.56-1.25-1.25s.561-1.25 1.25-1.25 1.25.56 1.25 1.25-.561 1.25-1.25 1.25z"/></svg></x-slot>
+  
+        <x-slot name="targetMethodLoading"></x-slot>
+  
+        <x-slot name="loadingMessage">Procesando solicitud...</x-slot>
+  
+        <x-slot name="modalId">sameProduct</x-slot>
+  
+        <x-slot name="eventClick"></x-slot>
+  
+        <x-slot name="buttonText"></x-slot>
+  
+        <x-slot name="title">Parametros duplicados</x-slot>
+  
+        Lo sentimos, ya existe un producto con la misma descripcion y/o codigo.      
+  
+  
     </x-modal-small>
 
     {{-- Tabla de materiales --}}

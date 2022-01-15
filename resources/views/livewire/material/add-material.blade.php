@@ -74,12 +74,12 @@
  
                  <div class="md:w-1/2 px-3">
                      <x-jet-label value="Precio"/>
-                         <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_precio'/>
+                         <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" min="1" step="1" placeholder="Precio del material" wire:model.defer='material.material_precio'/>
                      <x-jet-input-error for="material.material_precio"/>
                  </div>
                  <div class="md:w-1/2 px-3">
                      <x-jet-label value="Descripción"/>
-                         <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_descrip'/>
+                         <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Descripcion del material" wire:model.defer='material.material_descrip'/>
                      <x-jet-input-error for="material.material_descrip"/>
                  </div>
  
@@ -93,7 +93,7 @@
 
                     <x-jet-label value="Código"/>
                     
-                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Nombre de la categoría" wire:model.defer='material.material_cod'/>
+                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="text" placeholder="Codigo del material" wire:model.defer='material.material_cod'/>
                     
                     <x-jet-input-error for="material.material_cod"/>
 
@@ -103,7 +103,7 @@
 
                     <x-jet-label value="Stock inicial"/>
 
-                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" min="1" placeholder="Cantidad de stock inicial" wire:model.defer='material.material_stock'/>
+                    <input class=" appearance-none block w-full rounded-lg border-2 border-gray-600  focus:outline-none focus:ring-2 focus:ring-gray-700 focus:border-transparent" type="number" min="1" placeholder="Stock inicial" wire:model.defer='material.material_stock'/>
                     
                     <x-jet-input-error for="material.material_stock"/>
 

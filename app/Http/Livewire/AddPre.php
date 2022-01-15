@@ -47,7 +47,7 @@ class AddPre extends Component
         'pre.pre_observacion'=>'required|max:120',
         'pre.pre_precio'=>'required|max:10000|numeric|min:1',
         'pre.pre_stock'=>'required|max:10000|numeric|min:1',    
-        'image' => 'required',
+        //'image' => 'required',
     ];
 
     protected $messages = [
@@ -63,7 +63,7 @@ class AddPre extends Component
         'pre.pre_observacion.required'=>'Debe ingresar una observacion',
         'pre.pre_precio.required'=>'Debe ingresar un precio',
         'pre.pre_stock.required'=>'Debe ingresar un stock',
-        'image.required' => 'Debe seleccionar una imagen',
+        //'image.required' => 'Debe seleccionar una imagen',
         'pre.pre_stock.max'=>'Solo se puede ingresar un valor maximo 10000',
         'pre.pre_precio.max'=>'Solo se puede ingresar un valor maximo 10000',
         'pre.pre_stock.min'=>'Se debe ingresar un valor mayor a 0',
@@ -295,12 +295,26 @@ class AddPre extends Component
             } else {
 
                 $this->pre->pre_codigo = $this->codigo;
+
                 $this->pre->pre_descripcion = $this->descrip;
-                $this->pre->pre_importe = $this->pre->pre_stock*$this->pre->pre_precio; 
+
+                $this->pre->pre_importe = $this->pre->pre_stock*$this->pre->pre_precio;
+                
                 $this->pre->pre_status = "A";
+
+               if ($this->image) {
+                   
                 $imageName = $this->pre->pre_descripcion."_".date('d-m-Y').".png";
+
                 $imagePath = $this->image->storeAs('img/prefabricados',$imageName);
+
                 $this->pre->pre_image_path = $imagePath;
+                   
+               }else{
+
+                $this->pre->pre_image_path = "N/A";
+
+               }
 
             
                 $this->pre->save();
@@ -310,7 +324,9 @@ class AddPre extends Component
                 $this->pre = $prefa;
         
                 $this->emit('itemAdded');
+
                 $this->emit('preAdded');
+
                 $this->showBanner = true;
                 
             }
@@ -472,7 +488,6 @@ class AddPre extends Component
         $this->descripOriginal = $descrip;
 
     }
-    
     
     public function checkSameProduct($descrip, $codigo){
 

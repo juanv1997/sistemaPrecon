@@ -191,6 +191,13 @@ document.getElementById('editMaterialModal').close();
         }
     )
 
+    Livewire.on('sameProduct', function() {
+
+document.getElementById('sameProduct').showModal();
+
+}
+)
+
 </script>
 
 

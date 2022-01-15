@@ -23,17 +23,20 @@ class ShowMaterial extends Component
     public Material $material , $materialEdit, $infoMaterialToShow; 
     public $image;
     public $materialCount = 0;
-
-    // public function test(){
-
-    //     $this->reset('test');
-    // }
     
     protected $rules = [
 
-        'material.material_precio'=>'required',
+        'material.material_precio'=>'required|numeric|min:1|max:10000',
         'material.material_observacion'=>'required', 
 
+    ];
+
+    protected $messages = [
+
+        'material.material_observacion.required' => 'El campo observacion es obligatorio',
+        'material.material_precio.required' => 'El campo precio es obligatorio',
+        'material.material_precio.min' => 'El precio debe ser mayor a 0',
+        'material.material_precio.max' => 'El precio debe ser menor a 10000',
     ];
 
     public function findMaterial($idMaterial,$eventName){
@@ -113,7 +116,7 @@ class ShowMaterial extends Component
             'materiales'=>Material::join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
                         ->join('tbl_tipo','tbl_material.tipo_id','=','tbl_tipo.tipo_id')
                         ->orderBy('material_id','desc')
-                        ->paginate(7),
+                        ->paginate(5),
             'tipos'=>Tipo::all()->where('tipo_pro_id','3'),
             'unidades' => Unidad::all()->where('tipo_pro_id','3'),
             'materialCount' => $this->materialCount = DB::table('tbl_material')->count()          

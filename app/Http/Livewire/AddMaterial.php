@@ -37,7 +37,7 @@ class AddMaterial extends Component
       'material.material_observacion'=>'required|max:120',
       'material.material_cod'=>'required|max:50',
       'material.material_stock'=>'required|numeric|min:1|max:10000',
-      'image'=>'required'
+      //'image'=>'required'
 
     ];
 
@@ -47,7 +47,7 @@ class AddMaterial extends Component
         'material.material_descrip.max' => 'La descripción debe tener máximo 50 caracteres',
         'material.unidad_id.required' => 'Debe seleccionar una unidad para el material',
         'material.tipo_id.required' => 'Debe seleccionar un tipo de material ',
-        'image.required'=>'Debe insertar una imagen para el material',
+        //'image.required'=>'Debe insertar una imagen para el material',
         'material.material_observacion.required' => 'Dede ingresar una descripción',
         'material.material_observacion.max' => 'La descripción debe tener máximo 120 caracteres', 
         'material.material_cod.required' => 'Dede ingresar un código para el material',
@@ -67,19 +67,66 @@ class AddMaterial extends Component
     public function addMaterial(){
     
         $this->validate();
+
         date_default_timezone_set("America/Lima");
-        $this->material->material_importe = $this->material->material_stock*$this->material->material_precio;
-        $this->material->material_status = "A";  
-        $imageName = $this->material->material_descrip."_".date('d-m-Y').".png";
-        $imagePath = $this->image->storeAs('img/materiales',$imageName);
-        $this->material->material_image_path = $imagePath;
 
-        $this->material->save();
+        $sameProduct = $this->checkSameProduct($this->material->material_descrip, $this->material->material_cod);
 
-        $material = new Material();
-        $this->material = $material;
-        $this->emit('materialAdded');
-        $this->emit('itemAdded');
+
+        if($sameProduct){
+
+            $this->emit('sameProduct');
+
+        }else {
+           
+            $this->material->material_importe = $this->material->material_stock*$this->material->material_precio;
+
+            $this->material->material_status = "A"; 
+            
+            if ($this->image) {
+                    
+                $imageName = $this->material->material_descrip."_".date('d-m-Y').".png";
+
+                $imagePath = $this->image->storeAs('img/materiales',$imageName);
+
+                $this->material->material_image_path = $imagePath;
+                
+            }else{
+
+                $this->material->material_image_path = "N/A";
+
+            }
+        
+
+            $this->material->save();
+
+            $material = new Material();
+            $this->material = $material;
+            $this->emit('materialAdded');
+            $this->emit('itemAdded');
+
+        }
+
+    }
+
+    public function checkSameProduct($descrip, $codigo){
+
+        $value = false;
+
+        $materiales = Material::all();
+
+        foreach ($materiales as $material) {
+            
+            if($material->material_descrip == $descrip && $material->material_cod == $codigo){
+
+                $value = true;
+
+            }
+
+        }
+
+
+        return $value;
 
     }
 
@@ -101,7 +148,6 @@ class AddMaterial extends Component
         }
 
     }
-
 
     public function render()
     

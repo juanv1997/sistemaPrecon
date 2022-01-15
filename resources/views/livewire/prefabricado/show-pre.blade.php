@@ -28,9 +28,20 @@
 
         <x-slot name="buttonText">Actualizar</x-slot>
 
-        <x-slot name="title">Actualizar prefabricado</x-slot>
+        <x-slot name="title">
 
-      
+          Actualizar prefabricado
+
+          <br> 
+          
+          @if ($prefa)
+  
+            {{$prefa->pre_descripcion}}
+  
+          @endif
+        
+        </x-slot>
+
         <div class="-mx-2 md:flex mb-3">
 
             <div class="md:w-1/2 px-3">
@@ -80,26 +91,73 @@
                 </div>
 
                 <div class="w-full" wire:loading.remove wire:target="image">
-                    @if ($prefa )
-                      <div class="w-full md:w-full mb-4 px-2">
-                        <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
-                          <span class="text-center">Imagen actual</span>
-                          <img clas="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$prefa->pre_image_path}}"/>
+                  
+                
+                  @empty(!$prefa)
 
+                    
+                    @if ($prefa->pre_image_path != "N/A")
+
+                     
+
+                        <div class="w-full md:w-full mb-4 px-2">
+                          <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
+                            <span class="text-center">Imagen actual</span>
+                          
+                            
+                            <img clas="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$prefa->pre_image_path}}"/>
+
+                          </div>
                         </div>
-                      </div>
-                    @endif
+                          
+                      
+
+                    @else
+
+                        @empty($image)
+
+                          <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">
+
+                            <div class="px-32">
+    
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+    
+                            </div>
+    
+                            <div class="text-center">
+    
+                              <span >No se ha subido ninguna imagen para el producto</span>
+    
+                            </div>
+    
+                          </dd>
+                            
+                        @endempty
+
+                    
+
+                    @endif 
+                    
+                  @endempty 
+
                     <center>
                         @if ($image)
                         <div class="w-full md:w-full mb-4 px-2">
+
                          <div class="flex flex-col sm:flex-row md:flex-col -mx-2">
 
-                          <span class="text-center">Imagen seleccionada</span>  
-                                 <img clas="object-fill " src="{{$image->temporaryUrl()}}"/>
+                            <span class="text-center">Imagen seleccionada</span>
+
+                            <img clas="object-fill " src="{{$image->temporaryUrl()}}"/>
+
                          </div>
+
                        </div>
                        @endif
                      </center>
+
                 </div>
             </div>
         </div>
@@ -222,14 +280,33 @@
               Imagen
             </dt>
 
-                    @if ($prefa)
+                @empty(!$prefa)
 
+                    
+                  @if ($prefa->pre_image_path != "N/A")
 
                     <img class="object-fill " src="http://localhost/sistemaPrecon/storage/app/{{$prefa->pre_image_path}}"/>
 
-                    @endif
+                  @else
 
-            </dd>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                      <div class="px-32">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+
+                      </div>
+
+                      <span >No se ha subido ninguna imagen para el producto</span>
+
+                    </dd>
+
+                  @endif 
+                    
+                @endempty 
+ 
           </div>
 
 
@@ -270,122 +347,6 @@
 
 
     </x-modal-small>
-
-    {{--<div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div class="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
-              <table class="min-w-full overflow-x-scroll divide-y divide-gray-200">
-                <thead class="bg-gray-50" >
-                  <tr>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                    >
-                      Código
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                    >
-                      Nombre
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                    >
-                      Categoría
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                    >
-                      Proveedor
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                    >
-                      Precio
-                    </th>
-                    <th
-                    scope="col"
-                    class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                  >
-                    Stock
-                  </th>
-                  <th
-                  scope="col"
-                  class="px-6 py-3 text-xs font-medium tracking-wider  text-gray-500 uppercase"
-                >
-                  Acciones
-                </th>
-
-                  </tr>
-                </thead>
-                  <tbody class="bg-white  text-center">
-                      @foreach ($prefabricados as $prefabricado)
-                    <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
-
-
-
-
-
-                        <td >
-                            {{ $prefabricado->pre_codigo }}
-                          </td>
-                          <td >
-                            {{ $prefabricado->tipo_nombre }}
-                          </td>
-                          <td  >
-                            {{ $prefabricado->espesor_cantidad }}
-                          </td>
-                          <td >
-                            {{ $prefabricado->resistencia_cantidad }}
-                          </td>
-                          <td  >
-                            {{ $prefabricado->color_nombre }}
-                          </td>
-                          <td  >
-                            {{ $prefabricado->unidad_termino }}
-                          </td>
-
-                          <td  >
-                            {{ $prefabricado->pre_precio }}
-                          </td>
-
-                          <td >
-                            {{ $prefabricado->dimension_medida }}
-                          </td>
-
-
-
-                          <td>
-
-                              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#show">
-                                  <i class="fas fa-list-alt"></i>
-                              </button>
-
-                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit">
-                                  <i class="fas fa-edit"></i>
-                              </button>
-
-                              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete">
-                                  <i class="fas fa-trash"></i>
-                              </button>
-
-                          </td>
-
-
-
-
-
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-
-
-    </div> --}}
 
     <x-modal-small>
 

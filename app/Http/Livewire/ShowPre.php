@@ -24,7 +24,7 @@ class ShowPre extends Component
     //public $openModal = false;
     protected $listeners = ['preAdded'=>'render','findPrefabricado','updateStatus'];
     public $val=5;
-    public Prefabricado $prefa,$pre;
+    public Prefabricado $prefa ,$pre;
     public $image;
     public $destroyBanner = false;
     public $editBanner = false;
@@ -35,12 +35,14 @@ class ShowPre extends Component
     protected $rules = [
 
         'prefa.pre_observacion'=>'required',
-        'prefa.pre_precio'=>'required',
+        'prefa.pre_precio'=>'required|numeric|min:1|max:10000'
     ];
 
     protected $messages = [
         'prefa.pre_observacion.required' => 'El campo observacion es obligatorio',
         'prefa.pre_precio.required' => 'El campo precio es obligatorio',
+        'prefa.pre_precio.min' => 'El precio debe ser mayor a 0',
+        'prefa.pre_precio.max' => 'El precio debe ser menor a 10000',
     ];
 
     public function findPrefabricado($idPre,$eventName){
