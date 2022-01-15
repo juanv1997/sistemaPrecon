@@ -39,12 +39,33 @@ class MaterialExport implements FromCollection,WithHeadings//,WithColumnFormatti
     */
     public function collection()
     {
-        //return Material::all();
-        return collect(Material::join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
+       
+        $materiales = Material::join('tbl_unidad','tbl_material.unidad_id','=','tbl_unidad.unidad_id')
                     ->join('tbl_tipo','tbl_material.tipo_id','=','tbl_tipo.tipo_id')
                     ->select('tbl_material.material_cod','tbl_tipo.tipo_nombre',
                               'tbl_unidad.unidad_nombre','tbl_material.material_precio',
                               'tbl_material.material_descrip','tbl_material.material_observacion',
-                              'tbl_material.material_stock','tbl_material.material_importe')->get());
+                              'tbl_material.material_stock','tbl_material.material_importe')
+                    ->get();
+
+        foreach ($materiales as $material) {
+            
+            if ($material->material_stock == 0) {
+
+                $material->material_stock = "0";
+
+            }
+
+            if ($material->material_importe == 0) {
+
+                $material->material_importe = "0";
+
+            } 
+
+
+        }
+
+        
+        return collect($materiales);
     }
 }

@@ -375,7 +375,7 @@ class AddPre extends Component
 
                 $subTipoCod = strtoupper($tipoPre);
                 $codigo = $subTipoCod.$espesor->espesor_cantidad."-".$color->color_inicial."-".$capa->capa_nombre[0];
-                $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
+                $descrip = $tipo->tipo_nombre." "."E"."=".$espesor->espesor_cantidad." "."cm"." ".$color->color_nombre." ".$capa->capa_nombre;
 
             }
             elseif ($espesor->espesor_cantidad!=0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A") {
@@ -396,7 +396,7 @@ class AddPre extends Component
 
                 $subTipoCod = strtoupper($tipoPre);
                 $codigo = $subTipoCod."-".$color->color_inicial."-".$capa->capa_nombre[0];
-                $descrip = $tipo->tipo_nombre." "."MPA"." ".$color->color_nombre." ".$capa->capa_nombre;
+                $descrip = $tipo->tipo_nombre." ".$color->color_nombre." ".$capa->capa_nombre;
 
             }
             if($espesor->espesor_cantidad==0 && $color->color_nombre!="N/A" && $resistencia->resistencia_cantidad!=0 && $capa->capa_nombre=="N/A"){
